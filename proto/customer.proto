@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package proto;
+
+import "github.com/metaverse/truss/deftree/googlethirdparty/annotations.proto";
+import "generate.proto";
+
+service Customer {
+    rpc Insert(Empty) returns (Empty) {}
+}
+

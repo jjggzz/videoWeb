@@ -1,0 +1,28 @@
+server:
+  serverName: customer
+  tcp:
+    port: 7777
+  http:
+    port: 8080
+
+discovery:
+  consul:
+    address: 192.168.1.102:8500
+    health:
+      timeout: 5
+      interval: 5
+      deregisterCriticalServiceAfter: 30
+
+# 数据库
+db:
+  mysql:
+    host: localhost
+    port: 3306
+    schema: customer
+    username: root
+    password: 123456
+
+generateKeyServerName: generateKeyService
+
+zipkin:
+  address: 192.168.1.102:9411

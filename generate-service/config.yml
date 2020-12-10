@@ -1,0 +1,17 @@
+server:
+  serverName: generateKeyService
+  tcp:
+    port: 8888
+
+discovery:
+  consul:
+    address: 192.168.1.102:8500
+    health:
+      timeout: 5
+      interval: 5
+      deregisterCriticalServiceAfter: 30
+
+workId: 1
+
+zipkin:
+  address: 192.168.1.102:9411

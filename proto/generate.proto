@@ -1,0 +1,28 @@
+// In general, while you can use proto2 (the current default protocol buffers
+// version), we recommend that you use proto3 with gRPC as it lets you use the
+// full range of gRPC-supported languages, as well as avoiding compatibility
+// issues with proto2 clients talking to proto3 servers and vice versa.
+syntax = "proto3";
+
+// The package name determines the name of the directories that truss creates
+// for `package proto;` truss will create the directory "generate-service".
+package proto;
+
+import "github.com/metaverse/truss/deftree/googlethirdparty/annotations.proto";
+
+service Generate {
+    rpc GenerateInt64Key(Empty) returns (Int64KeyResponse) {}
+    rpc GenerateStringKey(Empty) returns (StringKeyResponse) {}
+}
+
+message Int64KeyResponse {
+    int64 id = 1;
+}
+
+message StringKeyResponse {
+    string id = 1;
+}
+
+message Empty {
+
+}
