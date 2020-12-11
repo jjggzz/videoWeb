@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package proto;
+
+import "github.com/metaverse/truss/deftree/googlethirdparty/annotations.proto";
+import "common.proto";
+
+service Verify {
+    rpc SendVerifyCode(SendVerifyCodeRequest) returns (Empty) {}
+    rpc CheckVerifyCode(CheckVerifyCodeRequest) returns (CheckVerifyCodeResponse) {}
+}
+
+// 验证码类型 手机号码 邮箱
+enum VerifyTargetType {
+    PHONE = 0;
+    EMAIL = 1;
+}
+
+enum VerifyCheckResults {
+    SUCCESS = 0;
+    FAIL = 1;
+}
+
+// target:验证码目标,可能是邮箱或者手机号码
+// type:决定了target的类型
+message SendVerifyCodeRequest {
+    string target = 1;
+    VerifyTargetType type = 2;
+}
+
+// target:验证码目标,可能是邮箱或者手机号码
+// type:决定了target的类型
+// code:提交的验证码值
+message CheckVerifyCodeRequest {
+    string target = 1;
+    string code = 2;
+    VerifyTargetType type = 3;
+}
+
+message CheckVerifyCodeResponse {
+    VerifyCheckResults result = 1;
+    string message = 2;
+}

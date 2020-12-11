@@ -1,7 +1,7 @@
 server:
-  serverName: generate-service
+  serverName: verify-service
   tcp:
-    port: 8888
+    port: 9999
 
 discovery:
   consul:
@@ -11,7 +11,8 @@ discovery:
       interval: 5
       deregisterCriticalServiceAfter: 30
 
-workId: 1
+redis:
+  address: localhost:3306
 
 zipkin:
   address: 192.168.151.109:9411

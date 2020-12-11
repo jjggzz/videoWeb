@@ -9,6 +9,7 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d
 	github.com/golang/protobuf v1.4.3
+	github.com/gomodule/redigo v1.8.3
 	github.com/gorilla/mux v1.8.0
 	github.com/hashicorp/consul v1.9.0 // indirect
 	github.com/hashicorp/consul/api v1.8.0
