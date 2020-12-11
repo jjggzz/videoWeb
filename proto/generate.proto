@@ -9,6 +9,7 @@ syntax = "proto3";
 package proto;
 
 import "github.com/metaverse/truss/deftree/googlethirdparty/annotations.proto";
+import "common.proto";
 
 service Generate {
     rpc GenerateInt64Key(Empty) returns (Int64KeyResponse) {}
@@ -21,8 +22,4 @@ message Int64KeyResponse {
 
 message StringKeyResponse {
     string id = 1;
-}
-
-message Empty {
-
 }
