@@ -14,7 +14,8 @@ require (
 	github.com/hashicorp/consul v1.9.0 // indirect
 	github.com/hashicorp/consul/api v1.8.0
 	github.com/jinzhu/gorm v1.9.16
-	github.com/jjggzz/kj v0.0.0-20201206045111-9f366da7b512
+	github.com/jjggzz/kj v0.0.0-20201212093149-2c78d54e69b9
+	github.com/jjggzz/truss v0.0.0-20201212035720-35f0e7aeb9e8
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/metaverse/truss v0.2.0
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
@@ -28,5 +29,3 @@ require (
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/yaml.v2 v2.4.0
 )
-
-replace github.com/jjggzz/kj v0.0.0-20201206045111-9f366da7b512 => ../kj

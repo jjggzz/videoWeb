@@ -16,10 +16,10 @@ import (
 	"os"
 	"videoWeb/generate-service/config"
 	"videoWeb/generate-service/handlers"
+	"videoWeb/generate-service/proto"
 	"videoWeb/generate-service/service"
 	"videoWeb/generate-service/svc"
 	"videoWeb/generate-service/svc/server"
-	"videoWeb/proto"
 )
 
 func main() {

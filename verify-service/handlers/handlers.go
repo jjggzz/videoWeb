@@ -3,7 +3,7 @@ package handlers
 import (
 	"context"
 
-	pb "videoWeb/proto"
+	pb "videoWeb/verify-service/proto"
 )
 
 // NewService returns a naïve, stateless implementation of Service.

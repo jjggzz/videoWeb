@@ -3,7 +3,7 @@ package handlers
 import (
 	"github.com/jjggzz/kj/middleware"
 	"github.com/sony/gobreaker"
-	pb "videoWeb/proto"
+	pb "videoWeb/verify-service/proto"
 	"videoWeb/verify-service/svc"
 )
 

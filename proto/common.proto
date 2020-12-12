@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package proto;
 
-import "github.com/metaverse/truss/deftree/googlethirdparty/annotations.proto";
+import "github.com/jjggzz/truss/deftree/googlethirdparty/annotations.proto";
 
 message Empty {
 

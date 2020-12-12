@@ -13,10 +13,8 @@ var (
 type Config struct {
 	Server    *config.Server    `yaml:"server"`
 	Discovery *config.Discovery `yaml:"discovery"`
+	Zipkin    *config.Zipkin    `yaml:"zipkin"`
 	WorkId    int64             `yaml:"workId"`
-	Zipkin    struct {
-		Address string `yaml:"address"`
-	} `yaml:"zipkin"`
 }
 
 func Init() {

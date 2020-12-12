@@ -5,14 +5,14 @@ server:
 
 discovery:
   consul:
-    address: 192.168.151.109:8500
+    address: 192.168.1.102:8500
     health:
       timeout: 5
       interval: 5
       deregisterCriticalServiceAfter: 30
 
 redis:
-  address: localhost:3306
+  address: 192.168.1.102:6379
 
 zipkin:
-  address: 192.168.151.109:9411
+  address: 192.168.1.102:9411

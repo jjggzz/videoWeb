@@ -3,8 +3,8 @@ package handlers
 import (
 	"github.com/jjggzz/kj/middleware"
 	"github.com/sony/gobreaker"
+	pb "videoWeb/generate-service/proto"
 	"videoWeb/generate-service/svc"
-	pb "videoWeb/proto"
 )
 
 // WrapEndpoints accepts the service's entire collection of endpoints, so that a

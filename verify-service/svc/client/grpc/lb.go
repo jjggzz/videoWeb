@@ -1,18 +1,14 @@
 package grpc
 
 import (
-	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/sd"
 	kitzipkin "github.com/go-kit/kit/tracing/zipkin"
 	grpctransport "github.com/go-kit/kit/transport/grpc"
 	"github.com/jjggzz/kj/discovery"
 	"github.com/jjggzz/kj/loadbalnace"
 	"github.com/openzipkin/zipkin-go"
-	"google.golang.org/grpc"
-	"io"
 	"time"
-	pb "videoWeb/proto"
+	pb "videoWeb/verify-service/proto"
 	"videoWeb/verify-service/svc"
 )
 
@@ -28,7 +24,7 @@ func NewVerifyBalanceClient(dis discovery.Discover, serverName string, tracer *z
 	}
 
 	var endpoints svc.Endpoints
-	// 获取int64key端点
+	// 获取发送验证码端点
 	{
 		factory := factoryGRPCFor(svc.MakeSendVerifyCodeEndpoint, options...)
 		endpoints.SendVerifyCodeEndpoint = loadbalnace.BuildLoadBalance(instancer,
@@ -39,7 +35,7 @@ func NewVerifyBalanceClient(dis discovery.Discover, serverName string, tracer *z
 			logger,
 		)
 	}
-	// 获取stringkey端点
+	// 获取校验验证码端点
 	{
 		factory := factoryGRPCFor(svc.MakeCheckVerifyCodeEndpoint, options...)
 		endpoints.CheckVerifyCodeEndpoint = loadbalnace.BuildLoadBalance(instancer,
@@ -51,15 +47,4 @@ func NewVerifyBalanceClient(dis discovery.Discover, serverName string, tracer *z
 		)
 	}
 	return endpoints, nil
-}
-
-func factoryGRPCFor(makeEndpoint func(pb.VerifyServer) endpoint.Endpoint, options ...grpctransport.ClientOption) sd.Factory {
-	return func(instance string) (endpoint.Endpoint, io.Closer, error) {
-		conn, err := grpc.Dial(instance, grpc.WithInsecure())
-		if err != nil {
-			return nil, nil, err
-		}
-		server, err := New(conn, options)
-		return makeEndpoint(server), conn, err
-	}
 }

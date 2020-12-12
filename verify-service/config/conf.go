@@ -13,10 +13,8 @@ var (
 type Config struct {
 	Server    *config.Server    `yaml:"server"`
 	Discovery *config.Discovery `yaml:"discovery"`
-	Zipkin    struct {
-		Address string `yaml:"address"`
-	} `yaml:"zipkin"`
-	Redis struct {
+	Zipkin    *config.Zipkin    `yaml:"zipkin"`
+	Redis     struct {
 		Address string `yaml:"address"`
 	} `yaml:"redis"`
 }

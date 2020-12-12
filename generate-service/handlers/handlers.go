@@ -4,7 +4,7 @@ import (
 	"context"
 	"videoWeb/generate-service/service"
 
-	pb "videoWeb/proto"
+	pb "videoWeb/generate-service/proto"
 )
 
 // NewService returns a naïve, stateless implementation of Service.
