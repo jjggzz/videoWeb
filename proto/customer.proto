@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package proto;
+
+import "github.com/jjggzz/truss/deftree/googlethirdparty/annotations.proto";
+import "common.proto";
+
+service Customer {
+    rpc RegisterByPhone(RegisterByPhoneRequest) returns (RegisterByPhoneResponse) {};
+
+}
+
+enum RegisterResult {
+    SUCCESS = 0;
+    FAIL = 1;
+}
+
+message RegisterByPhoneRequest {
+    string phone = 1;
+}
+
+message RegisterByPhoneResponse {
+    RegisterResult result = 1;
+    string message = 2;
+}
