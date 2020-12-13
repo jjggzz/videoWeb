@@ -24,6 +24,8 @@ func (server *Server) Router() {
 	server.engine.GET("/getCustomerByAccessKey", server.GetCustomerByAccessKey)
 	server.engine.GET("/insertCustomer", server.InsertCustomer)
 	server.engine.GET("/getKey", server.GetKey)
+	server.engine.GET("/send/:phone", server.Send)
+	server.engine.GET("/check/:phone/:code", server.Check)
 }
 
 func (server *Server) Start(conf *config.Config) error {

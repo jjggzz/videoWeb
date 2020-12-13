@@ -12,7 +12,10 @@ discovery:
       deregisterCriticalServiceAfter: 30
 
 redis:
-  address: 192.168.1.102:6379
+  address: localhost:6379
+  maxIdle: 8
+  maxActive: 50
+  idleTimeout: 100
 
 zipkin:
   address: 192.168.1.102:9411

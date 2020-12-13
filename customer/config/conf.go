@@ -17,7 +17,8 @@ type Config struct {
 	Zipkin    struct {
 		Address string `yaml:"address"`
 	} `yaml:"zipkin"`
-	GenerateKeyServerName string `yaml:"generateKeyServerName"`
+	GenerateServerName string `yaml:"generateServerName"`
+	VerifyServerName   string `yaml:"verifyServerName"`
 }
 
 func Init() {

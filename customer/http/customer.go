@@ -48,3 +48,28 @@ func (server *Server) GetKey(context *gin.Context) {
 	}
 	context.String(http.StatusOK, s)
 }
+
+func (server *Server) Send(context *gin.Context) {
+	phone := context.Param("phone")
+	err := server.service.SendVerify(context, phone)
+	if err != nil {
+		context.String(http.StatusInternalServerError, "服务器错误")
+		return
+	}
+	context.String(http.StatusOK, "发送成功")
+}
+
+func (server *Server) Check(context *gin.Context) {
+	phone := context.Param("phone")
+	code := context.Param("code")
+	result, err := server.service.CheckVerify(context, phone, code)
+	if err != nil {
+		context.String(http.StatusInternalServerError, "服务器错误")
+		return
+	}
+	if result {
+		context.String(http.StatusOK, "校验通过")
+		return
+	}
+	context.String(http.StatusOK, "校验失败")
+}

@@ -22,7 +22,8 @@ db:
     username: root
     password: 123456
 
-generateKeyServerName: generateKeyService
+generateServerName: generate-service
+verifyServerName: verify-service
 
 zipkin:
   address: 192.168.1.102:9411

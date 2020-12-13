@@ -29,8 +29,11 @@ func main() {
 	config.Init()
 	// 日志初始化
 	logger := log.BuildLogger(config.Conf.Server.ServerName, os.Stderr)
-	// 初始化业务逻辑
-	service.Gen = service.New(config.Conf)
+
+	// 初始化service
+	{
+		service.Gen = service.New(config.Conf)
+	}
 
 	// 初始化端点
 	handle := handlers.NewService()

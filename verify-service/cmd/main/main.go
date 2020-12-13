@@ -15,8 +15,10 @@ import (
 	"net"
 	"os"
 	"videoWeb/verify-service/config"
+	"videoWeb/verify-service/dao"
 	"videoWeb/verify-service/handlers"
 	"videoWeb/verify-service/proto"
+	"videoWeb/verify-service/service"
 	"videoWeb/verify-service/svc"
 	"videoWeb/verify-service/svc/server"
 )
@@ -28,6 +30,16 @@ func main() {
 	config.Init()
 	// 日志初始化
 	logger := log.BuildLogger(config.Conf.Server.ServerName, os.Stderr)
+
+	// 初始化dao
+	var d *dao.Dao
+	{
+		d = dao.New(config.Conf)
+	}
+	// 初始化service
+	{
+		service.Ver = service.New(d)
+	}
 
 	// 初始化端点
 	handle := handlers.NewService()
