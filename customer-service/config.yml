@@ -1,5 +1,5 @@
 server:
-  serverName: customer
+  serverName: customer-service
   tcp:
     port: 7777
   http:
@@ -7,7 +7,7 @@ server:
 
 discovery:
   consul:
-    address: 192.168.1.102:8500
+    address: 192.168.151.109:8500
     health:
       timeout: 5
       interval: 5
@@ -26,4 +26,4 @@ generateServerName: generate-service
 verifyServerName: verify-service
 
 zipkin:
-  address: 192.168.1.102:9411
+  address: 192.168.151.109:9411

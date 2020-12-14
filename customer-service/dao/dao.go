@@ -5,7 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
-	"videoWeb/customer/config"
+	"videoWeb/customer-service/config"
 )
 
 type Dao struct {

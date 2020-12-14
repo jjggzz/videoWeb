@@ -2,6 +2,8 @@ package handlers
 
 import (
 	"context"
+	"github.com/jjggzz/kj/errors"
+	"videoWeb/customer-service/service"
 
 	pb "videoWeb/customer-service/proto"
 )
@@ -15,10 +17,21 @@ type customerService struct{}
 
 func (s customerService) RegisterByPhone(ctx context.Context, in *pb.RegisterByPhoneRequest) (*pb.RegisterByPhoneResponse, error) {
 	var resp pb.RegisterByPhoneResponse
-	return &resp, nil
-}
+	status, err := service.Cus.RegisterByPhone(ctx, in.Phone)
+	if err != nil {
+		return nil, err
+	}
+	switch status {
+	case service.RegisterStatus_SUCCESS:
+		resp.Result = pb.RegisterResult_SUCCESS
+		resp.Message = "注册成功"
+		return &resp, nil
+	case service.RegisterStatus_FAIL_HAS_USE:
+		resp.Result = pb.RegisterResult_FAIL
+		resp.Message = "注册失败,该号码已注册"
+		return &resp, nil
+	default:
+		return nil, errors.New("未知知结果类型")
+	}
 
-func (s customerService) SelectCustomer(ctx context.Context, in *pb.Empty) (*pb.Empty, error) {
-	var resp pb.Empty
-	return &resp, nil
 }

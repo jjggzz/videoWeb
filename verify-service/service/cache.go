@@ -10,7 +10,7 @@ import (
 // 未作接口防刷(在redis中对对应号码作个60s的锁即可,如果存在则不发送)
 func (srv *service) SendPhoneVerify(ctx context.Context, target string) error {
 	code := getCode()
-	err := srv.dao.SetexRedisCache(5*60, target, strconv.Itoa(code))
+	err := srv.dao.SetexRedisCache(5*60, target, VerifyPrefix+strconv.Itoa(code))
 	if err != nil {
 		return err
 	}
@@ -24,7 +24,7 @@ func (srv *service) SendPhoneVerify(ctx context.Context, target string) error {
 
 func (srv *service) SendEmailVerify(ctx context.Context, target string) error {
 	code := getCode()
-	err := srv.dao.SetexRedisCache(5*60, target, strconv.Itoa(code))
+	err := srv.dao.SetexRedisCache(5*60, target, VerifyPrefix+strconv.Itoa(code))
 	if err != nil {
 		return err
 	}
@@ -35,8 +35,8 @@ func (srv *service) SendEmailVerify(ctx context.Context, target string) error {
 	return err
 }
 
-func (srv *service) CheckVerify(ctx context.Context, target string, code string) (result bool, err error) {
-	cacheCode, err := srv.dao.GetRedisCache(target)
+func (srv *service) CheckVerify(ctx context.Context, target string, code string) (bool, error) {
+	cacheCode, err := srv.dao.GetRedisCache(VerifyPrefix + target)
 	if err != nil {
 		return false, err
 	}
