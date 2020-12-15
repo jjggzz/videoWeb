@@ -14,12 +14,7 @@ type Config struct {
 	Server    *config.Server    `yaml:"server"`
 	Discovery *config.Discovery `yaml:"discovery"`
 	Zipkin    *config.Zipkin    `yaml:"zipkin"`
-	Redis     struct {
-		Address     string `yaml:"address"`
-		MaxIdle     int    `yaml:"maxIdle"`
-		MaxActive   int    `yaml:"maxActive"`
-		IdleTimeout int64  `yaml:"idleTimeout"`
-	} `yaml:"redis"`
+	Redis     *config.Redis     `yaml:"redis"`
 }
 
 func Init() {
