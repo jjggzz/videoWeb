@@ -27,31 +27,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
-type RegisterResult int32
-
-const (
-	RegisterResult_SUCCESS RegisterResult = 0
-	RegisterResult_FAIL    RegisterResult = 1
-)
-
-var RegisterResult_name = map[int32]string{
-	0: "SUCCESS",
-	1: "FAIL",
-}
-
-var RegisterResult_value = map[string]int32{
-	"SUCCESS": 0,
-	"FAIL":    1,
-}
-
-func (x RegisterResult) String() string {
-	return proto.EnumName(RegisterResult_name, int32(x))
-}
-
-func (RegisterResult) EnumDescriptor() ([]byte, []int) {
-	return fileDescriptor_9efa92dae3d6ec46, []int{0}
-}
-
 type RegisterByPhoneRequest struct {
 	Phone string `protobuf:"bytes,1,opt,name=phone,proto3" json:"phone,omitempty"`
 }
@@ -97,8 +72,8 @@ func (m *RegisterByPhoneRequest) GetPhone() string {
 }
 
 type RegisterByPhoneResponse struct {
-	Result  RegisterResult `protobuf:"varint,1,opt,name=result,proto3,enum=proto.RegisterResult" json:"result,omitempty"`
-	Message string         `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Result  bool   `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (m *RegisterByPhoneResponse) Reset()         { *m = RegisterByPhoneResponse{} }
@@ -134,11 +109,11 @@ func (m *RegisterByPhoneResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_RegisterByPhoneResponse proto.InternalMessageInfo
 
-func (m *RegisterByPhoneResponse) GetResult() RegisterResult {
+func (m *RegisterByPhoneResponse) GetResult() bool {
 	if m != nil {
 		return m.Result
 	}
-	return RegisterResult_SUCCESS
+	return false
 }
 
 func (m *RegisterByPhoneResponse) GetMessage() string {
@@ -148,35 +123,133 @@ func (m *RegisterByPhoneResponse) GetMessage() string {
 	return ""
 }
 
+type LoginByPhoneRequest struct {
+	Phone string `protobuf:"bytes,1,opt,name=phone,proto3" json:"phone,omitempty"`
+}
+
+func (m *LoginByPhoneRequest) Reset()         { *m = LoginByPhoneRequest{} }
+func (m *LoginByPhoneRequest) String() string { return proto.CompactTextString(m) }
+func (*LoginByPhoneRequest) ProtoMessage()    {}
+func (*LoginByPhoneRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9efa92dae3d6ec46, []int{2}
+}
+func (m *LoginByPhoneRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LoginByPhoneRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LoginByPhoneRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LoginByPhoneRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoginByPhoneRequest.Merge(m, src)
+}
+func (m *LoginByPhoneRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *LoginByPhoneRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_LoginByPhoneRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LoginByPhoneRequest proto.InternalMessageInfo
+
+func (m *LoginByPhoneRequest) GetPhone() string {
+	if m != nil {
+		return m.Phone
+	}
+	return ""
+}
+
+type LoginByPhoneResponse struct {
+	Result bool   `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
+	Token  string `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+}
+
+func (m *LoginByPhoneResponse) Reset()         { *m = LoginByPhoneResponse{} }
+func (m *LoginByPhoneResponse) String() string { return proto.CompactTextString(m) }
+func (*LoginByPhoneResponse) ProtoMessage()    {}
+func (*LoginByPhoneResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_9efa92dae3d6ec46, []int{3}
+}
+func (m *LoginByPhoneResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *LoginByPhoneResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_LoginByPhoneResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *LoginByPhoneResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoginByPhoneResponse.Merge(m, src)
+}
+func (m *LoginByPhoneResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *LoginByPhoneResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_LoginByPhoneResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_LoginByPhoneResponse proto.InternalMessageInfo
+
+func (m *LoginByPhoneResponse) GetResult() bool {
+	if m != nil {
+		return m.Result
+	}
+	return false
+}
+
+func (m *LoginByPhoneResponse) GetToken() string {
+	if m != nil {
+		return m.Token
+	}
+	return ""
+}
+
 func init() {
-	proto.RegisterEnum("proto.RegisterResult", RegisterResult_name, RegisterResult_value)
 	proto.RegisterType((*RegisterByPhoneRequest)(nil), "proto.RegisterByPhoneRequest")
 	proto.RegisterType((*RegisterByPhoneResponse)(nil), "proto.RegisterByPhoneResponse")
+	proto.RegisterType((*LoginByPhoneRequest)(nil), "proto.LoginByPhoneRequest")
+	proto.RegisterType((*LoginByPhoneResponse)(nil), "proto.LoginByPhoneResponse")
 }
 
 func init() { proto.RegisterFile("customer.proto", fileDescriptor_9efa92dae3d6ec46) }
 
 var fileDescriptor_9efa92dae3d6ec46 = []byte{
-	// 301 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x90, 0xcd, 0x4a, 0xfb, 0x40,
-	0x14, 0xc5, 0x33, 0x7f, 0xfe, 0xfd, 0x70, 0x94, 0x5a, 0x06, 0x3f, 0x42, 0xc1, 0x41, 0xba, 0x51,
-	0x04, 0x13, 0xa8, 0x4f, 0x60, 0x8b, 0x82, 0xe0, 0x42, 0xa6, 0xb8, 0x15, 0xd2, 0xf6, 0x3a, 0x4d,
-	0x69, 0xe6, 0xc6, 0x99, 0x9b, 0x45, 0xfb, 0x14, 0x3e, 0x96, 0xcb, 0x2e, 0x5d, 0x4a, 0xf2, 0x22,
-	0x62, 0xd2, 0x2e, 0x5a, 0x71, 0x35, 0xfc, 0xb8, 0xe7, 0xcc, 0x3d, 0xe7, 0xf2, 0xd6, 0x38, 0x73,
-	0x84, 0x09, 0xd8, 0x20, 0xb5, 0x48, 0x28, 0x6a, 0xe5, 0xd3, 0xe9, 0xeb, 0x98, 0xa6, 0xd9, 0x28,
-	0x18, 0x63, 0x12, 0xce, 0x66, 0x5a, 0x2f, 0x97, 0x21, 0xd9, 0xcc, 0xb9, 0x70, 0x02, 0xaf, 0x64,
-	0x01, 0x42, 0x8d, 0xa8, 0xe7, 0x40, 0xd3, 0xd8, 0x4e, 0xd2, 0xc8, 0xd2, 0x22, 0x8c, 0x8c, 0x41,
-	0x8a, 0x28, 0x46, 0xe3, 0xaa, 0xaf, 0x3a, 0x07, 0x63, 0x4c, 0x12, 0x34, 0x15, 0x75, 0x03, 0x7e,
-	0xa2, 0x40, 0xc7, 0x8e, 0xc0, 0xf6, 0x17, 0x4f, 0x53, 0x34, 0xa0, 0xe0, 0x2d, 0x03, 0x47, 0xe2,
-	0x88, 0xd7, 0xd2, 0x1f, 0xf6, 0xd9, 0x39, 0xbb, 0xdc, 0x53, 0x15, 0x74, 0x47, 0xfc, 0xf4, 0x97,
-	0xde, 0xa5, 0x68, 0x1c, 0x88, 0x6b, 0x5e, 0xb7, 0xe0, 0xb2, 0x39, 0x95, 0x8e, 0x56, 0xef, 0xb8,
-	0x5a, 0x11, 0x6c, 0xf4, 0xaa, 0x1c, 0xaa, 0xb5, 0x48, 0xf8, 0xbc, 0x91, 0x80, 0x73, 0x91, 0x06,
-	0xff, 0x5f, 0xb9, 0x61, 0x83, 0x57, 0x17, 0xbc, 0xb5, 0xed, 0x11, 0xfb, 0xbc, 0x31, 0x7c, 0x1e,
-	0x0c, 0xee, 0x86, 0xc3, 0xb6, 0x27, 0x9a, 0xfc, 0xff, 0xfd, 0xed, 0xc3, 0x63, 0x9b, 0xf5, 0x5e,
-	0x78, 0x73, 0xb0, 0xbe, 0x93, 0x50, 0xfc, 0x70, 0x27, 0x98, 0x38, 0xdb, 0x09, 0xb0, 0x5d, 0xb0,
-	0x23, 0xff, 0x1a, 0x57, 0x7d, 0xba, 0x5e, 0xdf, 0xff, 0xc8, 0x25, 0x5b, 0xe5, 0x92, 0x7d, 0xe5,
-	0x92, 0xbd, 0x17, 0xd2, 0x5b, 0x15, 0xd2, 0xfb, 0x2c, 0xa4, 0x37, 0xaa, 0x97, 0xd6, 0x9b, 0xef,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0x6d, 0x02, 0xd1, 0x93, 0xa8, 0x01, 0x00, 0x00,
+	// 309 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x90, 0xcf, 0x4a, 0xf3, 0x40,
+	0x14, 0xc5, 0x93, 0x0f, 0xda, 0xaf, 0x5e, 0x8a, 0xc2, 0x58, 0x6a, 0x88, 0x38, 0x48, 0x56, 0x82,
+	0x90, 0x80, 0xbe, 0x41, 0x75, 0x23, 0xba, 0x90, 0xbc, 0x41, 0xda, 0x5e, 0xa7, 0xa9, 0xcd, 0xdc,
+	0x38, 0x73, 0xb3, 0x68, 0x9f, 0xc2, 0xd7, 0xf0, 0x4d, 0x5c, 0x76, 0xe9, 0x52, 0xda, 0x17, 0x11,
+	0x33, 0x29, 0xf8, 0xa7, 0xa2, 0xab, 0xe1, 0xc7, 0xdc, 0x73, 0xce, 0xbd, 0x07, 0x76, 0x47, 0x95,
+	0x65, 0x2a, 0xd0, 0xc4, 0xa5, 0x21, 0x26, 0xd1, 0xaa, 0x9f, 0x70, 0xa0, 0x72, 0x9e, 0x54, 0xc3,
+	0x78, 0x44, 0x45, 0x32, 0x9d, 0x2a, 0xb5, 0x58, 0x24, 0x6c, 0x2a, 0x6b, 0x93, 0x31, 0xde, 0xb1,
+	0x41, 0x4c, 0x14, 0x91, 0x9a, 0x21, 0x4f, 0x72, 0x33, 0x2e, 0x33, 0xc3, 0xf3, 0x24, 0xd3, 0x9a,
+	0x38, 0xe3, 0x9c, 0xb4, 0x75, 0x56, 0x61, 0x77, 0x44, 0x45, 0x41, 0xda, 0x51, 0x14, 0x43, 0x3f,
+	0x45, 0x95, 0x5b, 0x46, 0x33, 0x98, 0xdf, 0x4e, 0x48, 0x63, 0x8a, 0x0f, 0x15, 0x5a, 0x16, 0x3d,
+	0x68, 0x95, 0xef, 0x1c, 0xf8, 0xc7, 0xfe, 0xc9, 0x4e, 0xea, 0x20, 0xba, 0x86, 0x83, 0x6f, 0xf3,
+	0xb6, 0x24, 0x6d, 0x51, 0xf4, 0xa1, 0x6d, 0xd0, 0x56, 0x33, 0xae, 0x15, 0x9d, 0xb4, 0x21, 0x11,
+	0xc0, 0xff, 0x02, 0xad, 0xcd, 0x14, 0x06, 0xff, 0x6a, 0xab, 0x0d, 0x46, 0xa7, 0xb0, 0x7f, 0x43,
+	0x2a, 0xd7, 0x7f, 0x4a, 0xbe, 0x84, 0xde, 0xe7, 0xe1, 0x5f, 0x62, 0x7b, 0xd0, 0x62, 0xba, 0x47,
+	0xdd, 0x84, 0x3a, 0x38, 0x7b, 0xf2, 0xa1, 0x73, 0xd1, 0x74, 0x2b, 0x52, 0xd8, 0xfb, 0x72, 0x8c,
+	0x38, 0x72, 0xbd, 0xc4, 0xdb, 0x4b, 0x09, 0xe5, 0x4f, 0xdf, 0x6e, 0x99, 0xc8, 0x13, 0x57, 0xd0,
+	0xfd, 0xb8, 0xa6, 0x08, 0x1b, 0xc5, 0x96, 0x43, 0xc3, 0xc3, 0xad, 0x7f, 0x1b, 0xab, 0x41, 0xf0,
+	0xbc, 0x92, 0xfe, 0x72, 0x25, 0xfd, 0xd7, 0x95, 0xf4, 0x1f, 0xd7, 0xd2, 0x5b, 0xae, 0xa5, 0xf7,
+	0xb2, 0x96, 0xde, 0xb0, 0x5d, 0xeb, 0xce, 0xdf, 0x02, 0x00, 0x00, 0xff, 0xff, 0xbb, 0x71, 0x07,
+	0x2d, 0x27, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -192,6 +265,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type CustomerClient interface {
 	RegisterByPhone(ctx context.Context, in *RegisterByPhoneRequest, opts ...grpc.CallOption) (*RegisterByPhoneResponse, error)
+	LoginByPhone(ctx context.Context, in *LoginByPhoneRequest, opts ...grpc.CallOption) (*LoginByPhoneResponse, error)
 }
 
 type customerClient struct {
@@ -211,9 +285,19 @@ func (c *customerClient) RegisterByPhone(ctx context.Context, in *RegisterByPhon
 	return out, nil
 }
 
+func (c *customerClient) LoginByPhone(ctx context.Context, in *LoginByPhoneRequest, opts ...grpc.CallOption) (*LoginByPhoneResponse, error) {
+	out := new(LoginByPhoneResponse)
+	err := c.cc.Invoke(ctx, "/proto.Customer/LoginByPhone", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CustomerServer is the server API for Customer service.
 type CustomerServer interface {
 	RegisterByPhone(context.Context, *RegisterByPhoneRequest) (*RegisterByPhoneResponse, error)
+	LoginByPhone(context.Context, *LoginByPhoneRequest) (*LoginByPhoneResponse, error)
 }
 
 // UnimplementedCustomerServer can be embedded to have forward compatible implementations.
@@ -222,6 +306,9 @@ type UnimplementedCustomerServer struct {
 
 func (*UnimplementedCustomerServer) RegisterByPhone(ctx context.Context, req *RegisterByPhoneRequest) (*RegisterByPhoneResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterByPhone not implemented")
+}
+func (*UnimplementedCustomerServer) LoginByPhone(ctx context.Context, req *LoginByPhoneRequest) (*LoginByPhoneResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LoginByPhone not implemented")
 }
 
 func RegisterCustomerServer(s *grpc.Server, srv CustomerServer) {
@@ -246,6 +333,24 @@ func _Customer_RegisterByPhone_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Customer_LoginByPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginByPhoneRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServer).LoginByPhone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.Customer/LoginByPhone",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServer).LoginByPhone(ctx, req.(*LoginByPhoneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Customer_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "proto.Customer",
 	HandlerType: (*CustomerServer)(nil),
@@ -253,6 +358,10 @@ var _Customer_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RegisterByPhone",
 			Handler:    _Customer_RegisterByPhone_Handler,
+		},
+		{
+			MethodName: "LoginByPhone",
+			Handler:    _Customer_LoginByPhone_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -298,16 +407,79 @@ func (m *RegisterByPhoneResponse) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Result != 0 {
+	if m.Result {
 		dAtA[i] = 0x8
 		i++
-		i = encodeVarintCustomer(dAtA, i, uint64(m.Result))
+		if m.Result {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
 	}
 	if len(m.Message) > 0 {
 		dAtA[i] = 0x12
 		i++
 		i = encodeVarintCustomer(dAtA, i, uint64(len(m.Message)))
 		i += copy(dAtA[i:], m.Message)
+	}
+	return i, nil
+}
+
+func (m *LoginByPhoneRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *LoginByPhoneRequest) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Phone) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintCustomer(dAtA, i, uint64(len(m.Phone)))
+		i += copy(dAtA[i:], m.Phone)
+	}
+	return i, nil
+}
+
+func (m *LoginByPhoneResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *LoginByPhoneResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Result {
+		dAtA[i] = 0x8
+		i++
+		if m.Result {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i++
+	}
+	if len(m.Token) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintCustomer(dAtA, i, uint64(len(m.Token)))
+		i += copy(dAtA[i:], m.Token)
 	}
 	return i, nil
 }
@@ -340,10 +512,39 @@ func (m *RegisterByPhoneResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Result != 0 {
-		n += 1 + sovCustomer(uint64(m.Result))
+	if m.Result {
+		n += 2
 	}
 	l = len(m.Message)
+	if l > 0 {
+		n += 1 + l + sovCustomer(uint64(l))
+	}
+	return n
+}
+
+func (m *LoginByPhoneRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Phone)
+	if l > 0 {
+		n += 1 + l + sovCustomer(uint64(l))
+	}
+	return n
+}
+
+func (m *LoginByPhoneResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Result {
+		n += 2
+	}
+	l = len(m.Token)
 	if l > 0 {
 		n += 1 + l + sovCustomer(uint64(l))
 	}
@@ -474,7 +675,7 @@ func (m *RegisterByPhoneResponse) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Result", wireType)
 			}
-			m.Result = 0
+			var v int
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowCustomer
@@ -484,11 +685,12 @@ func (m *RegisterByPhoneResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.Result |= RegisterResult(b&0x7F) << shift
+				v |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
+			m.Result = bool(v != 0)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
@@ -520,6 +722,196 @@ func (m *RegisterByPhoneResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			m.Message = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCustomer(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *LoginByPhoneRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCustomer
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LoginByPhoneRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LoginByPhoneRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Phone", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Phone = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipCustomer(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *LoginByPhoneResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowCustomer
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: LoginByPhoneResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: LoginByPhoneResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Result", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Result = bool(v != 0)
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Token", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Token = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex

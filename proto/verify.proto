@@ -16,11 +16,6 @@ enum VerifyTargetStrategy {
     EMAIL = 1;
 }
 
-enum VerifyCheckResults {
-    SUCCESS = 0;
-    FAIL = 1;
-}
-
 // target:验证码目标,可能是邮箱或者手机号码
 // type:决定了target的类型
 message SendVerifyCodeRequest {
@@ -36,6 +31,6 @@ message CheckVerifyCodeRequest {
 }
 
 message CheckVerifyCodeResponse {
-    VerifyCheckResults result = 1;
+    bool result = 1;
     string message = 2;
 }

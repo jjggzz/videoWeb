@@ -36,10 +36,10 @@ func (s verifyService) CheckVerifyCode(ctx context.Context, in *pb.CheckVerifyCo
 	)
 	result, err := service.Ver.CheckVerify(ctx, in.Target, in.Code)
 	if !result {
-		resp.Result = pb.VerifyCheckResults_FAIL
-		resp.Message = "校验未通过"
+		resp.Result = false
+		resp.Message = "验证码错误"
 	} else {
-		resp.Result = pb.VerifyCheckResults_SUCCESS
+		resp.Result = true
 		resp.Message = "校验成功"
 	}
 

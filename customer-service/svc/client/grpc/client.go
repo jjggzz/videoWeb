@@ -63,8 +63,22 @@ func New(conn *grpc.ClientConn, clientOptions []grpctransport.ClientOption, opti
 		).Endpoint()
 	}
 
+	var loginbyphoneEndpoint endpoint.Endpoint
+	{
+		loginbyphoneEndpoint = grpctransport.NewClient(
+			conn,
+			"proto.Customer",
+			"LoginByPhone",
+			EncodeGRPCLoginByPhoneRequest,
+			DecodeGRPCLoginByPhoneResponse,
+			pb.LoginByPhoneResponse{},
+			clientOptions...,
+		).Endpoint()
+	}
+
 	return svc.Endpoints{
 		RegisterByPhoneEndpoint: registerbyphoneEndpoint,
+		LoginByPhoneEndpoint:    loginbyphoneEndpoint,
 	}, nil
 }
 
@@ -77,12 +91,26 @@ func DecodeGRPCRegisterByPhoneResponse(_ context.Context, grpcReply interface{})
 	return reply, nil
 }
 
+// DecodeGRPCLoginByPhoneResponse is a transport/grpc.DecodeResponseFunc that converts a
+// gRPC loginbyphone reply to a user-domain loginbyphone response. Primarily useful in a client.
+func DecodeGRPCLoginByPhoneResponse(_ context.Context, grpcReply interface{}) (interface{}, error) {
+	reply := grpcReply.(*pb.LoginByPhoneResponse)
+	return reply, nil
+}
+
 // GRPC Client Encode
 
 // EncodeGRPCRegisterByPhoneRequest is a transport/grpc.EncodeRequestFunc that converts a
 // user-domain registerbyphone request to a gRPC registerbyphone request. Primarily useful in a client.
 func EncodeGRPCRegisterByPhoneRequest(_ context.Context, request interface{}) (interface{}, error) {
 	req := request.(*pb.RegisterByPhoneRequest)
+	return req, nil
+}
+
+// EncodeGRPCLoginByPhoneRequest is a transport/grpc.EncodeRequestFunc that converts a
+// user-domain loginbyphone request to a gRPC loginbyphone request. Primarily useful in a client.
+func EncodeGRPCLoginByPhoneRequest(_ context.Context, request interface{}) (interface{}, error) {
+	req := request.(*pb.LoginByPhoneRequest)
 	return req, nil
 }
 

@@ -23,15 +23,20 @@ func (s customerService) RegisterByPhone(ctx context.Context, in *pb.RegisterByP
 	}
 	switch status {
 	case service.RegisterStatus_SUCCESS:
-		resp.Result = pb.RegisterResult_SUCCESS
+		resp.Result = true
 		resp.Message = "注册成功"
 		return &resp, nil
 	case service.RegisterStatus_FAIL_HAS_USE:
-		resp.Result = pb.RegisterResult_FAIL
+		resp.Result = false
 		resp.Message = "注册失败,该号码已注册"
 		return &resp, nil
 	default:
 		return nil, errors.New("未知知结果类型")
 	}
 
+}
+
+func (s customerService) LoginByPhone(ctx context.Context, in *pb.LoginByPhoneRequest) (*pb.LoginByPhoneResponse, error) {
+	var resp pb.LoginByPhoneResponse
+	return &resp, nil
 }

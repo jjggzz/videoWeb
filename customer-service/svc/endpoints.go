@@ -34,6 +34,7 @@ import (
 // construct individual endpoints using transport/http.NewClient, combine them into an Endpoints, and return it to the caller as a Service.
 type Endpoints struct {
 	RegisterByPhoneEndpoint endpoint.Endpoint
+	LoginByPhoneEndpoint    endpoint.Endpoint
 }
 
 // Endpoints
@@ -44,6 +45,14 @@ func (e Endpoints) RegisterByPhone(ctx context.Context, in *pb.RegisterByPhoneRe
 		return nil, err
 	}
 	return response.(*pb.RegisterByPhoneResponse), nil
+}
+
+func (e Endpoints) LoginByPhone(ctx context.Context, in *pb.LoginByPhoneRequest) (*pb.LoginByPhoneResponse, error) {
+	response, err := e.LoginByPhoneEndpoint(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	return response.(*pb.LoginByPhoneResponse), nil
 }
 
 // Make Endpoints
@@ -59,6 +68,17 @@ func MakeRegisterByPhoneEndpoint(s pb.CustomerServer) endpoint.Endpoint {
 	}
 }
 
+func MakeLoginByPhoneEndpoint(s pb.CustomerServer) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
+		req := request.(*pb.LoginByPhoneRequest)
+		v, err := s.LoginByPhone(ctx, req)
+		if err != nil {
+			return nil, err
+		}
+		return v, nil
+	}
+}
+
 // WrapAllExcept wraps each Endpoint field of struct Endpoints with a
 // go-kit/kit/endpoint.Middleware.
 // Use this for applying a set of middlewares to every endpoint in the service.
@@ -67,6 +87,7 @@ func MakeRegisterByPhoneEndpoint(s pb.CustomerServer) endpoint.Endpoint {
 func (e *Endpoints) WrapAllExcept(middleware endpoint.Middleware, excluded ...string) {
 	included := map[string]struct{}{
 		"RegisterByPhone": {},
+		"LoginByPhone":    {},
 	}
 
 	for _, ex := range excluded {
@@ -79,6 +100,9 @@ func (e *Endpoints) WrapAllExcept(middleware endpoint.Middleware, excluded ...st
 	for inc := range included {
 		if inc == "RegisterByPhone" {
 			e.RegisterByPhoneEndpoint = middleware(e.RegisterByPhoneEndpoint)
+		}
+		if inc == "LoginByPhone" {
+			e.LoginByPhoneEndpoint = middleware(e.LoginByPhoneEndpoint)
 		}
 	}
 }
@@ -95,6 +119,7 @@ type LabeledMiddleware func(string, endpoint.Endpoint) endpoint.Endpoint
 func (e *Endpoints) WrapAllLabeledExcept(middleware func(string, endpoint.Endpoint) endpoint.Endpoint, excluded ...string) {
 	included := map[string]struct{}{
 		"RegisterByPhone": {},
+		"LoginByPhone":    {},
 	}
 
 	for _, ex := range excluded {
@@ -107,6 +132,9 @@ func (e *Endpoints) WrapAllLabeledExcept(middleware func(string, endpoint.Endpoi
 	for inc := range included {
 		if inc == "RegisterByPhone" {
 			e.RegisterByPhoneEndpoint = middleware("RegisterByPhone", e.RegisterByPhoneEndpoint)
+		}
+		if inc == "LoginByPhone" {
+			e.LoginByPhoneEndpoint = middleware("LoginByPhone", e.LoginByPhoneEndpoint)
 		}
 	}
 }

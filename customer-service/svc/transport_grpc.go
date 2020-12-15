@@ -35,12 +35,19 @@ func MakeGRPCServer(endpoints Endpoints, options ...grpctransport.ServerOption) 
 			EncodeGRPCRegisterByPhoneResponse,
 			serverOptions...,
 		),
+		loginbyphone: grpctransport.NewServer(
+			endpoints.LoginByPhoneEndpoint,
+			DecodeGRPCLoginByPhoneRequest,
+			EncodeGRPCLoginByPhoneResponse,
+			serverOptions...,
+		),
 	}
 }
 
 // grpcServer implements the CustomerServer interface
 type grpcServer struct {
 	registerbyphone grpctransport.Handler
+	loginbyphone    grpctransport.Handler
 }
 
 // Methods for grpcServer to implement CustomerServer interface
@@ -53,6 +60,14 @@ func (s *grpcServer) RegisterByPhone(ctx context.Context, req *pb.RegisterByPhon
 	return rep.(*pb.RegisterByPhoneResponse), nil
 }
 
+func (s *grpcServer) LoginByPhone(ctx context.Context, req *pb.LoginByPhoneRequest) (*pb.LoginByPhoneResponse, error) {
+	_, rep, err := s.loginbyphone.ServeGRPC(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return rep.(*pb.LoginByPhoneResponse), nil
+}
+
 // Server Decode
 
 // DecodeGRPCRegisterByPhoneRequest is a transport/grpc.DecodeRequestFunc that converts a
@@ -62,12 +77,26 @@ func DecodeGRPCRegisterByPhoneRequest(_ context.Context, grpcReq interface{}) (i
 	return req, nil
 }
 
+// DecodeGRPCLoginByPhoneRequest is a transport/grpc.DecodeRequestFunc that converts a
+// gRPC loginbyphone request to a user-domain loginbyphone request. Primarily useful in a server.
+func DecodeGRPCLoginByPhoneRequest(_ context.Context, grpcReq interface{}) (interface{}, error) {
+	req := grpcReq.(*pb.LoginByPhoneRequest)
+	return req, nil
+}
+
 // Server Encode
 
 // EncodeGRPCRegisterByPhoneResponse is a transport/grpc.EncodeResponseFunc that converts a
 // user-domain registerbyphone response to a gRPC registerbyphone reply. Primarily useful in a server.
 func EncodeGRPCRegisterByPhoneResponse(_ context.Context, response interface{}) (interface{}, error) {
 	resp := response.(*pb.RegisterByPhoneResponse)
+	return resp, nil
+}
+
+// EncodeGRPCLoginByPhoneResponse is a transport/grpc.EncodeResponseFunc that converts a
+// user-domain loginbyphone response to a gRPC loginbyphone reply. Primarily useful in a server.
+func EncodeGRPCLoginByPhoneResponse(_ context.Context, response interface{}) (interface{}, error) {
+	resp := response.(*pb.LoginByPhoneResponse)
 	return resp, nil
 }
 

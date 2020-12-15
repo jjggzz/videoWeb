@@ -8,19 +8,11 @@ import (
 	"github.com/jjggzz/kj/log"
 	"github.com/jjggzz/kj/track"
 	"os"
-	"reflect"
 	"testing"
 	"time"
 	"videoWeb/customer-service/proto"
 	"videoWeb/customer-service/svc/client/grpc"
 )
-
-func Test_A(t *testing.T) {
-	//var i int64 = 10
-	//i2 := interface{}(i)
-
-	fmt.Println(reflect.TypeOf(time.Now().Add(time.Minute * 15).Unix()))
-}
 
 func Test_main(t *testing.T) {
 

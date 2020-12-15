@@ -7,12 +7,7 @@ import "common.proto";
 
 service Customer {
     rpc RegisterByPhone(RegisterByPhoneRequest) returns (RegisterByPhoneResponse) {};
-
-}
-
-enum RegisterResult {
-    SUCCESS = 0;
-    FAIL = 1;
+    rpc LoginByPhone(LoginByPhoneRequest) returns (LoginByPhoneResponse) {};
 }
 
 message RegisterByPhoneRequest {
@@ -20,6 +15,15 @@ message RegisterByPhoneRequest {
 }
 
 message RegisterByPhoneResponse {
-    RegisterResult result = 1;
+    bool result = 1;
     string message = 2;
+}
+
+message LoginByPhoneRequest {
+    string phone = 1;
+}
+
+message LoginByPhoneResponse {
+    bool result = 1;
+    string token = 2;
 }
