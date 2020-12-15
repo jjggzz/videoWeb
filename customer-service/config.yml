@@ -22,6 +22,12 @@ db:
     username: root
     password: 123456
 
+redis:
+  address: localhost:6379
+  maxIdle: 8
+  maxActive: 50
+  idleTimeout: 100
+
 generateServerName: generate-service
 verifyServerName: verify-service
 
