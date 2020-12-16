@@ -8,6 +8,7 @@ import "common.proto";
 service Customer {
     rpc RegisterByPhone(RegisterByPhoneRequest) returns (RegisterByPhoneResponse) {};
     rpc LoginByPhone(LoginByPhoneRequest) returns (LoginByPhoneResponse) {};
+    rpc GetCustomerInfoByToken(GetCustomerInfoByTokenRequest) returns (GetCustomerInfoByTokenResponse) {};
 }
 
 message RegisterByPhoneRequest {
@@ -25,5 +26,22 @@ message LoginByPhoneRequest {
 
 message LoginByPhoneResponse {
     bool result = 1;
-    string token = 2;
+    string message = 2;
+    string token = 3;
+}
+
+message GetCustomerInfoByTokenRequest {
+    string token = 1;
+}
+
+message GetCustomerInfoByTokenResponse {
+    bool result = 1;
+    string message = 2;
+    CustomerInfo customerInfo = 3;
+}
+message CustomerInfo {
+    string accessKey = 1;
+    string username = 2;
+    string email = 3;
+    string nickname = 4;
 }

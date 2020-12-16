@@ -16,6 +16,7 @@ type Config struct {
 	DB                 *config.DB        `yaml:"db"`
 	Zipkin             *config.Zipkin    `yaml:"zipkin"`
 	Redis              *config.Redis     `yaml:"redis"`
+	SecretCode         string            `yaml:"secretCode"`
 	GenerateServerName string            `yaml:"generateServerName"`
 	VerifyServerName   string            `yaml:"verifyServerName"`
 }

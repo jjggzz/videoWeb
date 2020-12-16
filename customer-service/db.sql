@@ -13,7 +13,7 @@ create table customer (
   password varchar(64) not null comment '密码',
   email varchar(64) not null comment '邮箱',
   nickname varchar(32) not null comment '昵称',
-  status int not null  comment '账号状态 0:冻结 1:启动'
+  status int not null  comment '账号状态 0:冻结 1:启用'
 )comment '用户表';
 
 create index idx_customer_create_time on customer(create_time);

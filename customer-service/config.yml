@@ -1,8 +1,10 @@
+# 服务基本配置
 server:
   serverName: customer-service
   tcp:
     port: 7777
 
+# 服务注册与发现
 discovery:
   consul:
     address: 192.168.151.109:8500
@@ -20,14 +22,20 @@ db:
     username: root
     password: 123456
 
+# redis配置
 redis:
   address: localhost:6379
   maxIdle: 8
   maxActive: 50
   idleTimeout: 100
 
-generateServerName: generate-service
-verifyServerName: verify-service
-
+# 链路追踪服务地址
 zipkin:
   address: 192.168.151.109:9411
+
+# jwt加密码
+secretCode: DFAJLSDGEGFIA
+
+# 服务名
+generateServerName: generate-service
+verifyServerName: verify-service

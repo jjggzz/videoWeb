@@ -30,22 +30,19 @@ func Test_main(t *testing.T) {
 		tracer,
 		logger,
 	)
-	response, err := server.RegisterByPhone(context.Background(), &proto.RegisterByPhoneRequest{Phone: "18376301879"})
+	response, err := server.LoginByPhone(context.Background(), &proto.LoginByPhoneRequest{Phone: "18376301879"})
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	fmt.Println(response.Message)
+	fmt.Println(response.Token)
 }
 
 func Test_jwt(t *testing.T) {
 
 	token, _ := createToken("123456", secret)
 	fmt.Println(token)
-
-	s, _ := parseToken(token, secret)
-
-	fmt.Println(s, 0)
 
 }
 

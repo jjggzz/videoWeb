@@ -41,13 +41,20 @@ func MakeGRPCServer(endpoints Endpoints, options ...grpctransport.ServerOption) 
 			EncodeGRPCLoginByPhoneResponse,
 			serverOptions...,
 		),
+		getcustomerinfobytoken: grpctransport.NewServer(
+			endpoints.GetCustomerInfoByTokenEndpoint,
+			DecodeGRPCGetCustomerInfoByTokenRequest,
+			EncodeGRPCGetCustomerInfoByTokenResponse,
+			serverOptions...,
+		),
 	}
 }
 
 // grpcServer implements the CustomerServer interface
 type grpcServer struct {
-	registerbyphone grpctransport.Handler
-	loginbyphone    grpctransport.Handler
+	registerbyphone        grpctransport.Handler
+	loginbyphone           grpctransport.Handler
+	getcustomerinfobytoken grpctransport.Handler
 }
 
 // Methods for grpcServer to implement CustomerServer interface
@@ -68,6 +75,14 @@ func (s *grpcServer) LoginByPhone(ctx context.Context, req *pb.LoginByPhoneReque
 	return rep.(*pb.LoginByPhoneResponse), nil
 }
 
+func (s *grpcServer) GetCustomerInfoByToken(ctx context.Context, req *pb.GetCustomerInfoByTokenRequest) (*pb.GetCustomerInfoByTokenResponse, error) {
+	_, rep, err := s.getcustomerinfobytoken.ServeGRPC(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return rep.(*pb.GetCustomerInfoByTokenResponse), nil
+}
+
 // Server Decode
 
 // DecodeGRPCRegisterByPhoneRequest is a transport/grpc.DecodeRequestFunc that converts a
@@ -84,6 +99,13 @@ func DecodeGRPCLoginByPhoneRequest(_ context.Context, grpcReq interface{}) (inte
 	return req, nil
 }
 
+// DecodeGRPCGetCustomerInfoByTokenRequest is a transport/grpc.DecodeRequestFunc that converts a
+// gRPC getcustomerinfobytoken request to a user-domain getcustomerinfobytoken request. Primarily useful in a server.
+func DecodeGRPCGetCustomerInfoByTokenRequest(_ context.Context, grpcReq interface{}) (interface{}, error) {
+	req := grpcReq.(*pb.GetCustomerInfoByTokenRequest)
+	return req, nil
+}
+
 // Server Encode
 
 // EncodeGRPCRegisterByPhoneResponse is a transport/grpc.EncodeResponseFunc that converts a
@@ -97,6 +119,13 @@ func EncodeGRPCRegisterByPhoneResponse(_ context.Context, response interface{}) 
 // user-domain loginbyphone response to a gRPC loginbyphone reply. Primarily useful in a server.
 func EncodeGRPCLoginByPhoneResponse(_ context.Context, response interface{}) (interface{}, error) {
 	resp := response.(*pb.LoginByPhoneResponse)
+	return resp, nil
+}
+
+// EncodeGRPCGetCustomerInfoByTokenResponse is a transport/grpc.EncodeResponseFunc that converts a
+// user-domain getcustomerinfobytoken response to a gRPC getcustomerinfobytoken reply. Primarily useful in a server.
+func EncodeGRPCGetCustomerInfoByTokenResponse(_ context.Context, response interface{}) (interface{}, error) {
+	resp := response.(*pb.GetCustomerInfoByTokenResponse)
 	return resp, nil
 }
 

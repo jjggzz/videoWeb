@@ -31,6 +31,7 @@ func (dao *Dao) GetRedisCache(key string) (string, error) {
 	return redis.String(conn.Do("get", key))
 }
 
+// 删除缓存
 func (dao *Dao) DelRedisCache(key string) error {
 	conn := dao.redis.Get()
 	defer func() {

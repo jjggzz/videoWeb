@@ -21,12 +21,5 @@ func New(conf *config.Config, dao *dao.Dao, gen genpb.GenerateServer, logger log
 
 type Service interface {
 	RegisterByPhone(ctx context.Context, phone string) (RegisterStatus, error)
+	LoginByPhone(ctx context.Context, phone string) (LoginStatus, string, error)
 }
-
-type RegisterStatus int32
-
-const (
-	RegisterStatus_SUCCESS      = 0
-	RegisterStatus_FAIL_HAS_USE = 1
-	RegisterStatus_FAIL_SYS_ERR = -1
-)

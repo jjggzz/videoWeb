@@ -76,9 +76,23 @@ func New(conn *grpc.ClientConn, clientOptions []grpctransport.ClientOption, opti
 		).Endpoint()
 	}
 
+	var getcustomerinfobytokenEndpoint endpoint.Endpoint
+	{
+		getcustomerinfobytokenEndpoint = grpctransport.NewClient(
+			conn,
+			"proto.Customer",
+			"GetCustomerInfoByToken",
+			EncodeGRPCGetCustomerInfoByTokenRequest,
+			DecodeGRPCGetCustomerInfoByTokenResponse,
+			pb.GetCustomerInfoByTokenResponse{},
+			clientOptions...,
+		).Endpoint()
+	}
+
 	return svc.Endpoints{
-		RegisterByPhoneEndpoint: registerbyphoneEndpoint,
-		LoginByPhoneEndpoint:    loginbyphoneEndpoint,
+		RegisterByPhoneEndpoint:        registerbyphoneEndpoint,
+		LoginByPhoneEndpoint:           loginbyphoneEndpoint,
+		GetCustomerInfoByTokenEndpoint: getcustomerinfobytokenEndpoint,
 	}, nil
 }
 
@@ -98,6 +112,13 @@ func DecodeGRPCLoginByPhoneResponse(_ context.Context, grpcReply interface{}) (i
 	return reply, nil
 }
 
+// DecodeGRPCGetCustomerInfoByTokenResponse is a transport/grpc.DecodeResponseFunc that converts a
+// gRPC getcustomerinfobytoken reply to a user-domain getcustomerinfobytoken response. Primarily useful in a client.
+func DecodeGRPCGetCustomerInfoByTokenResponse(_ context.Context, grpcReply interface{}) (interface{}, error) {
+	reply := grpcReply.(*pb.GetCustomerInfoByTokenResponse)
+	return reply, nil
+}
+
 // GRPC Client Encode
 
 // EncodeGRPCRegisterByPhoneRequest is a transport/grpc.EncodeRequestFunc that converts a
@@ -111,6 +132,13 @@ func EncodeGRPCRegisterByPhoneRequest(_ context.Context, request interface{}) (i
 // user-domain loginbyphone request to a gRPC loginbyphone request. Primarily useful in a client.
 func EncodeGRPCLoginByPhoneRequest(_ context.Context, request interface{}) (interface{}, error) {
 	req := request.(*pb.LoginByPhoneRequest)
+	return req, nil
+}
+
+// EncodeGRPCGetCustomerInfoByTokenRequest is a transport/grpc.EncodeRequestFunc that converts a
+// user-domain getcustomerinfobytoken request to a gRPC getcustomerinfobytoken request. Primarily useful in a client.
+func EncodeGRPCGetCustomerInfoByTokenRequest(_ context.Context, request interface{}) (interface{}, error) {
+	req := request.(*pb.GetCustomerInfoByTokenRequest)
 	return req, nil
 }
 

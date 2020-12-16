@@ -35,6 +35,26 @@ func NewCustomerLoadBalanceClient(dis discovery.Discover, serverName string, tra
 			logger,
 		)
 	}
+	{
+		factory := factoryGRPCFor(svc.MakeLoginByPhoneEndpoint, options...)
+		endpoints.LoginByPhoneEndpoint = loadbalnace.BuildLoadBalance(instancer,
+			factory,
+			loadbalnace.Random,
+			3,
+			time.Millisecond*500,
+			logger,
+		)
+	}
+	{
+		factory := factoryGRPCFor(svc.MakeGetCustomerInfoByTokenEndpoint, options...)
+		endpoints.GetCustomerInfoByTokenEndpoint = loadbalnace.BuildLoadBalance(instancer,
+			factory,
+			loadbalnace.Random,
+			3,
+			time.Millisecond*500,
+			logger,
+		)
+	}
 
 	return endpoints, nil
 }

@@ -60,13 +60,15 @@ func NewEndpoints(service pb.CustomerServer) svc.Endpoints {
 
 	// Endpoint domain.
 	var (
-		registerbyphoneEndpoint = svc.MakeRegisterByPhoneEndpoint(service)
-		loginbyphoneEndpoint    = svc.MakeLoginByPhoneEndpoint(service)
+		registerbyphoneEndpoint        = svc.MakeRegisterByPhoneEndpoint(service)
+		loginbyphoneEndpoint           = svc.MakeLoginByPhoneEndpoint(service)
+		getcustomerinfobytokenEndpoint = svc.MakeGetCustomerInfoByTokenEndpoint(service)
 	)
 
 	endpoints := svc.Endpoints{
-		RegisterByPhoneEndpoint: registerbyphoneEndpoint,
-		LoginByPhoneEndpoint:    loginbyphoneEndpoint,
+		RegisterByPhoneEndpoint:        registerbyphoneEndpoint,
+		LoginByPhoneEndpoint:           loginbyphoneEndpoint,
+		GetCustomerInfoByTokenEndpoint: getcustomerinfobytokenEndpoint,
 	}
 
 	// Wrap selected Endpoints with middlewares. See handlers/middlewares.go

@@ -9,3 +9,9 @@ func (d *Dao) ExitsCustomerByPhone(phone string) (bool, error) {
 	err := d.db.Model(&Customer{}).Where("phone = ?", phone).Count(&count).Error
 	return count > 0, err
 }
+
+func (d *Dao) SelectCustomerByPhone(phone string) (*Customer, error) {
+	customer := &Customer{}
+	err := d.db.Where("phone = ?", phone).First(customer).Error
+	return customer, err
+}

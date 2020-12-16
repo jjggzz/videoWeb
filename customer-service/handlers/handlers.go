@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"github.com/jjggzz/kj/errors"
 	"videoWeb/customer-service/service"
 
 	pb "videoWeb/customer-service/proto"
@@ -31,12 +30,44 @@ func (s customerService) RegisterByPhone(ctx context.Context, in *pb.RegisterByP
 		resp.Message = "注册失败,该号码已注册"
 		return &resp, nil
 	default:
-		return nil, errors.New("未知知结果类型")
+		resp.Result = false
+		resp.Message = "系统异常"
+		return &resp, nil
 	}
 
 }
 
 func (s customerService) LoginByPhone(ctx context.Context, in *pb.LoginByPhoneRequest) (*pb.LoginByPhoneResponse, error) {
 	var resp pb.LoginByPhoneResponse
+	status, token, err := service.Cus.LoginByPhone(ctx, in.Phone)
+	if err != nil {
+		return nil, err
+	}
+	switch status {
+	case service.LoginStatus_SUCCESS:
+		resp.Result = true
+		resp.Message = "登录成功"
+		resp.Token = token
+		return &resp, nil
+	case service.LoginStatus_FAIL_NOT_REG:
+		resp.Result = false
+		resp.Message = "未注册"
+		resp.Token = token
+		return &resp, nil
+	case service.LoginStatus_FAIL_DISABLE:
+		resp.Result = false
+		resp.Message = "账户被冻结"
+		resp.Token = token
+		return &resp, nil
+	default:
+		resp.Result = false
+		resp.Message = "系统异常"
+		resp.Token = token
+		return &resp, nil
+	}
+}
+
+func (s customerService) GetCustomerInfoByToken(ctx context.Context, in *pb.GetCustomerInfoByTokenRequest) (*pb.GetCustomerInfoByTokenResponse, error) {
+	var resp pb.GetCustomerInfoByTokenResponse
 	return &resp, nil
 }
