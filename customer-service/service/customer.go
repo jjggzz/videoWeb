@@ -64,7 +64,8 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (LoginStatus
 	if customer.Status == 0 {
 		return LoginStatus_FAIL_DISABLE, "", nil
 	}
-
+	// 清理可能存在的token
+	srv.clearCacheCustomerInfo(customer.AccessKey)
 	// 生成token
 	claims := make(map[string]interface{})
 	claims["accessKey"] = customer.AccessKey
@@ -87,5 +88,13 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (LoginStatus
 		return LoginStatus_FAIL_SYS_ERR, "", errors.New(err.Error()).Append("操作缓存失败")
 	}
 	return LoginStatus_SUCCESS, token, nil
+}
 
+func (srv *service) clearCacheCustomerInfo(accessKey string) {
+	token, _ := srv.dao.GetRedisCache(LoginCustomerAccessKeyPrefix + accessKey)
+	if token == "" {
+		return
+	}
+	_ = srv.dao.DelRedisCache(token)
+	_ = srv.dao.DelRedisCache(LoginCustomerAccessKeyPrefix + accessKey)
 }
