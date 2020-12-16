@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/jjggzz/kj/discovery"
 	"github.com/jjggzz/kj/log"
 	"github.com/jjggzz/kj/track"
@@ -12,6 +11,8 @@ import (
 	"time"
 	"videoWeb/customer-service/proto"
 	"videoWeb/customer-service/svc/client/grpc"
+	genpb "videoWeb/generate-service/proto"
+	genrpc "videoWeb/generate-service/svc/client/grpc"
 )
 
 func Test_main(t *testing.T) {
@@ -30,43 +31,47 @@ func Test_main(t *testing.T) {
 		tracer,
 		logger,
 	)
-	response, err := server.LoginByPhone(context.Background(), &proto.LoginByPhoneRequest{Phone: "18376301879"})
-	if err != nil {
-		fmt.Println(err)
-		return
+	sum := 0
+	for i := 0; i < 1000; i++ {
+		deadline, _ := context.WithDeadline(context.Background(), time.Now().Add(time.Second*100))
+		response, err := server.LoginByPhone(deadline, &proto.LoginByPhoneRequest{Phone: "18376301879"})
+		if err != nil {
+			fmt.Println("error: " + err.Error())
+			sum++
+			continue
+		}
+		fmt.Println(response.Message)
+		fmt.Println(response.Token)
 	}
-	fmt.Println(response.Message)
-	fmt.Println(response.Token)
+	fmt.Println(sum)
 }
 
-func Test_jwt(t *testing.T) {
+func Test_main2(t *testing.T) {
 
-	token, _ := createToken("123456", secret)
-	fmt.Println(token)
-
-}
-
-const secret = "DFAJLSDGEGFIA"
-
-func createToken(uid string, secret string) (string, error) {
-	at := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"uid":  uid,
-		"name": "张三",
-		"exp":  time.Now().Add(time.Minute * 15).Unix(),
-	})
-	token, err := at.SignedString([]byte(secret))
-	if err != nil {
-		return "", err
+	logger := log.BuildLogger("test", os.Stderr)
+	consulDiscovery := discovery.NewConsulDiscovery(
+		"192.168.151.109:8500",
+		"test2",
+		6789,
+		logger,
+	)
+	tracer, _ := track.BuildZipkinTracer("192.168.151.109:9411", "test2")
+	server, _ := genrpc.NewGenerateLoadBalanceClient(
+		consulDiscovery,
+		"generate-service",
+		tracer,
+		logger,
+	)
+	sum := 0
+	for i := 0; i < 1000; i++ {
+		deadline, _ := context.WithDeadline(context.Background(), time.Now().Add(time.Second*100))
+		response, err := server.GenerateStringKey(deadline, &genpb.Empty{})
+		if err != nil {
+			fmt.Println("error: " + err.Error())
+			sum++
+			continue
+		}
+		fmt.Println(response.Id)
 	}
-	return token, nil
-}
-
-func parseToken(token string, secret string) (int64, error) {
-	claim, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
-		return []byte(secret), nil
-	})
-	if err != nil {
-		return 0, err
-	}
-	return claim.Claims.(jwt.MapClaims)["exp"].(int64), nil
+	fmt.Println(sum)
 }
