@@ -2,8 +2,6 @@ server:
   serverName: customer-service
   tcp:
     port: 7777
-  http:
-    port: 8080
 
 discovery:
   consul:

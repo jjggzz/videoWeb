@@ -1,0 +1,5 @@
+server:
+  serverName: video-portal
+  http:
+    port: 8080
+
