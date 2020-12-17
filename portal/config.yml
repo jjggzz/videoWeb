@@ -3,3 +3,17 @@ server:
   http:
     port: 8080
 
+# 服务注册与发现
+discovery:
+  consul:
+    address: 192.168.151.109:8500
+    health:
+      timeout: 5
+      interval: 5
+      deregisterCriticalServiceAfter: 30
+
+# 链路追踪服务地址
+zipkin:
+  address: 192.168.151.109:9411
+
+customerServerName: customer-service

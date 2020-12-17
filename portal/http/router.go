@@ -4,4 +4,5 @@ import "github.com/gin-gonic/gin"
 
 func Router(engine *gin.Engine, http *Http) {
 	// add router
+	engine.GET("/login/:phone", http.Login)
 }

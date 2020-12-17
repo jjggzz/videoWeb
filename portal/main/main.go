@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-kit/kit/log/level"
+	"github.com/jjggzz/kj/discovery"
 	"github.com/jjggzz/kj/log"
+	"github.com/jjggzz/kj/track"
 	"github.com/jjggzz/kj/uitls"
 	"os"
 	"os/signal"
@@ -21,11 +23,23 @@ func main() {
 	config.Init()
 	// 日志初始化
 	logger := log.BuildLogger(config.Conf.Server.ServerName, os.Stderr)
+	// 服务注册与发现
+	consulDiscovery := discovery.NewConsulDiscovery(
+		config.Conf.Discovery.Consul.Address,
+		config.Conf.Server.ServerName,
+		config.Conf.Server.Tcp.Port,
+		logger,
+	)
+	// 链路追踪
+	tracer, err := track.BuildZipkinTracer(config.Conf.Zipkin.Address, config.Conf.Server.ServerName)
+	if err != nil {
+		_ = level.Error(logger).Log("err", err)
+	}
 
 	// service初始化
 	var srv service.Service
 	{
-		srv = service.New(config.Conf)
+		srv = service.New(config.Conf, consulDiscovery, tracer, logger)
 	}
 	// http初始化
 	var h *http.Http
