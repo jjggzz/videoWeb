@@ -24,10 +24,10 @@ func Test_main(t *testing.T) {
 		6789,
 		logger,
 	)
+	instancer, _ := consulDiscovery.Discovery("customer-service")
 	tracer, _ := track.BuildZipkinTracer("192.168.151.109:9411", "test")
-	server, _ := grpc.NewCustomerLoadBalanceClient(
-		consulDiscovery,
-		"customer-service",
+	server, _ := grpc.NewLoadBalanceClient(
+		instancer,
 		tracer,
 		logger,
 	)
@@ -54,10 +54,10 @@ func Test_main2(t *testing.T) {
 		6789,
 		logger,
 	)
+	instancer, _ := consulDiscovery.Discovery("generate-service")
 	tracer, _ := track.BuildZipkinTracer("192.168.151.109:9411", "test2")
-	server, _ := genrpc.NewGenerateLoadBalanceClient(
-		consulDiscovery,
-		"generate-service",
+	server, _ := genrpc.NewLoadBalanceClient(
+		instancer,
 		tracer,
 		logger,
 	)

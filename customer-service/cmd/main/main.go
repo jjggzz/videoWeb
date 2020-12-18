@@ -50,7 +50,12 @@ func main() {
 	}
 	// service 初始化
 	{
-		generateServer, err := gengrpc.NewGenerateLoadBalanceClient(consulDiscovery, config.Conf.GenerateServerName, tracer, logger)
+		instancer, err := consulDiscovery.Discovery(config.Conf.GenerateServerName)
+		if err != nil {
+			_ = level.Error(logger).Log("err", err)
+			return
+		}
+		generateServer, err := gengrpc.NewLoadBalanceClient(instancer, tracer, logger)
 		if err != nil {
 			_ = level.Error(logger).Log("err", err)
 		}
