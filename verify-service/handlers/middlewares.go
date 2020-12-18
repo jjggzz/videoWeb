@@ -32,12 +32,10 @@ func WrapEndpoints(in svc.Endpoints) svc.Endpoints {
 
 	// 限流
 	limitMiddleware := middleware.LimitMiddleware(middleware.LimitDelay, 100)
-	in.SendVerifyCodeEndpoint = limitMiddleware(in.SendVerifyCodeEndpoint)
-	in.CheckVerifyCodeEndpoint = limitMiddleware(in.CheckVerifyCodeEndpoint)
 	// 断路器
 	breakerMiddleware := middleware.BreakerMiddleware(gobreaker.Settings{})
-	in.SendVerifyCodeEndpoint = breakerMiddleware(in.SendVerifyCodeEndpoint)
-	in.CheckVerifyCodeEndpoint = breakerMiddleware(in.CheckVerifyCodeEndpoint)
+	in.WrapAllExcept(limitMiddleware)
+	in.WrapAllExcept(breakerMiddleware)
 	return in
 }
 

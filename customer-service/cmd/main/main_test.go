@@ -32,9 +32,8 @@ func Test_main(t *testing.T) {
 		logger,
 	)
 	sum := 0
-	for i := 0; i < 1000; i++ {
-		deadline, _ := context.WithDeadline(context.Background(), time.Now().Add(time.Second*100))
-		response, err := server.LoginByPhone(deadline, &proto.LoginByPhoneRequest{Phone: "18376301879"})
+	for i := 0; i < 100; i++ {
+		response, err := server.LoginByPhone(context.Background(), &proto.LoginByPhoneRequest{Phone: "18376301879"})
 		if err != nil {
 			fmt.Println("error: " + err.Error())
 			sum++

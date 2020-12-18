@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"github.com/jjggzz/kj/middleware"
+	"github.com/sony/gobreaker"
 	pb "videoWeb/customer-service/proto"
 	"videoWeb/customer-service/svc"
 )
@@ -27,6 +29,12 @@ func WrapEndpoints(in svc.Endpoints) svc.Endpoints {
 
 	// How to apply a middleware to a single endpoint.
 	// in.ExampleEndpoint = authMiddleware(in.ExampleEndpoint)
+	// 限流
+	limitMiddleware := middleware.LimitMiddleware(middleware.LimitDelay, 100)
+	// 断路器
+	breakerMiddleware := middleware.BreakerMiddleware(gobreaker.Settings{})
+	in.WrapAllExcept(limitMiddleware)
+	in.WrapAllExcept(breakerMiddleware)
 
 	return in
 }

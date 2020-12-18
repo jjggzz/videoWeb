@@ -1,0 +1,65 @@
+syntax="proto3";
+
+// GoGo gRPC Example
+//
+// This example is used to show how to use gRPC and
+// gRPC-Gateway with GoGo Protobuf.
+package example;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/field_mask.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option go_package = "example";
+
+
+
+service UserService {
+    rpc AddUser(User) returns (google.protobuf.Empty) {}
+    rpc ListUsers(ListUsersRequest) returns (stream User) {}
+    rpc ListUsersByRole(UserRole) returns (stream User) {}
+    rpc UpdateUser(UpdateUserRequest) returns (User) {}
+}
+
+enum Role {
+    GUEST = 0;
+    MEMBER = 1;
+    ADMIN = 2;
+}
+
+message User {
+    option (gogoproto.goproto_getters) = false;
+    uint32 id = 1 [
+        (gogoproto.customname) = "ID"
+    ];
+    Role role = 2;
+    google.protobuf.Timestamp create_date = 3 [
+        (gogoproto.stdtime) = true
+    ];
+}
+
+message UserRole {
+    Role role = 1;
+}
+
+message UpdateUserRequest {
+    // The user resource which replaces the resource on the server.
+    User user = 1;
+
+    // The update mask applies to the resource. For the `FieldMask` definition,
+    // see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+    google.protobuf.FieldMask update_mask = 2;
+}
+
+message ListUsersRequest {
+    // Only list users created after this timestamp
+    google.protobuf.Timestamp created_since = 1 [
+        (gogoproto.stdtime) = true
+    ];
+    // Only list users older than this Duration
+    google.protobuf.Duration older_than = 2 [
+        (gogoproto.stdduration) = true
+    ];
+}

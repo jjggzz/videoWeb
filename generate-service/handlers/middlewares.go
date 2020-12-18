@@ -32,12 +32,10 @@ func WrapEndpoints(in svc.Endpoints) svc.Endpoints {
 
 	// 限流
 	limitMiddleware := middleware.LimitMiddleware(middleware.LimitDelay, 100)
-	in.GenerateStringKeyEndpoint = limitMiddleware(in.GenerateStringKeyEndpoint)
-	in.GenerateInt64KeyEndpoint = limitMiddleware(in.GenerateInt64KeyEndpoint)
 	// 断路器
 	breakerMiddleware := middleware.BreakerMiddleware(gobreaker.Settings{})
-	in.GenerateStringKeyEndpoint = breakerMiddleware(in.GenerateStringKeyEndpoint)
-	in.GenerateInt64KeyEndpoint = breakerMiddleware(in.GenerateInt64KeyEndpoint)
+	in.WrapAllExcept(limitMiddleware)
+	in.WrapAllExcept(breakerMiddleware)
 
 	return in
 }
