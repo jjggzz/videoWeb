@@ -31,7 +31,7 @@ func NewCustomerLoadBalanceClient(dis discovery.Discover, serverName string, tra
 			factory,
 			loadbalnace.Random,
 			3,
-			time.Millisecond*500,
+			time.Millisecond*3000,
 			logger,
 		)
 	}
@@ -41,7 +41,7 @@ func NewCustomerLoadBalanceClient(dis discovery.Discover, serverName string, tra
 			factory,
 			loadbalnace.Random,
 			3,
-			time.Millisecond*500,
+			time.Millisecond*3000,
 			logger,
 		)
 	}
@@ -51,7 +51,7 @@ func NewCustomerLoadBalanceClient(dis discovery.Discover, serverName string, tra
 			factory,
 			loadbalnace.Random,
 			3,
-			time.Millisecond*500,
+			time.Millisecond*3000,
 			logger,
 		)
 	}

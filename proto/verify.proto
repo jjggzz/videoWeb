@@ -2,12 +2,13 @@ syntax = "proto3";
 
 package proto;
 
-import "github.com/jjggzz/truss/deftree/googlethirdparty/annotations.proto";
-import "common.proto";
-
 service Verify {
     rpc SendVerifyCode(SendVerifyCodeRequest) returns (Empty) {}
     rpc CheckVerifyCode(CheckVerifyCodeRequest) returns (CheckVerifyCodeResponse) {}
+}
+
+message Empty {
+
 }
 
 // 发送验证码的策略 手机号码 邮箱

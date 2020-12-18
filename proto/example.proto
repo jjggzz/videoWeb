@@ -6,7 +6,6 @@ syntax="proto3";
 // gRPC-Gateway with GoGo Protobuf.
 package example;
 
-import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/field_mask.proto";
@@ -14,12 +13,10 @@ import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 option go_package = "example";
 
-
-
 service UserService {
     rpc AddUser(User) returns (google.protobuf.Empty) {}
-    rpc ListUsers(ListUsersRequest) returns (stream User) {}
-    rpc ListUsersByRole(UserRole) returns (stream User) {}
+    rpc ListUsers(ListUsersRequest) returns (User) {}
+    rpc ListUsersByRole(UserRole) returns (User) {}
     rpc UpdateUser(UpdateUserRequest) returns (User) {}
 }
 
@@ -38,6 +35,7 @@ message User {
     google.protobuf.Timestamp create_date = 3 [
         (gogoproto.stdtime) = true
     ];
+    string name = 4;
 }
 
 message UserRole {
@@ -45,6 +43,7 @@ message UserRole {
 }
 
 message UpdateUserRequest {
+    option (gogoproto.goproto_getters) = false;
     // The user resource which replaces the resource on the server.
     User user = 1;
 
@@ -54,6 +53,7 @@ message UpdateUserRequest {
 }
 
 message ListUsersRequest {
+    option (gogoproto.goproto_getters) = false;
     // Only list users created after this timestamp
     google.protobuf.Timestamp created_since = 1 [
         (gogoproto.stdtime) = true

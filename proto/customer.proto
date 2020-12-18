@@ -2,9 +2,6 @@ syntax = "proto3";
 
 package proto;
 
-import "github.com/jjggzz/truss/deftree/googlethirdparty/annotations.proto";
-import "common.proto";
-
 service Customer {
     rpc RegisterByPhone(RegisterByPhoneRequest) returns (RegisterByPhoneResponse) {};
     rpc LoginByPhone(LoginByPhoneRequest) returns (LoginByPhoneResponse) {};
