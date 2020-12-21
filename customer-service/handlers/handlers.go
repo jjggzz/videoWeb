@@ -17,57 +17,65 @@ type customerService struct{}
 func (s customerService) RegisterByPhone(ctx context.Context, in *pb.RegisterByPhoneRequest) (*pb.RegisterByPhoneResponse, error) {
 	var resp pb.RegisterByPhoneResponse
 	status, err := service.Cus.RegisterByPhone(ctx, in.Phone)
-	if err != nil {
-		return nil, err
-	}
 	switch status {
-	case service.RegisterStatus_SUCCESS:
+	case service.RegisterStatusSuccess:
 		resp.Result = true
 		resp.Message = "注册成功"
-		return &resp, nil
-	case service.RegisterStatus_FAIL_HAS_USE:
+	case service.RegisterStatusFailHasUse:
 		resp.Result = false
 		resp.Message = "注册失败,该号码已注册"
-		return &resp, nil
 	default:
 		resp.Result = false
 		resp.Message = "系统异常"
-		return &resp, nil
 	}
-
+	return &resp, err
 }
 
 func (s customerService) LoginByPhone(ctx context.Context, in *pb.LoginByPhoneRequest) (*pb.LoginByPhoneResponse, error) {
 	var resp pb.LoginByPhoneResponse
 	status, token, err := service.Cus.LoginByPhone(ctx, in.Phone)
-	if err != nil {
-		return nil, err
-	}
 	switch status {
-	case service.LoginStatus_SUCCESS:
+	case service.LoginStatusSuccess:
 		resp.Result = true
 		resp.Message = "登录成功"
 		resp.Token = token
-		return &resp, nil
-	case service.LoginStatus_FAIL_NOT_REG:
+	case service.LoginStatusFailNotReg:
 		resp.Result = false
 		resp.Message = "未注册"
 		resp.Token = token
-		return &resp, nil
-	case service.LoginStatus_FAIL_DISABLE:
+	case service.LoginStatusFailDisable:
 		resp.Result = false
 		resp.Message = "账户被冻结"
 		resp.Token = token
-		return &resp, nil
 	default:
 		resp.Result = false
 		resp.Message = "系统异常"
 		resp.Token = token
-		return &resp, nil
 	}
+	return &resp, err
 }
 
 func (s customerService) GetCustomerInfoByToken(ctx context.Context, in *pb.GetCustomerInfoByTokenRequest) (*pb.GetCustomerInfoByTokenResponse, error) {
 	var resp pb.GetCustomerInfoByTokenResponse
-	return &resp, nil
+	status, customer, err := service.Cus.GetCustomerInfoByToken(ctx, in.Token)
+	switch status {
+	case service.GetInfoStatusSuccess:
+		resp.Result = true
+		resp.Message = "获取成功"
+		if customer != nil {
+			resp.CustomerInfo = new(pb.CustomerInfo)
+			resp.CustomerInfo.Username = customer.Username
+			resp.CustomerInfo.AccessKey = customer.AccessKey
+			resp.CustomerInfo.Email = customer.Email
+			resp.CustomerInfo.Nickname = customer.Nickname
+		}
+	case service.GetInfoStatusFailNotLogin:
+		resp.Result = false
+		resp.Message = "未登陆"
+	default:
+		resp.Result = false
+		resp.Message = "系统异常"
+	}
+
+	return &resp, err
 }

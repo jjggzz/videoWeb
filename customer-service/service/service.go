@@ -22,4 +22,5 @@ func New(conf *config.Config, dao *dao.Dao, gen genpb.GenerateServer, logger log
 type Service interface {
 	RegisterByPhone(ctx context.Context, phone string) (RegisterStatus, error)
 	LoginByPhone(ctx context.Context, phone string) (LoginStatus, string, error)
+	GetCustomerInfoByToken(ctx context.Context, token string) (GetInfoStatus, *dao.Customer, error)
 }

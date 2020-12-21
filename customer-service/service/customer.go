@@ -16,14 +16,14 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (Register
 	// 电话号码是否被使用
 	exist, err := srv.dao.ExitsCustomerByPhone(phone)
 	if err != nil {
-		return RegisterStatus_FAIL_SYS_ERR, errors.New(err.Error()).Append("操作数据库出错")
+		return RegisterStatusFailSysErr, errors.New(err.Error()).Append("操作数据库出错")
 	}
 	if exist {
-		return RegisterStatus_FAIL_HAS_USE, nil
+		return RegisterStatusFailHasUse, nil
 	}
 	response, err := srv.gen.GenerateStringKey(ctx, &genpb.Empty{})
 	if err != nil {
-		return RegisterStatus_FAIL_SYS_ERR, errors.New(err.Error()).Append("生成key出错")
+		return RegisterStatusFailSysErr, errors.New(err.Error()).Append("生成key出错")
 	}
 	// 插入数据
 	customer := &dao.Customer{
@@ -39,9 +39,9 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (Register
 	}
 	err = srv.dao.InsertCustomer(customer)
 	if err != nil {
-		return RegisterStatus_FAIL_SYS_ERR, err
+		return RegisterStatusFailSysErr, err
 	}
-	return RegisterStatus_SUCCESS, nil
+	return RegisterStatusSuccess, nil
 }
 
 // 通过电话号码登录
@@ -50,19 +50,19 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (LoginStatus
 	// 是否注册
 	exist, err := srv.dao.ExitsCustomerByPhone(phone)
 	if err != nil {
-		return LoginStatus_FAIL_SYS_ERR, "", errors.New(err.Error()).Append("操作数据库出错")
+		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("操作数据库出错")
 	}
 	if !exist {
-		return LoginStatus_FAIL_NOT_REG, "", nil
+		return LoginStatusFailNotReg, "", nil
 	}
 
 	// 获取用户信息
 	customer, err := srv.dao.SelectCustomerByPhone(phone)
 	if err != nil {
-		return LoginStatus_FAIL_SYS_ERR, "", errors.New(err.Error()).Append("操作数据库出错")
+		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("操作数据库出错")
 	}
 	if customer.Status == 0 {
-		return LoginStatus_FAIL_DISABLE, "", nil
+		return LoginStatusFailDisable, "", nil
 	}
 	// 清理可能存在的token
 	srv.clearCacheCustomerInfo(customer.AccessKey)
@@ -75,19 +75,39 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (LoginStatus
 	claims["exp"] = time.Now().Add(time.Second * 60 * 60 * 24).Unix()
 	token, err := util.GenerateToken(claims)
 	if err != nil {
-		return LoginStatus_FAIL_SYS_ERR, "", errors.New(err.Error()).Append("生成token失败")
+		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("生成token失败")
 	}
 	// 缓存token和用户信息
+	// 缓存token
 	err = srv.dao.SetexRedisCache(60*60*24, LoginCustomerAccessKeyPrefix+customer.AccessKey, token)
 	if err != nil {
-		return LoginStatus_FAIL_SYS_ERR, "", errors.New(err.Error()).Append("操作缓存失败")
+		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("操作缓存失败")
 	}
+	// 缓存用户信息
 	bytes, _ := json.Marshal(customer)
 	err = srv.dao.SetexRedisCache(60*60*24, token, string(bytes))
 	if err != nil {
-		return LoginStatus_FAIL_SYS_ERR, "", errors.New(err.Error()).Append("操作缓存失败")
+		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("操作缓存失败")
 	}
-	return LoginStatus_SUCCESS, token, nil
+	return LoginStatusSuccess, token, nil
+}
+
+// 通过token获取用户信息
+// 返回用户信息
+func (srv *service) GetCustomerInfoByToken(ctx context.Context, token string) (GetInfoStatus, *dao.Customer, error) {
+	infoJson, err := srv.dao.GetRedisCache(token)
+	if err != nil {
+		return GetInfoStatusFailSysErr, nil, err
+	}
+	if infoJson == "" {
+		return GetInfoStatusFailNotLogin, nil, nil
+	}
+	customer := dao.Customer{}
+	err = json.Unmarshal([]byte(infoJson), &customer)
+	if err != nil {
+		return GetInfoStatusFailSysErr, nil, err
+	}
+	return GetInfoStatusSuccess, &customer, nil
 }
 
 func (srv *service) clearCacheCustomerInfo(accessKey string) {

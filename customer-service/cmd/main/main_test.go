@@ -34,7 +34,7 @@ func Test_main(t *testing.T) {
 		logger,
 	)
 	sum := 0
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 1; i++ {
 		response, err := server.LoginByPhone(context.Background(), &proto.LoginByPhoneRequest{Phone: "18376301879"})
 		if err != nil {
 			fmt.Println("error: " + err.Error())
@@ -91,6 +91,35 @@ func Test_main2(t *testing.T) {
 			continue
 		}
 		fmt.Println(response.Id)
+	}
+	fmt.Println(sum)
+}
+
+func Test_main3(t *testing.T) {
+
+	logger := log.BuildLogger("test", os.Stderr)
+	consulDiscovery := discovery.NewConsulDiscovery(
+		"192.168.151.109:8500",
+		"test",
+		6789,
+		logger,
+	)
+	instancer, _ := consulDiscovery.Discovery("customer-service")
+	tracer, _ := track.BuildZipkinTracer("192.168.151.109:9411", "test")
+	server, _ := grpc.NewLoadBalanceClient(
+		instancer,
+		tracer,
+		logger,
+	)
+	sum := 0
+	for i := 0; i < 1; i++ {
+		response, err := server.GetCustomerInfoByToken(context.Background(), &proto.GetCustomerInfoByTokenRequest{Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiIxMzM4NzkxOTQwMjMzMTA1NDA4IiwiZXhwIjoxNjA4NjIxNjgwLCJuaWNrbmFtZSI6IjE4Mzc2MzAxODc5IiwicGhvbmUiOiIxODM3NjMwMTg3OSIsInVzZXJuYW1lIjoiMTgzNzYzMDE4NzkifQ._yjDjK2KtmnoOUKoxuhnn0VindnIUknU5717uM8cCfM"})
+		if err != nil {
+			fmt.Println("error: " + err.Error())
+			sum++
+		}
+		fmt.Println(response.Message)
+		fmt.Println(response.CustomerInfo)
 	}
 	fmt.Println(sum)
 }
