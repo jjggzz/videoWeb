@@ -113,10 +113,11 @@ func Test_main3(t *testing.T) {
 	)
 	sum := 0
 	for i := 0; i < 1; i++ {
-		response, err := server.GetCustomerInfoByToken(context.Background(), &proto.GetCustomerInfoByTokenRequest{Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiIxMzM4NzkxOTQwMjMzMTA1NDA4IiwiZXhwIjoxNjA4NjIxNjgwLCJuaWNrbmFtZSI6IjE4Mzc2MzAxODc5IiwicGhvbmUiOiIxODM3NjMwMTg3OSIsInVzZXJuYW1lIjoiMTgzNzYzMDE4NzkifQ._yjDjK2KtmnoOUKoxuhnn0VindnIUknU5717uM8cCfM"})
+		response, err := server.GetCustomerInfoByToken(context.Background(), &proto.GetCustomerInfoByTokenRequest{Token: ""})
 		if err != nil {
 			fmt.Println("error: " + err.Error())
 			sum++
+			continue
 		}
 		fmt.Println(response.Message)
 		fmt.Println(response.CustomerInfo)
