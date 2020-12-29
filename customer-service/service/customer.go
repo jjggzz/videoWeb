@@ -3,8 +3,6 @@ package service
 import (
 	"context"
 	"encoding/json"
-	"fmt"
-	"github.com/jjggzz/kj/errors"
 	"time"
 	"videoWeb/common/ecode"
 	"videoWeb/customer-service/dao"
@@ -28,9 +26,9 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.EC
 	if err != nil {
 		return ecode.Fail, err
 	}
-	// 调用第三方服务出现业务错误错，返回fail，并返回错误
+	// 调用第三方服务出现业务误错，返回对应的错误
 	if response.Code != ecode.Success.Code() {
-		return ecode.Fail, errors.New(fmt.Sprintf("调用生成key服务出错:%d", response.Code))
+		return ecode.Build(response.Code), nil
 	}
 	// 插入数据
 	customer := &dao.Customer{
