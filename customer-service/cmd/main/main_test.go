@@ -41,7 +41,7 @@ func Test_main(t *testing.T) {
 			sum++
 			continue
 		}
-		fmt.Println(response.Message)
+		fmt.Println(response.Code)
 		fmt.Println(response.Token)
 	}
 	fmt.Println(sum)
@@ -90,6 +90,7 @@ func Test_main2(t *testing.T) {
 			sum++
 			continue
 		}
+		fmt.Println(response.Code)
 		fmt.Println(response.Id)
 	}
 	fmt.Println(sum)
@@ -119,8 +120,7 @@ func Test_main3(t *testing.T) {
 			sum++
 			continue
 		}
-		fmt.Println(response.Message)
-		fmt.Println(response.CustomerInfo)
+		fmt.Println(response.Code)
 	}
 	fmt.Println(sum)
 }

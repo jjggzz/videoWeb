@@ -39,12 +39,12 @@ type Endpoints struct {
 
 // Endpoints
 
-func (e Endpoints) SendVerifyCode(ctx context.Context, in *pb.SendVerifyCodeRequest) (*pb.Empty, error) {
+func (e Endpoints) SendVerifyCode(ctx context.Context, in *pb.SendVerifyCodeRequest) (*pb.SendVerifyCodeResponse, error) {
 	response, err := e.SendVerifyCodeEndpoint(ctx, in)
 	if err != nil {
 		return nil, err
 	}
-	return response.(*pb.Empty), nil
+	return response.(*pb.SendVerifyCodeResponse), nil
 }
 
 func (e Endpoints) CheckVerifyCode(ctx context.Context, in *pb.CheckVerifyCodeRequest) (*pb.CheckVerifyCodeResponse, error) {

@@ -87,7 +87,7 @@ func New(conn *grpc.ClientConn, clientOptions []grpctransport.ClientOption, opti
 			"SendVerifyCode",
 			EncodeGRPCSendVerifyCodeRequest,
 			DecodeGRPCSendVerifyCodeResponse,
-			pb.Empty{},
+			pb.SendVerifyCodeResponse{},
 			clientOptions...,
 		).Endpoint()
 	}
@@ -116,7 +116,7 @@ func New(conn *grpc.ClientConn, clientOptions []grpctransport.ClientOption, opti
 // DecodeGRPCSendVerifyCodeResponse is a transport/grpc.DecodeResponseFunc that converts a
 // gRPC sendverifycode reply to a user-domain sendverifycode response. Primarily useful in a client.
 func DecodeGRPCSendVerifyCodeResponse(_ context.Context, grpcReply interface{}) (interface{}, error) {
-	reply := grpcReply.(*pb.Empty)
+	reply := grpcReply.(*pb.SendVerifyCodeResponse)
 	return reply, nil
 }
 

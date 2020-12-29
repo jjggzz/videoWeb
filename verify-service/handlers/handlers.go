@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"github.com/jjggzz/kj/errors"
+	"videoWeb/common/ecode"
 	pb "videoWeb/verify-service/proto"
 	"videoWeb/verify-service/service"
 )
@@ -14,19 +15,24 @@ func NewService() pb.VerifyServer {
 
 type verifyService struct{}
 
-func (s verifyService) SendVerifyCode(ctx context.Context, in *pb.SendVerifyCodeRequest) (*pb.Empty, error) {
+func (s verifyService) SendVerifyCode(ctx context.Context, in *pb.SendVerifyCodeRequest) (*pb.SendVerifyCodeResponse, error) {
 	var (
-		resp pb.Empty
+		code = ecode.Fail
 		err  error
+		resp pb.SendVerifyCodeResponse
 	)
 	switch in.Strategy {
 	case pb.VerifyTargetStrategy_PHONE:
-		err = service.Ver.SendPhoneVerify(ctx, in.Target)
+		code, err = service.Ver.SendPhoneVerify(ctx, in.Target)
 	case pb.VerifyTargetStrategy_EMAIL:
-		err = service.Ver.SendEmailVerify(ctx, in.Target)
+		code, err = service.Ver.SendEmailVerify(ctx, in.Target)
 	default:
 		err = errors.New("不支持的策略")
 	}
+	if err != nil {
+		return nil, err
+	}
+	resp.Code = code.Code()
 	return &resp, err
 }
 
@@ -34,14 +40,10 @@ func (s verifyService) CheckVerifyCode(ctx context.Context, in *pb.CheckVerifyCo
 	var (
 		resp pb.CheckVerifyCodeResponse
 	)
-	result, err := service.Ver.CheckVerify(ctx, in.Target, in.Code)
-	if !result {
-		resp.Result = false
-		resp.Message = "验证码错误"
-	} else {
-		resp.Result = true
-		resp.Message = "校验成功"
+	code, err := service.Ver.CheckVerify(ctx, in.Target, in.VerifyCode)
+	if err != nil {
+		return nil, err
 	}
-
+	resp.Code = code.Code()
 	return &resp, err
 }

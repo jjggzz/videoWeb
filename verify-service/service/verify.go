@@ -2,55 +2,55 @@ package service
 
 import (
 	"context"
-	"github.com/jjggzz/kj/errors"
 	"math/rand"
 	"strconv"
 	"time"
+	"videoWeb/common/ecode"
 )
 
 // 未作接口防刷(在redis中对对应号码作个60s的锁即可,如果存在则不发送)
-func (srv *service) SendPhoneVerify(ctx context.Context, target string) error {
+func (srv *service) SendPhoneVerify(ctx context.Context, target string) (ecode.ECode, error) {
 	code := getCode()
 	err := srv.dao.SetexRedisCache(5*60, target, VerifyPrefix+strconv.Itoa(code))
 	if err != nil {
-		return errors.New(err.Error()).Append("设置缓存出错")
+		return ecode.Fail, err
 	}
 
 	// 如果缓存验证码失败直接返回错误,用户不会受到验证码,只有缓存成并且发送成功,用户才会收到验证码
 	// TODO 发送code到Phone
 
-	return nil
+	return ecode.Success, nil
 
 }
 
-func (srv *service) SendEmailVerify(ctx context.Context, target string) error {
+func (srv *service) SendEmailVerify(ctx context.Context, target string) (ecode.ECode, error) {
 	code := getCode()
 	err := srv.dao.SetexRedisCache(5*60, target, VerifyPrefix+strconv.Itoa(code))
 	if err != nil {
-		return errors.New(err.Error()).Append("设置缓存出错")
+		return ecode.Fail, err
 	}
 
 	// 如果缓存验证码失败直接返回错误,用户不会受到验证码,只有缓存成并且发送成功,用户才会收到验证码
 	// TODO 发送code到Email
 
-	return nil
+	return ecode.Success, nil
 }
 
-func (srv *service) CheckVerify(ctx context.Context, target string, code string) (bool, error) {
+func (srv *service) CheckVerify(ctx context.Context, target string, code string) (ecode.ECode, error) {
 	cacheCode, err := srv.dao.GetRedisCache(VerifyPrefix + target)
 	if err != nil {
-		return false, errors.New(err.Error()).Append("获取缓存出错")
+		return ecode.Fail, err
 	}
 
 	if cacheCode == code {
 		// 删除key
 		err := srv.dao.DelRedisCache(target)
 		if err != nil {
-			return false, errors.New(err.Error()).Append("删除缓存出错")
+			return ecode.Fail, err
 		}
-		return true, nil
+		return ecode.Success, nil
 	}
-	return false, nil
+	return ecode.CheckVerifyFail, nil
 }
 
 func getCode() int {

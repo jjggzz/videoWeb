@@ -3,12 +3,8 @@ syntax = "proto3";
 package proto;
 
 service Verify {
-    rpc SendVerifyCode(SendVerifyCodeRequest) returns (Empty) {}
+    rpc SendVerifyCode(SendVerifyCodeRequest) returns (SendVerifyCodeResponse) {}
     rpc CheckVerifyCode(CheckVerifyCodeRequest) returns (CheckVerifyCodeResponse) {}
-}
-
-message Empty {
-
 }
 
 // 发送验证码的策略 手机号码 邮箱
@@ -24,14 +20,17 @@ message SendVerifyCodeRequest {
     VerifyTargetStrategy strategy = 2;
 }
 
+message SendVerifyCodeResponse {
+    int64 code = 1;
+}
+
 // target:验证码目标,可能是邮箱或者手机号码
 // code:提交的验证码值
 message CheckVerifyCodeRequest {
     string target = 1;
-    string code = 2;
+    string verifyCode = 2;
 }
 
 message CheckVerifyCodeResponse {
-    bool result = 1;
-    string message = 2;
+    int64 code = 1;
 }

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"videoWeb/common/ecode"
 	"videoWeb/verify-service/dao"
 )
 
@@ -16,7 +17,7 @@ func New(dao *dao.Dao) Service {
 }
 
 type Service interface {
-	SendPhoneVerify(ctx context.Context, target string) error
-	SendEmailVerify(ctx context.Context, target string) error
-	CheckVerify(ctx context.Context, target string, code string) (bool, error)
+	SendPhoneVerify(ctx context.Context, target string) (ecode.ECode, error)
+	SendEmailVerify(ctx context.Context, target string) (ecode.ECode, error)
+	CheckVerify(ctx context.Context, target string, code string) (ecode.ECode, error)
 }

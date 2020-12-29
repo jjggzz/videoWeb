@@ -52,12 +52,12 @@ type grpcServer struct {
 
 // Methods for grpcServer to implement VerifyServer interface
 
-func (s *grpcServer) SendVerifyCode(ctx context.Context, req *pb.SendVerifyCodeRequest) (*pb.Empty, error) {
+func (s *grpcServer) SendVerifyCode(ctx context.Context, req *pb.SendVerifyCodeRequest) (*pb.SendVerifyCodeResponse, error) {
 	_, rep, err := s.sendverifycode.ServeGRPC(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	return rep.(*pb.Empty), nil
+	return rep.(*pb.SendVerifyCodeResponse), nil
 }
 
 func (s *grpcServer) CheckVerifyCode(ctx context.Context, req *pb.CheckVerifyCodeRequest) (*pb.CheckVerifyCodeResponse, error) {
@@ -89,7 +89,7 @@ func DecodeGRPCCheckVerifyCodeRequest(_ context.Context, grpcReq interface{}) (i
 // EncodeGRPCSendVerifyCodeResponse is a transport/grpc.EncodeResponseFunc that converts a
 // user-domain sendverifycode response to a gRPC sendverifycode reply. Primarily useful in a server.
 func EncodeGRPCSendVerifyCodeResponse(_ context.Context, response interface{}) (interface{}, error) {
-	resp := response.(*pb.Empty)
+	resp := response.(*pb.SendVerifyCodeResponse)
 	return resp, nil
 }
 

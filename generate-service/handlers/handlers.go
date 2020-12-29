@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"videoWeb/common/ecode"
 	"videoWeb/generate-service/service"
 
 	pb "videoWeb/generate-service/proto"
@@ -20,6 +21,7 @@ func (s generateService) GenerateInt64Key(ctx context.Context, in *pb.Empty) (*p
 	if err != nil {
 		return nil, err
 	}
+	resp.Code = ecode.Success.Code()
 	resp.Id = id
 	return &resp, nil
 }
@@ -30,6 +32,7 @@ func (s generateService) GenerateStringKey(ctx context.Context, in *pb.Empty) (*
 	if err != nil {
 		return nil, err
 	}
+	resp.Code = ecode.Success.Code()
 	resp.Id = id
 	return &resp, nil
 }

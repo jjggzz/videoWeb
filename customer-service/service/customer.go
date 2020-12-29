@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	"encoding/json"
-	"github.com/jjggzz/kj/errors"
 	"time"
+	"videoWeb/common/ecode"
 	"videoWeb/customer-service/dao"
 	"videoWeb/customer-service/util"
 	genpb "videoWeb/generate-service/proto"
@@ -12,18 +12,23 @@ import (
 
 // 通过电话号码注册
 // 返回注册状态
-func (srv *service) RegisterByPhone(ctx context.Context, phone string) (RegisterStatus, error) {
+func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.ECode, error) {
 	// 电话号码是否被使用
 	exist, err := srv.dao.ExitsCustomerByPhone(phone)
 	if err != nil {
-		return RegisterStatusFailSysErr, errors.New(err.Error()).Append("操作数据库出错")
+		return ecode.Fail, err
 	}
+	// 如果电话号码已经被使用
 	if exist {
-		return RegisterStatusFailHasUse, nil
+		return ecode.PhoneAlreadyExist, nil
 	}
 	response, err := srv.gen.GenerateStringKey(ctx, &genpb.Empty{})
 	if err != nil {
-		return RegisterStatusFailSysErr, errors.New(err.Error()).Append("生成key出错")
+		return ecode.Fail, err
+	}
+	// 调用第三方服务出现业务错误错，直接返回
+	if response.Code != ecode.Success.Code() {
+		return ecode.Build(response.Code), nil
 	}
 	// 插入数据
 	customer := &dao.Customer{
@@ -39,30 +44,31 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (Register
 	}
 	err = srv.dao.InsertCustomer(customer)
 	if err != nil {
-		return RegisterStatusFailSysErr, err
+		return ecode.Fail, err
 	}
-	return RegisterStatusSuccess, nil
+	return ecode.Success, nil
 }
 
 // 通过电话号码登录
 // 返回登录token
-func (srv *service) LoginByPhone(ctx context.Context, phone string) (LoginStatus, string, error) {
+func (srv *service) LoginByPhone(ctx context.Context, phone string) (ecode.ECode, string, error) {
 	// 是否注册
 	exist, err := srv.dao.ExitsCustomerByPhone(phone)
 	if err != nil {
-		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("操作数据库出错")
+		return ecode.Fail, "", err
 	}
+	// 如果用户不存在
 	if !exist {
-		return LoginStatusFailNotReg, "", nil
+		return ecode.CustomerNotExist, "", nil
 	}
 
 	// 获取用户信息
 	customer, err := srv.dao.SelectCustomerByPhone(phone)
 	if err != nil {
-		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("操作数据库出错")
+		return ecode.Fail, "", err
 	}
 	if customer.Status == 0 {
-		return LoginStatusFailDisable, "", nil
+		return ecode.CustomerIsDisable, "", nil
 	}
 	// 清理可能存在的token
 	srv.clearCacheCustomerInfo(customer.AccessKey)
@@ -75,39 +81,39 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (LoginStatus
 	claims["exp"] = time.Now().Add(time.Second * 60 * 60 * 24).Unix()
 	token, err := util.GenerateToken(claims)
 	if err != nil {
-		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("生成token失败")
+		return ecode.Fail, "", err
 	}
 	// 缓存token和用户信息
 	// 缓存token
 	err = srv.dao.SetexRedisCache(60*60*24, LoginCustomerAccessKeyPrefix+customer.AccessKey, token)
 	if err != nil {
-		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("操作缓存失败")
+		return ecode.Fail, "", err
 	}
 	// 缓存用户信息
 	bytes, _ := json.Marshal(customer)
 	err = srv.dao.SetexRedisCache(60*60*24, token, string(bytes))
 	if err != nil {
-		return LoginStatusFailSysErr, "", errors.New(err.Error()).Append("操作缓存失败")
+		return ecode.Fail, "", err
 	}
-	return LoginStatusSuccess, token, nil
+	return ecode.Success, token, nil
 }
 
 // 通过token获取用户信息
 // 返回用户信息
-func (srv *service) GetCustomerInfoByToken(ctx context.Context, token string) (GetInfoStatus, *dao.Customer, error) {
+func (srv *service) GetCustomerInfoByToken(ctx context.Context, token string) (ecode.ECode, *dao.Customer, error) {
+	customer := dao.Customer{}
 	infoJson, err := srv.dao.GetRedisCache(token)
 	if err != nil {
-		return GetInfoStatusFailSysErr, nil, err
+		return ecode.Fail, nil, err
 	}
 	if infoJson == "" {
-		return GetInfoStatusFailNotLogin, nil, nil
+		return ecode.CustomerUnLogin, &customer, nil
 	}
-	customer := dao.Customer{}
 	err = json.Unmarshal([]byte(infoJson), &customer)
 	if err != nil {
-		return GetInfoStatusFailSysErr, nil, err
+		return ecode.Fail, nil, err
 	}
-	return GetInfoStatusSuccess, &customer, nil
+	return ecode.Success, &customer, nil
 }
 
 func (srv *service) clearCacheCustomerInfo(accessKey string) {

@@ -52,42 +52,6 @@ func (VerifyTargetStrategy) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_a87721bac73e05a3, []int{0}
 }
 
-type Empty struct {
-}
-
-func (m *Empty) Reset()         { *m = Empty{} }
-func (m *Empty) String() string { return proto.CompactTextString(m) }
-func (*Empty) ProtoMessage()    {}
-func (*Empty) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a87721bac73e05a3, []int{0}
-}
-func (m *Empty) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *Empty) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_Empty.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *Empty) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Empty.Merge(m, src)
-}
-func (m *Empty) XXX_Size() int {
-	return m.Size()
-}
-func (m *Empty) XXX_DiscardUnknown() {
-	xxx_messageInfo_Empty.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Empty proto.InternalMessageInfo
-
 // target:验证码目标,可能是邮箱或者手机号码
 // type:决定了target的类型
 type SendVerifyCodeRequest struct {
@@ -99,7 +63,7 @@ func (m *SendVerifyCodeRequest) Reset()         { *m = SendVerifyCodeRequest{} }
 func (m *SendVerifyCodeRequest) String() string { return proto.CompactTextString(m) }
 func (*SendVerifyCodeRequest) ProtoMessage()    {}
 func (*SendVerifyCodeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a87721bac73e05a3, []int{1}
+	return fileDescriptor_a87721bac73e05a3, []int{0}
 }
 func (m *SendVerifyCodeRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -142,11 +106,55 @@ func (m *SendVerifyCodeRequest) GetStrategy() VerifyTargetStrategy {
 	return VerifyTargetStrategy_PHONE
 }
 
+type SendVerifyCodeResponse struct {
+	Code int64 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+}
+
+func (m *SendVerifyCodeResponse) Reset()         { *m = SendVerifyCodeResponse{} }
+func (m *SendVerifyCodeResponse) String() string { return proto.CompactTextString(m) }
+func (*SendVerifyCodeResponse) ProtoMessage()    {}
+func (*SendVerifyCodeResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a87721bac73e05a3, []int{1}
+}
+func (m *SendVerifyCodeResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SendVerifyCodeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SendVerifyCodeResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalTo(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SendVerifyCodeResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SendVerifyCodeResponse.Merge(m, src)
+}
+func (m *SendVerifyCodeResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *SendVerifyCodeResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_SendVerifyCodeResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SendVerifyCodeResponse proto.InternalMessageInfo
+
+func (m *SendVerifyCodeResponse) GetCode() int64 {
+	if m != nil {
+		return m.Code
+	}
+	return 0
+}
+
 // target:验证码目标,可能是邮箱或者手机号码
 // code:提交的验证码值
 type CheckVerifyCodeRequest struct {
-	Target string `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
-	Code   string `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	Target     string `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
+	VerifyCode string `protobuf:"bytes,2,opt,name=verifyCode,proto3" json:"verifyCode,omitempty"`
 }
 
 func (m *CheckVerifyCodeRequest) Reset()         { *m = CheckVerifyCodeRequest{} }
@@ -189,16 +197,15 @@ func (m *CheckVerifyCodeRequest) GetTarget() string {
 	return ""
 }
 
-func (m *CheckVerifyCodeRequest) GetCode() string {
+func (m *CheckVerifyCodeRequest) GetVerifyCode() string {
 	if m != nil {
-		return m.Code
+		return m.VerifyCode
 	}
 	return ""
 }
 
 type CheckVerifyCodeResponse struct {
-	Result  bool   `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
-	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Code int64 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
 }
 
 func (m *CheckVerifyCodeResponse) Reset()         { *m = CheckVerifyCodeResponse{} }
@@ -234,24 +241,17 @@ func (m *CheckVerifyCodeResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_CheckVerifyCodeResponse proto.InternalMessageInfo
 
-func (m *CheckVerifyCodeResponse) GetResult() bool {
+func (m *CheckVerifyCodeResponse) GetCode() int64 {
 	if m != nil {
-		return m.Result
+		return m.Code
 	}
-	return false
-}
-
-func (m *CheckVerifyCodeResponse) GetMessage() string {
-	if m != nil {
-		return m.Message
-	}
-	return ""
+	return 0
 }
 
 func init() {
 	proto.RegisterEnum("proto.VerifyTargetStrategy", VerifyTargetStrategy_name, VerifyTargetStrategy_value)
-	proto.RegisterType((*Empty)(nil), "proto.Empty")
 	proto.RegisterType((*SendVerifyCodeRequest)(nil), "proto.SendVerifyCodeRequest")
+	proto.RegisterType((*SendVerifyCodeResponse)(nil), "proto.SendVerifyCodeResponse")
 	proto.RegisterType((*CheckVerifyCodeRequest)(nil), "proto.CheckVerifyCodeRequest")
 	proto.RegisterType((*CheckVerifyCodeResponse)(nil), "proto.CheckVerifyCodeResponse")
 }
@@ -259,26 +259,25 @@ func init() {
 func init() { proto.RegisterFile("verify.proto", fileDescriptor_a87721bac73e05a3) }
 
 var fileDescriptor_a87721bac73e05a3 = []byte{
-	// 297 bytes of a gzipped FileDescriptorProto
+	// 281 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x29, 0x4b, 0x2d, 0xca,
-	0x4c, 0xab, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x05, 0x53, 0x4a, 0xec, 0x5c, 0xac,
-	0xae, 0xb9, 0x05, 0x25, 0x95, 0x4a, 0x19, 0x5c, 0xa2, 0xc1, 0xa9, 0x79, 0x29, 0x61, 0x60, 0x35,
-	0xce, 0xf9, 0x29, 0xa9, 0x41, 0xa9, 0x85, 0xa5, 0xa9, 0xc5, 0x25, 0x42, 0x62, 0x5c, 0x6c, 0x25,
-	0x89, 0x45, 0xe9, 0xa9, 0x25, 0x12, 0x8c, 0x0a, 0x8c, 0x1a, 0x9c, 0x41, 0x50, 0x9e, 0x90, 0x39,
-	0x17, 0x47, 0x71, 0x49, 0x51, 0x62, 0x49, 0x6a, 0x7a, 0xa5, 0x04, 0x93, 0x02, 0xa3, 0x06, 0x9f,
-	0x91, 0x34, 0xc4, 0x68, 0x3d, 0x88, 0x19, 0x21, 0x60, 0x65, 0xc1, 0x50, 0x25, 0x41, 0x70, 0xc5,
-	0x4a, 0x2e, 0x5c, 0x62, 0xce, 0x19, 0xa9, 0xc9, 0xd9, 0xc4, 0x5b, 0x25, 0xc4, 0xc5, 0x92, 0x9c,
-	0x9f, 0x92, 0x0a, 0xb6, 0x86, 0x33, 0x08, 0xcc, 0x56, 0xf2, 0xe6, 0x12, 0xc7, 0x30, 0xa5, 0xb8,
-	0x20, 0x3f, 0xaf, 0x38, 0x15, 0x64, 0x4c, 0x51, 0x6a, 0x71, 0x69, 0x0e, 0xc4, 0x18, 0x8e, 0x20,
-	0x28, 0x4f, 0x48, 0x82, 0x8b, 0x3d, 0x37, 0xb5, 0xb8, 0x38, 0x31, 0x1d, 0x66, 0x12, 0x8c, 0xab,
-	0xa5, 0xc3, 0x25, 0x82, 0xcd, 0xd1, 0x42, 0x9c, 0x5c, 0xac, 0x01, 0x1e, 0xfe, 0x7e, 0xae, 0x02,
-	0x0c, 0x20, 0xa6, 0xab, 0xaf, 0xa3, 0xa7, 0x8f, 0x00, 0xa3, 0xd1, 0x1c, 0x46, 0x2e, 0x36, 0x88,
-	0x72, 0x21, 0x3b, 0x2e, 0x3e, 0xd4, 0x50, 0x13, 0x92, 0x81, 0x06, 0x02, 0xd6, 0xc0, 0x94, 0xe2,
-	0x81, 0xca, 0x42, 0xc2, 0x9c, 0x41, 0x28, 0x88, 0x8b, 0x1f, 0xcd, 0x17, 0x42, 0xb2, 0x50, 0x25,
-	0xd8, 0xc3, 0x48, 0x4a, 0x0e, 0x97, 0x34, 0xc4, 0xf3, 0x4a, 0x0c, 0x4e, 0x12, 0x27, 0x1e, 0xc9,
+	0x4c, 0xab, 0xd4, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x05, 0x53, 0x4a, 0x19, 0x5c, 0xa2,
+	0xc1, 0xa9, 0x79, 0x29, 0x61, 0x60, 0x29, 0xe7, 0xfc, 0x94, 0xd4, 0xa0, 0xd4, 0xc2, 0xd2, 0xd4,
+	0xe2, 0x12, 0x21, 0x31, 0x2e, 0xb6, 0x92, 0xc4, 0xa2, 0xf4, 0xd4, 0x12, 0x09, 0x46, 0x05, 0x46,
+	0x0d, 0xce, 0x20, 0x28, 0x4f, 0xc8, 0x9c, 0x8b, 0xa3, 0xb8, 0xa4, 0x28, 0xb1, 0x24, 0x35, 0xbd,
+	0x52, 0x82, 0x49, 0x81, 0x51, 0x83, 0xcf, 0x48, 0x1a, 0x62, 0xa2, 0x1e, 0xc4, 0x8c, 0x10, 0xb0,
+	0xb2, 0x60, 0xa8, 0x92, 0x20, 0xb8, 0x62, 0x25, 0x1d, 0x2e, 0x31, 0x74, 0x9b, 0x8a, 0x0b, 0xf2,
+	0xf3, 0x8a, 0x53, 0x85, 0x84, 0xb8, 0x58, 0x92, 0xf3, 0x53, 0x52, 0xc1, 0x16, 0x31, 0x07, 0x81,
+	0xd9, 0x4a, 0x01, 0x5c, 0x62, 0xce, 0x19, 0xa9, 0xc9, 0xd9, 0xc4, 0x3b, 0x4c, 0x8e, 0x8b, 0xab,
+	0x0c, 0xae, 0x18, 0xec, 0x34, 0xce, 0x20, 0x24, 0x11, 0x25, 0x5d, 0x2e, 0x71, 0x0c, 0x13, 0x71,
+	0x3b, 0x40, 0x4b, 0x87, 0x4b, 0x04, 0x9b, 0x87, 0x84, 0x38, 0xb9, 0x58, 0x03, 0x3c, 0xfc, 0xfd,
+	0x5c, 0x05, 0x18, 0x40, 0x4c, 0x57, 0x5f, 0x47, 0x4f, 0x1f, 0x01, 0x46, 0xa3, 0xb5, 0x8c, 0x5c,
+	0x6c, 0x10, 0xe5, 0x42, 0xfe, 0x5c, 0x7c, 0xa8, 0xfe, 0x14, 0x92, 0x81, 0x06, 0x10, 0xd6, 0x80,
+	0x96, 0x92, 0xc5, 0x21, 0x0b, 0x71, 0x9b, 0x12, 0x83, 0x50, 0x10, 0x17, 0x3f, 0x9a, 0xc3, 0x85,
+	0x60, 0x7a, 0xb0, 0x07, 0x91, 0x94, 0x1c, 0x2e, 0x69, 0x98, 0x99, 0x4e, 0x12, 0x27, 0x1e, 0xc9,
 	0x31, 0x5e, 0x78, 0x24, 0xc7, 0xf8, 0xe0, 0x91, 0x1c, 0xe3, 0x84, 0xc7, 0x72, 0x0c, 0x17, 0x1e,
 	0xcb, 0x31, 0xdc, 0x78, 0x2c, 0xc7, 0x90, 0xc4, 0x06, 0xd6, 0x6a, 0x0c, 0x08, 0x00, 0x00, 0xff,
-	0xff, 0x21, 0xb8, 0x1c, 0xf5, 0x0a, 0x02, 0x00, 0x00,
+	0xff, 0xfa, 0x2e, 0xa5, 0xd1, 0x2e, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -293,7 +292,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type VerifyClient interface {
-	SendVerifyCode(ctx context.Context, in *SendVerifyCodeRequest, opts ...grpc.CallOption) (*Empty, error)
+	SendVerifyCode(ctx context.Context, in *SendVerifyCodeRequest, opts ...grpc.CallOption) (*SendVerifyCodeResponse, error)
 	CheckVerifyCode(ctx context.Context, in *CheckVerifyCodeRequest, opts ...grpc.CallOption) (*CheckVerifyCodeResponse, error)
 }
 
@@ -305,8 +304,8 @@ func NewVerifyClient(cc *grpc.ClientConn) VerifyClient {
 	return &verifyClient{cc}
 }
 
-func (c *verifyClient) SendVerifyCode(ctx context.Context, in *SendVerifyCodeRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
+func (c *verifyClient) SendVerifyCode(ctx context.Context, in *SendVerifyCodeRequest, opts ...grpc.CallOption) (*SendVerifyCodeResponse, error) {
+	out := new(SendVerifyCodeResponse)
 	err := c.cc.Invoke(ctx, "/proto.Verify/SendVerifyCode", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -325,7 +324,7 @@ func (c *verifyClient) CheckVerifyCode(ctx context.Context, in *CheckVerifyCodeR
 
 // VerifyServer is the server API for Verify service.
 type VerifyServer interface {
-	SendVerifyCode(context.Context, *SendVerifyCodeRequest) (*Empty, error)
+	SendVerifyCode(context.Context, *SendVerifyCodeRequest) (*SendVerifyCodeResponse, error)
 	CheckVerifyCode(context.Context, *CheckVerifyCodeRequest) (*CheckVerifyCodeResponse, error)
 }
 
@@ -333,7 +332,7 @@ type VerifyServer interface {
 type UnimplementedVerifyServer struct {
 }
 
-func (*UnimplementedVerifyServer) SendVerifyCode(ctx context.Context, req *SendVerifyCodeRequest) (*Empty, error) {
+func (*UnimplementedVerifyServer) SendVerifyCode(ctx context.Context, req *SendVerifyCodeRequest) (*SendVerifyCodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendVerifyCode not implemented")
 }
 func (*UnimplementedVerifyServer) CheckVerifyCode(ctx context.Context, req *CheckVerifyCodeRequest) (*CheckVerifyCodeResponse, error) {
@@ -397,24 +396,6 @@ var _Verify_serviceDesc = grpc.ServiceDesc{
 	Metadata: "verify.proto",
 }
 
-func (m *Empty) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *Empty) MarshalTo(dAtA []byte) (int, error) {
-	var i int
-	_ = i
-	var l int
-	_ = l
-	return i, nil
-}
-
 func (m *SendVerifyCodeRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -444,6 +425,29 @@ func (m *SendVerifyCodeRequest) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *SendVerifyCodeResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SendVerifyCodeResponse) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Code != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintVerify(dAtA, i, uint64(m.Code))
+	}
+	return i, nil
+}
+
 func (m *CheckVerifyCodeRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -465,11 +469,11 @@ func (m *CheckVerifyCodeRequest) MarshalTo(dAtA []byte) (int, error) {
 		i = encodeVarintVerify(dAtA, i, uint64(len(m.Target)))
 		i += copy(dAtA[i:], m.Target)
 	}
-	if len(m.Code) > 0 {
+	if len(m.VerifyCode) > 0 {
 		dAtA[i] = 0x12
 		i++
-		i = encodeVarintVerify(dAtA, i, uint64(len(m.Code)))
-		i += copy(dAtA[i:], m.Code)
+		i = encodeVarintVerify(dAtA, i, uint64(len(m.VerifyCode)))
+		i += copy(dAtA[i:], m.VerifyCode)
 	}
 	return i, nil
 }
@@ -489,21 +493,10 @@ func (m *CheckVerifyCodeResponse) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Result {
+	if m.Code != 0 {
 		dAtA[i] = 0x8
 		i++
-		if m.Result {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i++
-	}
-	if len(m.Message) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintVerify(dAtA, i, uint64(len(m.Message)))
-		i += copy(dAtA[i:], m.Message)
+		i = encodeVarintVerify(dAtA, i, uint64(m.Code))
 	}
 	return i, nil
 }
@@ -517,15 +510,6 @@ func encodeVarintVerify(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
-func (m *Empty) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	return n
-}
-
 func (m *SendVerifyCodeRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -542,6 +526,18 @@ func (m *SendVerifyCodeRequest) Size() (n int) {
 	return n
 }
 
+func (m *SendVerifyCodeResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Code != 0 {
+		n += 1 + sovVerify(uint64(m.Code))
+	}
+	return n
+}
+
 func (m *CheckVerifyCodeRequest) Size() (n int) {
 	if m == nil {
 		return 0
@@ -552,7 +548,7 @@ func (m *CheckVerifyCodeRequest) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovVerify(uint64(l))
 	}
-	l = len(m.Code)
+	l = len(m.VerifyCode)
 	if l > 0 {
 		n += 1 + l + sovVerify(uint64(l))
 	}
@@ -565,12 +561,8 @@ func (m *CheckVerifyCodeResponse) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Result {
-		n += 2
-	}
-	l = len(m.Message)
-	if l > 0 {
-		n += 1 + l + sovVerify(uint64(l))
+	if m.Code != 0 {
+		n += 1 + sovVerify(uint64(m.Code))
 	}
 	return n
 }
@@ -580,59 +572,6 @@ func sovVerify(x uint64) (n int) {
 }
 func sozVerify(x uint64) (n int) {
 	return sovVerify(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (m *Empty) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowVerify
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: Empty: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: Empty: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipVerify(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthVerify
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthVerify
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
 }
 func (m *SendVerifyCodeRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -738,6 +677,78 @@ func (m *SendVerifyCodeRequest) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *SendVerifyCodeResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowVerify
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SendVerifyCodeResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SendVerifyCodeResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+			}
+			m.Code = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowVerify
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Code |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipVerify(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthVerify
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthVerify
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *CheckVerifyCodeRequest) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -801,7 +812,7 @@ func (m *CheckVerifyCodeRequest) Unmarshal(dAtA []byte) error {
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field VerifyCode", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -829,7 +840,7 @@ func (m *CheckVerifyCodeRequest) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Code = string(dAtA[iNdEx:postIndex])
+			m.VerifyCode = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -886,9 +897,9 @@ func (m *CheckVerifyCodeResponse) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Result", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Code", wireType)
 			}
-			var v int
+			m.Code = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowVerify
@@ -898,44 +909,11 @@ func (m *CheckVerifyCodeResponse) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= int(b&0x7F) << shift
+				m.Code |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.Result = bool(v != 0)
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Message", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowVerify
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthVerify
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthVerify
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Message = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipVerify(dAtA[iNdEx:])

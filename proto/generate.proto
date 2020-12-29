@@ -19,9 +19,11 @@ message Empty {
 }
 
 message Int64KeyResponse {
-    int64 id = 1;
+    int64 code = 1;
+    int64 id = 2;
 }
 
 message StringKeyResponse {
-    string id = 1;
+    int64 code = 1;
+    string id = 2;
 }
