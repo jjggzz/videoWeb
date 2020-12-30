@@ -1,8 +1,11 @@
 package handlers
 
 import (
+	"context"
+	"github.com/go-kit/kit/endpoint"
 	"github.com/jjggzz/kj/middleware"
 	"github.com/sony/gobreaker"
+	"log"
 	pb "videoWeb/customer-service/proto"
 	"videoWeb/customer-service/svc"
 )
@@ -33,12 +36,27 @@ func WrapEndpoints(in svc.Endpoints) svc.Endpoints {
 	limitMiddleware := middleware.LimitMiddleware(middleware.LimitDelay, 100)
 	// 断路器
 	breakerMiddleware := middleware.BreakerMiddleware(gobreaker.Settings{})
+	errorMiddleware := ErrorMiddleware()
+
 	in.WrapAllExcept(limitMiddleware)
 	in.WrapAllExcept(breakerMiddleware)
-
+	in.WrapAllExcept(errorMiddleware)
 	return in
 }
 
 func WrapService(in pb.CustomerServer) pb.CustomerServer {
 	return in
+}
+
+func ErrorMiddleware() endpoint.Middleware {
+	return func(i endpoint.Endpoint) endpoint.Endpoint {
+		return func(ctx context.Context, request interface{}) (response interface{}, err error) {
+			res, err := i(ctx, request)
+			if err != nil {
+				log.Println(err)
+				return res, err
+			}
+			return res, err
+		}
+	}
 }

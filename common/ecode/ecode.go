@@ -4,22 +4,22 @@ import "fmt"
 
 type ECode int64
 
-var codeList = map[int64]struct{}{}
+var codeList = map[int64]string{}
 
 // 创建一个错误码
-func New(code int64) ECode {
+func New(code int64, msg string) ECode {
 	if code <= 0 {
 		panic(fmt.Sprintf("illegal error code: %d", code))
 	}
-	return add(code)
+	return add(code, msg)
 }
 
 // 添加一个错误码
-func add(code int64) ECode {
+func add(code int64, msg string) ECode {
 	if _, ok := codeList[code]; ok {
 		panic(fmt.Sprintf("error code: %d already exist", code))
 	}
-	codeList[code] = struct{}{}
+	codeList[code] = msg
 
 	return ECode(code)
 }
@@ -34,4 +34,11 @@ func Build(code int64) ECode {
 
 func (e ECode) Code() int64 {
 	return int64(e)
+}
+
+func (e ECode) Msg() string {
+	if _, ok := codeList[e.Code()]; !ok {
+		panic(fmt.Sprintf("error code: %d don't exist", e.Code()))
+	}
+	return codeList[e.Code()]
 }
