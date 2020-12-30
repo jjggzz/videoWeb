@@ -54,7 +54,6 @@ func ErrorMiddleware() endpoint.Middleware {
 			res, err := i(ctx, request)
 			if err != nil {
 				log.Println(err)
-				return res, err
 			}
 			return res, err
 		}
