@@ -15,6 +15,18 @@ func New(service service.Service) *Http {
 	return &Http{srv: service}
 }
 
+// 将报错统一转换成服务不可用,不暴露更多细节
+type HandlerFunc func(context *gin.Context) error
+
+func Wrapper(handle HandlerFunc) func(context *gin.Context) {
+	return func(context *gin.Context) {
+		err := handle(context)
+		if err != nil {
+			serverErr(context)
+		}
+	}
+}
+
 // 参数解析失败
 func paramParsingErr(context *gin.Context) {
 	context.JSON(http.StatusBadRequest, gin.H{
