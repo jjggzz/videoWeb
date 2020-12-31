@@ -2,15 +2,41 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"videoWeb/common/ecode"
 )
 
 func (h *Http) Login(context *gin.Context) {
-	param := context.Param("phone")
-	s, err := h.srv.Login(context, param)
+	data := struct {
+		Phone  string `json:"phone"`
+		Verify string `json:"verify"`
+	}{}
+	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		context.String(http.StatusInternalServerError, err.Error())
+		paramParsingErr(context)
 		return
 	}
-	context.String(http.StatusOK, s)
+	code, token, err := h.srv.Login(context, data.Phone, data.Verify)
+	if err != nil {
+		serverErr(context)
+		return
+	}
+	if code != ecode.Success {
+		fail(context, code)
+		return
+	}
+	success(context, gin.H{"token": token})
+}
+
+func (h *Http) SendVerify(context *gin.Context) {
+	phone := context.Param("phone")
+	code, err := h.srv.SendVerify(context, phone)
+	if err != nil {
+		serverErr(context)
+		return
+	}
+	if code != ecode.Success {
+		fail(context, code)
+		return
+	}
+	success(context, gin.H{})
 }

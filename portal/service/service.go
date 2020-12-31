@@ -5,26 +5,36 @@ import (
 	"github.com/go-kit/kit/log"
 	"github.com/jjggzz/kj/discovery"
 	"github.com/openzipkin/zipkin-go"
+	"videoWeb/common/ecode"
 	cuspb "videoWeb/customer-service/proto"
 	cusgrpc "videoWeb/customer-service/svc/client/grpc"
 	"videoWeb/portal/config"
+	verpb "videoWeb/verify-service/proto"
+	vergrpc "videoWeb/verify-service/svc/client/grpc"
 )
 
 type service struct {
 	cus cuspb.CustomerServer
+	ver verpb.VerifyServer
 }
 
 func New(conf *config.Config, discover discovery.Discover, tracer *zipkin.Tracer, logger log.Logger) Service {
-	server, _ := cusgrpc.NewCustomerLoadBalanceClient(
-		discover,
-		conf.CustomerServerName,
+	cusIns, _ := discover.Discovery(conf.CustomerServerName)
+	verIns, _ := discover.Discovery(conf.VerifyServerName)
+	customerServer, _ := cusgrpc.NewLoadBalanceClient(
+		cusIns,
 		tracer,
 		logger,
 	)
-
-	return &service{cus: server}
+	verifyServer, _ := vergrpc.NewLoadBalanceClient(
+		verIns,
+		tracer,
+		logger,
+	)
+	return &service{cus: customerServer, ver: verifyServer}
 }
 
 type Service interface {
-	Login(ctx context.Context, phone string) (string, error)
+	Login(ctx context.Context, phone string, verify string) (ecode.ECode, string, error)
+	SendVerify(ctx context.Context, phone string) (ecode.ECode, error)
 }

@@ -15,6 +15,7 @@ type Config struct {
 	Discovery          *config.Discovery `yaml:"discovery"`
 	Zipkin             *config.Zipkin    `yaml:"zipkin"`
 	CustomerServerName string            `yaml:"customerServerName"`
+	VerifyServerName   string            `yaml:"verifyServerName"`
 }
 
 func Init() {
