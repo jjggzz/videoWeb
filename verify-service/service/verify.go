@@ -13,7 +13,7 @@ func (srv *service) SendPhoneVerify(ctx context.Context, target string) (ecode.E
 	code := getCode()
 	err := srv.dao.SetexRedisCache(5*60, VerifyPrefix+target, strconv.Itoa(code))
 	if err != nil {
-		return ecode.Fail, err
+		return ecode.ServerErr, err
 	}
 
 	// 如果缓存验证码失败直接返回错误,用户不会受到验证码,只有缓存成并且发送成功,用户才会收到验证码
@@ -27,7 +27,7 @@ func (srv *service) SendEmailVerify(ctx context.Context, target string) (ecode.E
 	code := getCode()
 	err := srv.dao.SetexRedisCache(5*60, VerifyPrefix+target, strconv.Itoa(code))
 	if err != nil {
-		return ecode.Fail, err
+		return ecode.ServerErr, err
 	}
 
 	// 如果缓存验证码失败直接返回错误,用户不会受到验证码,只有缓存成并且发送成功,用户才会收到验证码
@@ -39,14 +39,14 @@ func (srv *service) SendEmailVerify(ctx context.Context, target string) (ecode.E
 func (srv *service) CheckVerify(ctx context.Context, target string, code string) (ecode.ECode, error) {
 	cacheCode, err := srv.dao.GetRedisCache(VerifyPrefix + target)
 	if err != nil {
-		return ecode.Fail, err
+		return ecode.ServerErr, err
 	}
 
 	if cacheCode == code {
 		// 删除key
 		err := srv.dao.DelRedisCache(VerifyPrefix + target)
 		if err != nil {
-			return ecode.Fail, err
+			return ecode.ServerErr, err
 		}
 		return ecode.Success, nil
 	}

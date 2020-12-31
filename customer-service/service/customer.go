@@ -16,7 +16,7 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.EC
 	// 电话号码是否被使用
 	exist, err := srv.dao.ExitsCustomerByPhone(phone)
 	if err != nil {
-		return ecode.Fail, err
+		return ecode.ServerErr, err
 	}
 	// 如果电话号码已经被使用
 	if exist {
@@ -24,7 +24,7 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.EC
 	}
 	response, err := srv.gen.GenerateStringKey(ctx, &genpb.Empty{})
 	if err != nil {
-		return ecode.Fail, err
+		return ecode.ServerErr, err
 	}
 	// 调用第三方服务出现业务误错，返回对应的错误
 	if response.Code != ecode.Success.Code() {
@@ -44,7 +44,7 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.EC
 	}
 	err = srv.dao.InsertCustomer(customer)
 	if err != nil {
-		return ecode.Fail, err
+		return ecode.ServerErr, err
 	}
 	return ecode.Success, nil
 }
@@ -55,7 +55,7 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (ecode.ECode
 	// 是否注册
 	exist, err := srv.dao.ExitsCustomerByPhone(phone)
 	if err != nil {
-		return ecode.Fail, "", err
+		return ecode.ServerErr, "", err
 	}
 	// 如果用户不存在
 	if !exist {
@@ -65,7 +65,7 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (ecode.ECode
 	// 获取用户信息
 	customer, err := srv.dao.SelectCustomerByPhone(phone)
 	if err != nil {
-		return ecode.Fail, "", err
+		return ecode.ServerErr, "", err
 	}
 	if customer.Status == 0 {
 		return ecode.CustomerIsDisable, "", nil
@@ -81,19 +81,19 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (ecode.ECode
 	claims["exp"] = time.Now().Add(time.Second * 60 * 60 * 24).Unix()
 	token, err := util.GenerateToken(claims)
 	if err != nil {
-		return ecode.Fail, "", err
+		return ecode.ServerErr, "", err
 	}
 	// 缓存token和用户信息
 	// 缓存token
 	err = srv.dao.SetexRedisCache(60*60*24, LoginCustomerAccessKeyPrefix+customer.AccessKey, token)
 	if err != nil {
-		return ecode.Fail, "", err
+		return ecode.ServerErr, "", err
 	}
 	// 缓存用户信息
 	bytes, _ := json.Marshal(customer)
 	err = srv.dao.SetexRedisCache(60*60*24, token, string(bytes))
 	if err != nil {
-		return ecode.Fail, "", err
+		return ecode.ServerErr, "", err
 	}
 	return ecode.Success, token, nil
 }
@@ -104,14 +104,14 @@ func (srv *service) GetCustomerInfoByToken(ctx context.Context, token string) (e
 	customer := dao.Customer{}
 	infoJson, err := srv.dao.GetRedisCache(token)
 	if err != nil {
-		return ecode.Fail, nil, err
+		return ecode.ServerErr, nil, err
 	}
 	if infoJson == "" {
 		return ecode.CustomerUnLogin, &customer, nil
 	}
 	err = json.Unmarshal([]byte(infoJson), &customer)
 	if err != nil {
-		return ecode.Fail, nil, err
+		return ecode.ServerErr, nil, err
 	}
 	return ecode.Success, &customer, nil
 }

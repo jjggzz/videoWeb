@@ -17,7 +17,7 @@ type verifyService struct{}
 
 func (s verifyService) SendVerifyCode(ctx context.Context, in *pb.SendVerifyCodeRequest) (*pb.SendVerifyCodeResponse, error) {
 	var (
-		code = ecode.Fail
+		code = ecode.ServerErr
 		err  error
 		resp pb.SendVerifyCodeResponse
 	)

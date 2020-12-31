@@ -5,38 +5,27 @@ import (
 	"videoWeb/common/ecode"
 )
 
-func (h *Http) Login(context *gin.Context) error {
+func (h *Http) Login(context *gin.Context) (ecode.ECode, interface{}, error) {
 	data := struct {
 		Phone  string `json:"phone"`
 		Verify string `json:"verify"`
 	}{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		paramParsingErr(context)
-		return nil
+		return ecode.ParamParsingErr, nil, nil
 	}
 	code, token, err := h.srv.Login(context, data.Phone, data.Verify)
 	if err != nil {
-		return err
+		return ecode.ServerErr, nil, err
 	}
-	if code != ecode.Success {
-		fail(context, code)
-		return nil
-	}
-	success(context, gin.H{"token": token})
-	return nil
+	return code, gin.H{"token": token}, nil
 }
 
-func (h *Http) SendVerify(context *gin.Context) error {
+func (h *Http) SendVerify(context *gin.Context) (ecode.ECode, interface{}, error) {
 	phone := context.Param("phone")
 	code, err := h.srv.SendVerify(context, phone)
 	if err != nil {
-		return err
+		return ecode.ServerErr, nil, err
 	}
-	if code != ecode.Success {
-		fail(context, code)
-		return nil
-	}
-	success(context, gin.H{})
-	return nil
+	return code, gin.H{}, nil
 }
