@@ -13,7 +13,7 @@ enum SMTPStrategy {
 
 message SendEmailRequest {
     // SMTP
-    SMTPStrategy smtp = 1;
+    SMTPStrategy strategy = 1;
     // 标题
     string title = 2;
     // 内容

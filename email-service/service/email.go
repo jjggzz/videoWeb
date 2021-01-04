@@ -6,8 +6,8 @@ import (
 	"videoWeb/common/ecode"
 )
 
-func (srv *service) SendEmail(ctx context.Context, smtp string, title string, body string, recipientList []string) (ecode.ECode, error) {
-	strategy, ok := srv.smtpStrategy[smtp]
+func (srv *service) SendEmail(ctx context.Context, strategyName string, title string, body string, recipientList []string) (ecode.ECode, error) {
+	strategy, ok := srv.smtpStrategy[strategyName]
 	if !ok {
 		return ecode.SMTPStrategy, nil
 	}

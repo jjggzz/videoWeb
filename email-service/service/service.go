@@ -33,5 +33,5 @@ func New(conf *config.Config, logger log.Logger) Service {
 }
 
 type Service interface {
-	SendEmail(ctx context.Context, smtp string, title string, body string, recipientList []string) (ecode.ECode, error)
+	SendEmail(ctx context.Context, strategyName string, title string, body string, recipientList []string) (ecode.ECode, error)
 }

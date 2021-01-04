@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package proto;
+
+service Sms {
+    rpc SendSms(SendSmsRequest) returns (SendSmsResponse) {};
+}
+
+// 短信的策略
+// 1验证码短信
+// 2推广短信
+// ...
+enum SmsStrategy {
+    verify = 0;
+}
+
+message SendSmsRequest {
+    // 策略
+    SmsStrategy strategy = 1;
+    // 内容
+    string body = 2;
+    // 手机号码列表
+    repeated string phone = 3;
+}
+
+message SendSmsResponse {
+    int64 code = 1;
+}

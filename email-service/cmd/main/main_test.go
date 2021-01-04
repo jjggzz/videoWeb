@@ -29,7 +29,7 @@ func Test_main(t *testing.T) {
 		logger,
 	)
 	request := proto.SendEmailRequest{
-		Smtp:          proto.SMTPStrategy_QQ,
+		Strategy:      proto.SMTPStrategy_QQ,
 		Title:         "测试用email服务",
 		Body:          "Good Good Study, Day Day Up!!!!!!",
 		RecipientList: []string{"1945282561@qq.com"},
