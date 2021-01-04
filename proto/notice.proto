@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package proto;
+
+service Notice {
+    rpc SendSms(SendSmsRequest) returns (SendSmsResponse) {};
+    rpc SendEmail(SendEmailRequest) returns (SendEmailResponse) {};
+}
+
+// 短信的策略
+// 1验证码短信
+// 2推广短信
+// ...
+enum SmsStrategy {
+    verify = 0;
+}
+
+message SendSmsRequest {
+    // 策略
+    SmsStrategy strategy = 1;
+    // 内容
+    string body = 2;
+    // 手机号码列表
+    repeated string phone = 3;
+}
+
+message SendSmsResponse {
+    int64 code = 1;
+}
+
+// SMTP类型
+enum SMTPStrategy {
+    QQ = 0;
+}
+
+message SendEmailRequest {
+    // SMTP
+    SMTPStrategy strategy = 1;
+    // 标题
+    string title = 2;
+    // 内容
+    string body = 3;
+    // 收件人列表
+    repeated string recipientList = 4;
+}
+
+message SendEmailResponse {
+    int64 code = 1;
+}

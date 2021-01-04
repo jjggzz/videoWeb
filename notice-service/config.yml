@@ -1,0 +1,22 @@
+server:
+  serverName: notice-service
+  tcp:
+    port: 6666
+
+discovery:
+  consul:
+    address: 192.168.151.109:8500
+    health:
+      timeout: 5
+      interval: 5
+      deregisterCriticalServiceAfter: 30
+
+zipkin:
+  address: 192.168.151.109:9411
+
+email:
+  qq:
+    sender: 1945282561@qq.com
+    password:
+    addr: smtp.qq.com
+    port: 587
