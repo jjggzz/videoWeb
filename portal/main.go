@@ -9,15 +9,31 @@ import (
 	"github.com/jjggzz/kj/log"
 	"github.com/jjggzz/kj/track"
 	"github.com/jjggzz/kj/uitls"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"os"
 	"os/signal"
 	"syscall"
 	"videoWeb/portal/config"
 	"videoWeb/portal/http"
 	"videoWeb/portal/service"
+
+	_ "videoWeb/portal/docs"
 )
 
-// 入口
+// @title Swagger Example API
+// @version 1.0
+// @description This is a sample server Petstore server.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host 192.168.151.109:8080
 func main() {
 	flag.Parse()
 	config.Init()
@@ -61,6 +77,8 @@ func main() {
 		engine := gin.Default()
 		http.Middleware(engine)
 		http.Router(engine, h)
+		url := ginSwagger.URL("http://192.168.151.109:8080/swagger/doc.json")
+		engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 		errs <- engine.Run(fmt.Sprintf("%s:%d", uitls.LocalIpv4(), config.Conf.Server.Http.Port))
 	}()
 

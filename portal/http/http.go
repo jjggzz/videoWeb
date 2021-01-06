@@ -11,6 +11,12 @@ type Http struct {
 	srv service.Service
 }
 
+type ResultEntity struct {
+	Code int64       `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data"`
+}
+
 func New(service service.Service) *Http {
 	return &Http{srv: service}
 }
@@ -43,33 +49,36 @@ func Wrapper(handle HandlerFunc) func(context *gin.Context) {
 
 // 参数解析失败
 func paramParsingErr(context *gin.Context) {
-	context.JSON(http.StatusBadRequest, gin.H{
-		"code": ecode.ParamParsingErr.Code(),
-		"msg":  ecode.ParamParsingErr.Msg(),
+	context.JSON(http.StatusBadRequest, ResultEntity{
+		Code: ecode.ParamParsingErr.Code(),
+		Msg:  ecode.ParamParsingErr.Msg(),
+		Data: struct{}{},
 	})
 }
 
 // 服务不可用
 func serverErr(context *gin.Context) {
-	context.JSON(http.StatusInternalServerError, gin.H{
-		"code": ecode.ServerErr.Code(),
-		"msg":  ecode.ServerErr.Msg(),
+	context.JSON(http.StatusInternalServerError, ResultEntity{
+		Code: ecode.ServerErr.Code(),
+		Msg:  ecode.ServerErr.Msg(),
+		Data: struct{}{},
 	})
 }
 
 // 业务上的失败
 func fail(context *gin.Context, code ecode.ECode) {
-	context.JSON(http.StatusOK, gin.H{
-		"code": code.Code(),
-		"msg":  code.Msg(),
+	context.JSON(http.StatusOK, ResultEntity{
+		Code: code.Code(),
+		Msg:  code.Msg(),
+		Data: struct{}{},
 	})
 }
 
 // 执行成功
 func success(context *gin.Context, data interface{}) {
-	context.JSON(http.StatusOK, gin.H{
-		"code": ecode.Success.Code(),
-		"msg":  ecode.Success.Msg(),
-		"data": data,
+	context.JSON(http.StatusOK, ResultEntity{
+		Code: ecode.Success.Code(),
+		Msg:  ecode.Success.Msg(),
+		Data: data,
 	})
 }

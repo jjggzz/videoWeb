@@ -5,10 +5,21 @@ import (
 	"videoWeb/common/ecode"
 )
 
+type SendPhoneVerifyRequest struct {
+	Phone string `json:"phone"`
+}
+
+// @Summary 发送短信验证码
+// @Description 发送短信验证码
+// @Tags 验证码相关
+// @accept json
+// @Produce  json
+// @Param SendPhoneVerifyRequest body SendPhoneVerifyRequest true "请求体"
+// @Success 200 {object} ResultEntity "{"code":200,"data":{},"msg":"操作成功"}"
+// @Failure 500 {object} ResultEntity "{"code":500,"data":{},"msg":"服务暂时不可用"}"
+// @Router /verify/sendPhoneVerify [post]
 func (h *Http) SendPhoneVerify(context *gin.Context) (ecode.ECode, interface{}, error) {
-	data := struct {
-		Phone string `json:"phone"`
-	}{}
+	data := SendPhoneVerifyRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
 		return ecode.ParamParsingErr, nil, nil
@@ -20,10 +31,21 @@ func (h *Http) SendPhoneVerify(context *gin.Context) (ecode.ECode, interface{}, 
 	return code, gin.H{}, nil
 }
 
+type SendEmailVerifyRequest struct {
+	Email string `json:"email"`
+}
+
+// @Summary 发送邮件验证码
+// @Description 发送邮件验证码
+// @Tags 验证码相关
+// @accept json
+// @Produce  json
+// @Param SendEmailVerifyRequest body SendEmailVerifyRequest true "请求体"
+// @Success 200 {object} ResultEntity "{"code":200,"data":{},"msg":"操作成功"}"
+// @Failure 500 {object} ResultEntity "{"code":500,"data":{},"msg":"服务暂时不可用"}"
+// @Router /verify/sendEmailVerify [post]
 func (h *Http) SendEmailVerify(context *gin.Context) (ecode.ECode, interface{}, error) {
-	data := struct {
-		Email string `json:"email"`
-	}{}
+	data := SendEmailVerifyRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
 		return ecode.ParamParsingErr, nil, nil

@@ -4,7 +4,17 @@ import "github.com/gin-gonic/gin"
 
 func Router(engine *gin.Engine, http *Http) {
 	// add router
-	engine.POST("/login", Wrapper(http.Login))
-	engine.POST("/sendPhoneVerify", Wrapper(http.SendPhoneVerify))
-	engine.POST("/SendEmailVerify", Wrapper(http.SendEmailVerify))
+
+	// 客户
+	customer := engine.Group("/customer")
+	{
+		customer.POST("/login", Wrapper(http.Login))
+	}
+	// 验证码
+	verify := engine.Group("/verify")
+	{
+		verify.POST("/sendPhoneVerify", Wrapper(http.SendPhoneVerify))
+		verify.POST("/sendEmailVerify", Wrapper(http.SendEmailVerify))
+	}
+
 }
