@@ -25,8 +25,8 @@ func (srv *service) Login(ctx context.Context, phone string, verify string) (eco
 	return ecode.Success, loginResponse.Token, nil
 }
 
-func (srv *service) SendVerify(ctx context.Context, phone string) (ecode.ECode, error) {
-	sendResponse, err := srv.ver.SendVerifyCode(ctx, &verpb.SendVerifyCodeRequest{Target: phone, Strategy: verpb.VerifyTargetStrategy_PHONE})
+func (srv *service) SendVerify(ctx context.Context, strategyName string, phone string) (ecode.ECode, error) {
+	sendResponse, err := srv.ver.SendVerifyCode(ctx, &verpb.SendVerifyCodeRequest{Target: phone, Strategy: strategy[strategyName]})
 	if err != nil {
 		return ecode.ServerErr, err
 	}

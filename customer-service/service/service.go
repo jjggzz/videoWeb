@@ -3,10 +3,13 @@ package service
 import (
 	"context"
 	"github.com/go-kit/kit/log"
+	"github.com/jjggzz/kj/discovery"
+	"github.com/openzipkin/zipkin-go"
 	"videoWeb/common/ecode"
 	"videoWeb/customer-service/config"
 	"videoWeb/customer-service/dao"
 	genpb "videoWeb/generate-service/proto"
+	gengrpc "videoWeb/generate-service/svc/client/grpc"
 )
 
 var Cus Service
@@ -16,8 +19,14 @@ type service struct {
 	gen genpb.GenerateServer
 }
 
-func New(conf *config.Config, dao *dao.Dao, gen genpb.GenerateServer, logger log.Logger) Service {
-	return &service{dao: dao, gen: gen}
+func New(conf *config.Config, dao *dao.Dao, discover discovery.Discover, tracer *zipkin.Tracer, logger log.Logger) Service {
+	genIns, _ := discover.Discovery(conf.GenerateServerName)
+	generateServer, _ := gengrpc.NewLoadBalanceClient(
+		genIns,
+		tracer,
+		logger,
+	)
+	return &service{dao: dao, gen: generateServer}
 }
 
 type Service interface {

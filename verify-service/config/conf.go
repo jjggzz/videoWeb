@@ -11,10 +11,11 @@ var (
 )
 
 type Config struct {
-	Server    *config.Server    `yaml:"server"`
-	Discovery *config.Discovery `yaml:"discovery"`
-	Zipkin    *config.Zipkin    `yaml:"zipkin"`
-	Redis     *config.Redis     `yaml:"redis"`
+	Server        *config.Server    `yaml:"server"`
+	Discovery     *config.Discovery `yaml:"discovery"`
+	Zipkin        *config.Zipkin    `yaml:"zipkin"`
+	Redis         *config.Redis     `yaml:"redis"`
+	NoticeService string            `yaml:"noticeService"`
 }
 
 func Init() {

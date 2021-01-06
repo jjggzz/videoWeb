@@ -24,7 +24,7 @@ func add(code int64, msg string) ECode {
 	return ECode(code)
 }
 
-// 通过code获取一个存在的验证码
+// 通过code获取一个存在的错误码
 func Build(code int64) ECode {
 	if _, ok := codeList[code]; !ok {
 		panic(fmt.Sprintf("error code: %d don't exist", code))

@@ -27,8 +27,8 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 // 短信的策略
-// 1验证码短信
-// 2推广短信
+// 0验证码短信
+// 1推广短信
 // ...
 type SmsStrategy int32
 

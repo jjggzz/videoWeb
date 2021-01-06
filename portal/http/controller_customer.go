@@ -20,12 +20,3 @@ func (h *Http) Login(context *gin.Context) (ecode.ECode, interface{}, error) {
 	}
 	return code, gin.H{"token": token}, nil
 }
-
-func (h *Http) SendVerify(context *gin.Context) (ecode.ECode, interface{}, error) {
-	phone := context.Param("phone")
-	code, err := h.srv.SendVerify(context, phone)
-	if err != nil {
-		return ecode.ServerErr, nil, err
-	}
-	return code, gin.H{}, nil
-}

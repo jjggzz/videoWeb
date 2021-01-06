@@ -21,7 +21,6 @@ import (
 	"videoWeb/customer-service/service"
 	"videoWeb/customer-service/svc"
 	"videoWeb/customer-service/svc/server"
-	gengrpc "videoWeb/generate-service/svc/client/grpc"
 )
 
 func main() {
@@ -50,16 +49,7 @@ func main() {
 	}
 	// service 初始化
 	{
-		instancer, err := consulDiscovery.Discovery(config.Conf.GenerateServerName)
-		if err != nil {
-			_ = level.Error(logger).Log("err", err)
-			return
-		}
-		generateServer, err := gengrpc.NewLoadBalanceClient(instancer, tracer, logger)
-		if err != nil {
-			_ = level.Error(logger).Log("err", err)
-		}
-		service.Cus = service.New(config.Conf, d, generateServer, logger)
+		service.Cus = service.New(config.Conf, d, consulDiscovery, tracer, logger)
 	}
 
 	// 初始化端点
@@ -82,7 +72,6 @@ func main() {
 			errs <- err
 			return
 		}
-
 		options := []grpctransport.ServerOption{
 			grpctransport.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
 			zipkin.GRPCServerTrace(tracer),

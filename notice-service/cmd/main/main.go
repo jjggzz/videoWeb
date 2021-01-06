@@ -40,10 +40,12 @@ func main() {
 	if err != nil {
 		_ = level.Error(logger).Log("err", err)
 	}
+
 	// service初始化
 	{
 		service.Not = service.New(config.Conf, logger)
 	}
+
 	// 初始化端点
 	handle := handlers.NewService()
 	// 熔断、限流等中间件
@@ -52,17 +54,18 @@ func main() {
 	// 监听停止操作ctrl + c 等等
 	errs := make(chan error)
 	go handlers.InterruptHandler(errs)
+
 	go func() {
 		// 注册
 		consulDiscovery.RegisterServer()
 		_ = level.Info(logger).Log("transport", "gRPC", "Ip", uitls.LocalIpv4(), "Port", config.Conf.Server.Tcp.Port)
+
 		// 启动服务
 		ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", uitls.LocalIpv4(), config.Conf.Server.Tcp.Port))
 		if err != nil {
 			errs <- err
 			return
 		}
-
 		options := []grpctransport.ServerOption{
 			grpctransport.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
 			zipkin.GRPCServerTrace(tracer),

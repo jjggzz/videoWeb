@@ -8,8 +8,8 @@ service Notice {
 }
 
 // 短信的策略
-// 1验证码短信
-// 2推广短信
+// 0验证码短信
+// 1推广短信
 // ...
 enum SmsStrategy {
     verify = 0;

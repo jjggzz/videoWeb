@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"time"
 	"videoWeb/common/ecode"
+	"videoWeb/common/ecode/business"
 	"videoWeb/customer-service/dao"
 	"videoWeb/customer-service/util"
 	genpb "videoWeb/generate-service/proto"
@@ -20,7 +21,7 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.EC
 	}
 	// 如果电话号码已经被使用
 	if exist {
-		return ecode.PhoneAlreadyExist, nil
+		return business.PhoneAlreadyExist, nil
 	}
 	response, err := srv.gen.GenerateStringKey(ctx, &genpb.Empty{})
 	if err != nil {
@@ -59,7 +60,7 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (ecode.ECode
 	}
 	// 如果用户不存在
 	if !exist {
-		return ecode.CustomerNotExist, "", nil
+		return business.CustomerNotExist, "", nil
 	}
 
 	// 获取用户信息
@@ -68,7 +69,7 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (ecode.ECode
 		return ecode.ServerErr, "", err
 	}
 	if customer.Status == 0 {
-		return ecode.CustomerIsDisable, "", nil
+		return business.CustomerIsDisable, "", nil
 	}
 	// 清理可能存在的token
 	srv.clearCacheCustomerInfo(customer.AccessKey)
@@ -107,7 +108,7 @@ func (srv *service) GetCustomerInfoByToken(ctx context.Context, token string) (e
 		return ecode.ServerErr, nil, err
 	}
 	if infoJson == "" {
-		return ecode.CustomerUnLogin, &customer, nil
+		return business.CustomerUnLogin, &customer, nil
 	}
 	err = json.Unmarshal([]byte(infoJson), &customer)
 	if err != nil {

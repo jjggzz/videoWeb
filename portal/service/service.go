@@ -36,5 +36,5 @@ func New(conf *config.Config, discover discovery.Discover, tracer *zipkin.Tracer
 
 type Service interface {
 	Login(ctx context.Context, phone string, verify string) (ecode.ECode, string, error)
-	SendVerify(ctx context.Context, phone string) (ecode.ECode, error)
+	SendVerify(ctx context.Context, strategyName string, phone string) (ecode.ECode, error)
 }

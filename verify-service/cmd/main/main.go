@@ -30,6 +30,18 @@ func main() {
 	config.Init()
 	// 日志初始化
 	logger := log.BuildLogger(config.Conf.Server.ServerName, os.Stderr)
+	// 服务注册组件初始化
+	consulDiscovery := discovery.NewConsulDiscovery(
+		config.Conf.Discovery.Consul.Address,
+		config.Conf.Server.ServerName,
+		config.Conf.Server.Tcp.Port,
+		logger,
+	)
+	// 链路追踪
+	tracer, err := track.BuildZipkinTracer(config.Conf.Zipkin.Address, config.Conf.Server.ServerName)
+	if err != nil {
+		_ = level.Error(logger).Log("err", err)
+	}
 
 	// 初始化dao
 	var d *dao.Dao
@@ -38,7 +50,7 @@ func main() {
 	}
 	// 初始化service
 	{
-		service.Ver = service.New(d)
+		service.Ver = service.New(config.Conf, d, consulDiscovery, tracer, logger)
 	}
 
 	// 初始化端点
@@ -49,14 +61,6 @@ func main() {
 	// 监听停止操作ctrl + c 等等
 	errs := make(chan error)
 	go handlers.InterruptHandler(errs)
-
-	// 服务注册组件初始化
-	consulDiscovery := discovery.NewConsulDiscovery(
-		config.Conf.Discovery.Consul.Address,
-		config.Conf.Server.ServerName,
-		config.Conf.Server.Tcp.Port,
-		logger,
-	)
 
 	go func() {
 		// 注册
@@ -69,9 +73,6 @@ func main() {
 			errs <- err
 			return
 		}
-
-		// 链路追踪
-		tracer, err := track.BuildZipkinTracer(config.Conf.Zipkin.Address, config.Conf.Server.ServerName)
 		options := []grpctransport.ServerOption{
 			grpctransport.ServerErrorHandler(transport.NewLogErrorHandler(logger)),
 			zipkin.GRPCServerTrace(tracer),
