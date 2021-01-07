@@ -11,27 +11,33 @@ import (
 	notpb "videoWeb/notice-service/proto"
 )
 
-// TODO 未作接口防刷(在redis中对对应号码作个60s的锁即可,如果存在则不发送)
+// 发送短信验证码
 func (srv *service) SendPhoneVerify(ctx context.Context, target string) (ecode.ECode, error) {
-	code := getCode()
-	err := srv.dao.SetexRedisCache(5*60, VerifyPrefix+target, strconv.Itoa(code))
+	// 缓存验证码
+	eCode, _, err := srv.cacheVerify(target)
 	if err != nil {
-		return ecode.ServerErr, err
+		return eCode, err
+	}
+	if eCode != ecode.Success {
+		return eCode, nil
 	}
 
-	// 如果缓存验证码失败直接返回错误,用户不会受到验证码,只有缓存成并且发送成功,用户才会收到验证码
+	// 如果缓存验证码失败直接返回错误,用户不会收到验证码,只有缓存成并且发送成功,用户才会收到验证码
 	// TODO 发送code到Phone
 
 	return ecode.Success, nil
 
 }
 
+// 发送邮件验证码
 func (srv *service) SendEmailVerify(ctx context.Context, target string) (ecode.ECode, error) {
-	code := getCode()
-	err := srv.dao.SetexRedisCache(5*60, VerifyPrefix+target, strconv.Itoa(code))
-	// 如果缓存验证码失败直接返回错误
+	// 缓存验证码
+	eCode, code, err := srv.cacheVerify(target)
 	if err != nil {
-		return ecode.ServerErr, err
+		return eCode, err
+	}
+	if eCode != ecode.Success {
+		return eCode, nil
 	}
 
 	// 发送code到Email
@@ -52,6 +58,7 @@ func (srv *service) SendEmailVerify(ctx context.Context, target string) (ecode.E
 	return ecode.Success, nil
 }
 
+// 校验验证码
 func (srv *service) CheckVerify(ctx context.Context, target string, code string) (ecode.ECode, error) {
 	cacheCode, err := srv.dao.GetRedisCache(VerifyPrefix + target)
 	if err != nil {
@@ -59,6 +66,11 @@ func (srv *service) CheckVerify(ctx context.Context, target string, code string)
 	}
 
 	if cacheCode == code {
+		// 删除锁
+		err = srv.dao.DelRedisCache(VerifyLockPrefix + target)
+		if err != nil {
+			return ecode.ServerErr, err
+		}
 		// 删除key
 		err := srv.dao.DelRedisCache(VerifyPrefix + target)
 		if err != nil {
@@ -69,11 +81,43 @@ func (srv *service) CheckVerify(ctx context.Context, target string, code string)
 	return business.CheckVerifyFail, nil
 }
 
-func getCode() int {
-	rand.Seed(time.Now().Unix())
-	n := rand.Intn(10000)
-	if n < 1000 {
-		n += 1000
+// 缓存验证码
+func (srv *service) cacheVerify(target string) (ecode.ECode, int, error) {
+	// 是否符合发送标准
+	can, err := srv.canSendVerify(target)
+	if err != nil {
+		return ecode.ServerErr, 0, err
 	}
-	return n
+	if !can {
+		return business.VerifySendFrequent, 0, nil
+	}
+	rand.Seed(time.Now().Unix())
+	code := rand.Intn(10000)
+	if code < 1000 {
+		code += 1000
+	}
+	err = srv.dao.SetexRedisCache(5*60, VerifyPrefix+target, strconv.Itoa(code))
+	// 如果缓存验证码失败直接返回错误
+	if err != nil {
+		return ecode.ServerErr, 0, err
+	}
+
+	// 锁定目标
+	err = srv.dao.SetexRedisCache(1*60, VerifyLockPrefix+target, "lock")
+	if err != nil {
+		return ecode.ServerErr, 0, err
+	}
+	return ecode.Success, code, nil
+}
+
+// 判断是否允许发送验证码
+func (srv *service) canSendVerify(target string) (bool, error) {
+	s, err := srv.dao.GetRedisCache(VerifyLockPrefix + target)
+	if err != nil {
+		return false, err
+	}
+	if s == "" {
+		return true, nil
+	}
+	return false, nil
 }
