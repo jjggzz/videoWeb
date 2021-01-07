@@ -1,0 +1,163 @@
+definitions:
+  http.LoginRequest:
+    properties:
+      phone:
+        type: string
+      verify:
+        type: string
+    required:
+    - phone
+    - verify
+    type: object
+  http.RegisterRequest:
+    properties:
+      phone:
+        type: string
+      verify:
+        type: string
+    required:
+    - phone
+    - verify
+    type: object
+  http.ResultEntity:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      msg:
+        type: string
+    type: object
+  http.SendEmailVerifyRequest:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  http.SendPhoneVerifyRequest:
+    properties:
+      phone:
+        type: string
+    required:
+    - phone
+    type: object
+host: 192.168.151.109:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /customer/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录
+      parameters:
+      - description: 请求体
+        in: body
+        name: LoginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"操作成功"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+        "500":
+          description: '{"code":500,"data":{},"msg":"服务暂时不可用"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+      summary: 登录
+      tags:
+      - 用户相关
+  /customer/register:
+    post:
+      consumes:
+      - application/json
+      description: 用户注册
+      parameters:
+      - description: 请求体
+        in: body
+        name: LoginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"操作成功"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+        "500":
+          description: '{"code":500,"data":{},"msg":"服务暂时不可用"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+      summary: 注册
+      tags:
+      - 用户相关
+  /verify/sendEmailVerify:
+    post:
+      consumes:
+      - application/json
+      description: 发送邮件验证码
+      parameters:
+      - description: 请求体
+        in: body
+        name: SendEmailVerifyRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.SendEmailVerifyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"操作成功"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+        "500":
+          description: '{"code":500,"data":{},"msg":"服务暂时不可用"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+      summary: 发送邮件验证码
+      tags:
+      - 验证码相关
+  /verify/sendPhoneVerify:
+    post:
+      consumes:
+      - application/json
+      description: 发送短信验证码
+      parameters:
+      - description: 请求体
+        in: body
+        name: SendPhoneVerifyRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.SendPhoneVerifyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"操作成功"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+        "500":
+          description: '{"code":500,"data":{},"msg":"服务暂时不可用"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+      summary: 发送短信验证码
+      tags:
+      - 验证码相关
+swagger: "2.0"

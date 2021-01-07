@@ -6,7 +6,7 @@ import (
 )
 
 type SendPhoneVerifyRequest struct {
-	Phone string `json:"phone"`
+	Phone string `json:"phone" binding:"required,min=11,max=11"`
 }
 
 // @Summary 发送短信验证码
@@ -22,7 +22,7 @@ func (h *Http) SendPhoneVerify(context *gin.Context) (ecode.ECode, interface{}, 
 	data := SendPhoneVerifyRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		return ecode.ParamParsingErr, nil, nil
+		return ecode.ParamParsingErr, nil, err
 	}
 	code, err := h.srv.SendVerify(context, "phone", data.Phone)
 	if err != nil {
@@ -32,7 +32,7 @@ func (h *Http) SendPhoneVerify(context *gin.Context) (ecode.ECode, interface{}, 
 }
 
 type SendEmailVerifyRequest struct {
-	Email string `json:"email"`
+	Email string `json:"email" binding:"required,email"`
 }
 
 // @Summary 发送邮件验证码
@@ -48,7 +48,7 @@ func (h *Http) SendEmailVerify(context *gin.Context) (ecode.ECode, interface{}, 
 	data := SendEmailVerifyRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		return ecode.ParamParsingErr, nil, nil
+		return ecode.ParamParsingErr, nil, err
 	}
 	code, err := h.srv.SendVerify(context, "email", data.Email)
 	if err != nil {

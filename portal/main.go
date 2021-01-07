@@ -14,11 +14,11 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	_ "videoWeb/common/ecode/business"
 	"videoWeb/portal/config"
+	_ "videoWeb/portal/docs"
 	"videoWeb/portal/http"
 	"videoWeb/portal/service"
-
-	_ "videoWeb/portal/docs"
 )
 
 // @title Swagger Example API

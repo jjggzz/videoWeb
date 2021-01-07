@@ -2,11 +2,13 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"videoWeb/common/ecode"
 	"videoWeb/portal/service"
 )
 
+// 参数校验参考 https://github.com/go-playground/validator
 type Http struct {
 	srv service.Service
 }
@@ -29,6 +31,7 @@ func Wrapper(handle HandlerFunc) func(context *gin.Context) {
 		code, data, err := handle(context)
 		// 报错统一包装成服务不可用
 		if err != nil {
+			log.Println(err)
 			serverErr(context)
 			return
 		}

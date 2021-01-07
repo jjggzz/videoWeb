@@ -1,0 +1,249 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server Petstore server.",
+        "title": "Swagger Example API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "192.168.151.109:8080",
+    "paths": {
+        "/customer/login": {
+            "post": {
+                "description": "用户登录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关"
+                ],
+                "summary": "登录",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "LoginRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"操作成功\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":500,\"data\":{},\"msg\":\"服务暂时不可用\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    }
+                }
+            }
+        },
+        "/customer/register": {
+            "post": {
+                "description": "用户注册",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户相关"
+                ],
+                "summary": "注册",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "LoginRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"操作成功\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":500,\"data\":{},\"msg\":\"服务暂时不可用\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    }
+                }
+            }
+        },
+        "/verify/sendEmailVerify": {
+            "post": {
+                "description": "发送邮件验证码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "验证码相关"
+                ],
+                "summary": "发送邮件验证码",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "SendEmailVerifyRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.SendEmailVerifyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"操作成功\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":500,\"data\":{},\"msg\":\"服务暂时不可用\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    }
+                }
+            }
+        },
+        "/verify/sendPhoneVerify": {
+            "post": {
+                "description": "发送短信验证码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "验证码相关"
+                ],
+                "summary": "发送短信验证码",
+                "parameters": [
+                    {
+                        "description": "请求体",
+                        "name": "SendPhoneVerifyRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.SendPhoneVerifyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"操作成功\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":500,\"data\":{},\"msg\":\"服务暂时不可用\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "http.LoginRequest": {
+            "type": "object",
+            "required": [
+                "phone",
+                "verify"
+            ],
+            "properties": {
+                "phone": {
+                    "type": "string"
+                },
+                "verify": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.RegisterRequest": {
+            "type": "object",
+            "required": [
+                "phone",
+                "verify"
+            ],
+            "properties": {
+                "phone": {
+                    "type": "string"
+                },
+                "verify": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.ResultEntity": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "object"
+                },
+                "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.SendEmailVerifyRequest": {
+            "type": "object",
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.SendPhoneVerifyRequest": {
+            "type": "object",
+            "required": [
+                "phone"
+            ],
+            "properties": {
+                "phone": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
