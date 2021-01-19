@@ -7,7 +7,7 @@ create table customer (
   access_key varchar(64) not null comment '业务key',
   create_time datetime not null comment '创建时间',
   update_time datetime not null comment '修改时间',
-  delete_status int not null comment '状态 0:已删除 1:未删除',
+  delete_status int not null default 0 comment '状态 0:未删除 1:已删除',
   phone char(11) not null comment '电话号码',
   username varchar(32) not null comment '用户名',
   password varchar(64) not null comment '密码',
