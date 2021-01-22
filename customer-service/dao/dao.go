@@ -3,15 +3,15 @@ package dao
 import (
 	"fmt"
 	"github.com/gomodule/redigo/redis"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/jmoiron/sqlx"
 	"log"
 	"time"
 	"videoWeb/customer-service/config"
+	"videoWeb/customer-service/dao/repository"
 )
 
 type Dao struct {
-	db    *gorm.DB
+	Repo  repository.Repository
 	redis *redis.Pool
 }
 
@@ -31,10 +31,10 @@ func New(conf *config.Config) *Dao {
 		conf.DB.Mysql.Host,
 		conf.DB.Mysql.Port,
 		conf.DB.Mysql.Schema)
-	c, err := gorm.Open("mysql", addr)
+	db, err := sqlx.Open("mysql", addr)
 	if err != nil {
 		log.Println("数据库连接失败")
 		panic(err)
 	}
-	return &Dao{db: c, redis: pool}
+	return &Dao{Repo: repository.NewRepo(db), redis: pool}
 }

@@ -6,7 +6,7 @@ import (
 	"time"
 	"videoWeb/common/ecode"
 	"videoWeb/common/ecode/business"
-	"videoWeb/customer-service/dao"
+	"videoWeb/customer-service/dao/repository"
 	"videoWeb/customer-service/util"
 	genpb "videoWeb/generate-service/proto"
 )
@@ -15,12 +15,13 @@ import (
 // 返回注册状态
 func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.ECode, error) {
 	// 电话号码是否被使用
-	exist, err := srv.dao.ExitsCustomerByPhone(phone)
+
+	customers, err := srv.dao.Repo.CustomerRepo.SelectByExample(new(repository.CustomerExample).AndPhoneEqualTo(phone))
 	if err != nil {
 		return ecode.ServerErr, err
 	}
 	// 如果电话号码已经被使用
-	if exist {
+	if len(customers) > 0 {
 		return business.PhoneAlreadyExist, nil
 	}
 	response, err := srv.gen.GenerateStringKey(ctx, &genpb.Empty{})
@@ -32,7 +33,7 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.EC
 		return ecode.Build(response.Code), nil
 	}
 	// 插入数据
-	customer := &dao.Customer{
+	customer := &repository.Customer{
 		AccessKey:    response.Id,
 		CreateTime:   time.Now(),
 		UpdateTime:   time.Now(),
@@ -43,7 +44,7 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.EC
 		Nickname:     phone,
 		Status:       1,
 	}
-	err = srv.dao.InsertCustomer(customer)
+	_, err = srv.dao.Repo.CustomerRepo.Insert(customer)
 	if err != nil {
 		return ecode.ServerErr, err
 	}
@@ -54,20 +55,17 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.EC
 // 返回登录token
 func (srv *service) LoginByPhone(ctx context.Context, phone string) (ecode.ECode, string, error) {
 	// 是否注册
-	exist, err := srv.dao.ExitsCustomerByPhone(phone)
+	customers, err := srv.dao.Repo.CustomerRepo.SelectByExample(new(repository.CustomerExample).AndPhoneEqualTo(phone))
 	if err != nil {
 		return ecode.ServerErr, "", err
 	}
 	// 如果用户不存在
-	if !exist {
+	if len(customers) == 0 {
 		return business.CustomerNotExist, "", nil
 	}
 
 	// 获取用户信息
-	customer, err := srv.dao.SelectCustomerByPhone(phone)
-	if err != nil {
-		return ecode.ServerErr, "", err
-	}
+	customer := customers[0]
 	if customer.Status == 0 {
 		return business.CustomerIsDisable, "", nil
 	}
@@ -101,8 +99,8 @@ func (srv *service) LoginByPhone(ctx context.Context, phone string) (ecode.ECode
 
 // 通过token获取用户信息
 // 返回用户信息
-func (srv *service) GetCustomerInfoByToken(ctx context.Context, token string) (ecode.ECode, *dao.Customer, error) {
-	customer := dao.Customer{}
+func (srv *service) GetCustomerInfoByToken(ctx context.Context, token string) (ecode.ECode, *repository.Customer, error) {
+	customer := repository.Customer{}
 	infoJson, err := srv.dao.GetRedisCache(token)
 	if err != nil {
 		return ecode.ServerErr, nil, err

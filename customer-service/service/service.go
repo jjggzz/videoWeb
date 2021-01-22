@@ -8,6 +8,7 @@ import (
 	"videoWeb/common/ecode"
 	"videoWeb/customer-service/config"
 	"videoWeb/customer-service/dao"
+	"videoWeb/customer-service/dao/repository"
 	genpb "videoWeb/generate-service/proto"
 	gengrpc "videoWeb/generate-service/svc/client/grpc"
 )
@@ -32,5 +33,5 @@ func New(conf *config.Config, dao *dao.Dao, discover discovery.Discover, tracer 
 type Service interface {
 	RegisterByPhone(ctx context.Context, phone string) (ecode.ECode, error)
 	LoginByPhone(ctx context.Context, phone string) (ecode.ECode, string, error)
-	GetCustomerInfoByToken(ctx context.Context, token string) (ecode.ECode, *dao.Customer, error)
+	GetCustomerInfoByToken(ctx context.Context, token string) (ecode.ECode, *repository.Customer, error)
 }
