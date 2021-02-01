@@ -237,6 +237,8 @@ github.com/jjggzz/kit v0.0.0-20210201092551-18f0be340396 h1:DlKLTiVQU17njY7DJrXW
 github.com/jjggzz/kit v0.0.0-20210201092551-18f0be340396/go.mod h1:gk529QiypWpEi8o/QQ+DYsDQ6wjHONJg9a942sO0O6Q=
 github.com/jjggzz/kj v0.0.0-20201215024458-6a19cf5c16a2 h1:YqjkyAiQ7S8upyBC2wx/i52onQDeS9ae3zDaBC6lw1s=
 github.com/jjggzz/kj v0.0.0-20201215024458-6a19cf5c16a2/go.mod h1:dxIMQH9YpMm8d4m4w5TZ5CM531ANJMNFfQi0MohP2Pw=
+github.com/jjggzz/kj v0.0.0-20210201132342-40a9beb6e594 h1:DZSDgXIzGCFoVZjyVO/7s9rMsqVS99OYkFIhbPJxeHw=
+github.com/jjggzz/kj v0.0.0-20210201132342-40a9beb6e594/go.mod h1:1PhfvJFq/JW0+0mI7UkzTfTGRhUtEzzlWLl2wFJKKDU=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af h1:pmfjZENx5imkbgOkpRUYLnmbU7UEFbjtDA2hxJ1ichM=
 github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af/go.mod h1:Nht3zPeWKUH0NzdCt2Blrr5ys8VGpn0CEB0cQHVjt7k=
 github.com/jmoiron/sqlx v1.2.0 h1:41Ip0zITnmWNR/vHV+S4m+VoUivnWY5E4OJfLZjCJMA=

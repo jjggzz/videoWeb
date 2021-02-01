@@ -8,7 +8,7 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
-	github.com/go-kit/kit v0.9.0
+	github.com/go-kit/kit v0.10.0 // indirect
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/go-sql-driver/mysql v1.4.0
 	github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d
@@ -20,7 +20,7 @@ require (
 	github.com/hashicorp/go-sockaddr v1.0.2 // indirect
 	github.com/hashicorp/go-uuid v1.0.2 // indirect
 	github.com/jjggzz/kit v0.0.0-20210201092551-18f0be340396
-	github.com/jjggzz/kj v0.0.0-20201215024458-6a19cf5c16a2
+	github.com/jjggzz/kj v0.0.0-20210201132342-40a9beb6e594
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kr/pretty v0.2.1 // indirect
@@ -43,5 +43,3 @@ require (
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 	gopkg.in/yaml.v2 v2.4.0
 )
-
-replace github.com/jjggzz/kj v0.0.0-20201215024458-6a19cf5c16a2 => D:\\code\\GoCode\\kj
