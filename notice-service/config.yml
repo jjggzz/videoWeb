@@ -1,7 +1,7 @@
 server:
   serverName: notice-service
   tcp:
-    port: 6666
+    port: 10030
 
 discovery:
   consul:
@@ -10,6 +10,10 @@ discovery:
       timeout: 5
       interval: 5
       deregisterCriticalServiceAfter: 30
+  nacos:
+    address: 192.168.151.109:8848
+    namespace: 73d8542f-4ccb-4f16-af3b-c104bee8af8f
+    weight: 5
 
 zipkin:
   address: 192.168.151.109:9411

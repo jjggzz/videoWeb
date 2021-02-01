@@ -14,23 +14,21 @@ import (
 	"google.golang.org/grpc"
 	"net"
 	"os"
-	"videoWeb/verify-service/config"
-	"videoWeb/verify-service/dao"
-	"videoWeb/verify-service/handlers"
-	"videoWeb/verify-service/proto"
-	"videoWeb/verify-service/service"
-	"videoWeb/verify-service/svc"
-	"videoWeb/verify-service/svc/server"
+	"videoWeb/video-service/config"
+	"videoWeb/video-service/dao"
+	"videoWeb/video-service/handlers"
+	"videoWeb/video-service/proto"
+	"videoWeb/video-service/svc"
+	"videoWeb/video-service/svc/server"
 )
 
 func main() {
-	// 读取配置
 	flag.Parse()
-	// 初始化配置
+	// 初始化配置(包含了全局配置)
 	config.Init()
 	// 日志初始化
 	logger := log.BuildLogger(config.Conf.Server.ServerName, os.Stderr)
-	// 服务注册组件初始化
+	// 服务注册与发现
 	discovery := nacos.NewNacosDiscovery(
 		config.Conf.Discovery.Nacos.Address,
 		config.Conf.Server.ServerName,
@@ -51,14 +49,10 @@ func main() {
 		_ = level.Error(logger).Log("err", err)
 	}
 
-	// 初始化dao
 	var d *dao.Dao
 	{
 		d = dao.New(config.Conf)
-	}
-	// 初始化service
-	{
-		service.Ver = service.New(config.Conf, d, discovery, tracer, logger)
+		fmt.Println(d)
 	}
 
 	// 初始化端点
@@ -87,7 +81,7 @@ func main() {
 		}
 		grpcServer := svc.MakeGRPCServer(endpoints, options...)
 		s := grpc.NewServer()
-		proto.RegisterVerifyServer(s, grpcServer)
+		proto.RegisterVideoServer(s, grpcServer)
 		errs <- s.Serve(ln)
 	}()
 

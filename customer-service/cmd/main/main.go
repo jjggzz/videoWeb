@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/go-kit/kit/log/level"
-	"github.com/go-kit/kit/tracing/zipkin"
-	"github.com/go-kit/kit/transport"
-	grpctransport "github.com/go-kit/kit/transport/grpc"
-	"github.com/jjggzz/kj/discovery"
+	"github.com/jjggzz/kit/log/level"
+	"github.com/jjggzz/kit/tracing/zipkin"
+	"github.com/jjggzz/kit/transport"
+	grpctransport "github.com/jjggzz/kit/transport/grpc"
+	"github.com/jjggzz/kj/discovery/nacos"
 	"github.com/jjggzz/kj/log"
 	"github.com/jjggzz/kj/track"
 	"github.com/jjggzz/kj/uitls"
@@ -30,12 +30,20 @@ func main() {
 	// 日志初始化
 	logger := log.BuildLogger(config.Conf.Server.ServerName, os.Stderr)
 	// 服务注册与发现
-	consulDiscovery := discovery.NewConsulDiscovery(
-		config.Conf.Discovery.Consul.Address,
+	discovery := nacos.NewNacosDiscovery(
+		config.Conf.Discovery.Nacos.Address,
 		config.Conf.Server.ServerName,
 		config.Conf.Server.Tcp.Port,
+		config.Conf.Discovery.Nacos.Namespace,
+		config.Conf.Discovery.Nacos.Weight,
 		logger,
 	)
+	//discovery := consul.NewConsulDiscovery(
+	//	config.Conf.Discovery.Consul.Address,
+	//	config.Conf.Server.ServerName,
+	//	config.Conf.Server.Tcp.Port,
+	//	logger,
+	//)
 	// 链路追踪
 	tracer, err := track.BuildZipkinTracer(config.Conf.Zipkin.Address, config.Conf.Server.ServerName)
 	if err != nil {
@@ -49,7 +57,7 @@ func main() {
 	}
 	// service 初始化
 	{
-		service.Cus = service.New(config.Conf, d, consulDiscovery, tracer, logger)
+		service.Cus = service.New(config.Conf, d, discovery, tracer, logger)
 	}
 
 	// 初始化端点
@@ -63,7 +71,7 @@ func main() {
 
 	go func() {
 		// 注册
-		consulDiscovery.RegisterServer()
+		discovery.RegisterServer()
 		_ = level.Info(logger).Log("transport", "gRPC", "Ip", uitls.LocalIpv4(), "Port", config.Conf.Server.Tcp.Port)
 
 		// 启动服务
@@ -84,6 +92,6 @@ func main() {
 
 	// 退出注销服务
 	_ = level.Error(logger).Log("exit", <-errs)
-	consulDiscovery.DeregisterServer()
+	discovery.DeregisterServer()
 
 }

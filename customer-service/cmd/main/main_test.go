@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/go-kit/kit/endpoint"
-	"github.com/jjggzz/kj/discovery"
+	"github.com/jjggzz/kj/discovery/consul"
 	"github.com/jjggzz/kj/errors"
 	"github.com/jjggzz/kj/log"
 	"github.com/jjggzz/kj/track"
@@ -21,7 +21,7 @@ import (
 func Test_main(t *testing.T) {
 
 	logger := log.BuildLogger("test", os.Stderr)
-	consulDiscovery := discovery.NewConsulDiscovery(
+	consulDiscovery := consul.NewConsulDiscovery(
 		"192.168.151.109:8500",
 		"test",
 		6789,
@@ -51,7 +51,7 @@ func Test_main(t *testing.T) {
 func Test_main2(t *testing.T) {
 
 	logger := log.BuildLogger("test", os.Stderr)
-	consulDiscovery := discovery.NewConsulDiscovery(
+	consulDiscovery := consul.NewConsulDiscovery(
 		"192.168.151.109:8500",
 		"test2",
 		6789,
@@ -100,7 +100,7 @@ func Test_main2(t *testing.T) {
 func Test_main3(t *testing.T) {
 
 	logger := log.BuildLogger("test", os.Stderr)
-	consulDiscovery := discovery.NewConsulDiscovery(
+	consulDiscovery := consul.NewConsulDiscovery(
 		"192.168.151.109:8500",
 		"test",
 		6789,

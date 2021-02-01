@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package proto;
+
+service Video {
+    rpc UploadVideo(UploadVideoRequest) returns (UploadVideoResponse) {};
+}
+
+message UploadVideoRequest {
+}
+
+message UploadVideoResponse {
+    int64 code = 1;
+}

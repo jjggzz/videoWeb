@@ -1,8 +1,10 @@
+# 服务基本配置
 server:
-  serverName: verify-service
+  serverName: video-service
   tcp:
-    port: 10040
+    port: 10050
 
+# 服务注册与发现
 discovery:
   consul:
     address: 192.168.151.109:8500
@@ -15,13 +17,24 @@ discovery:
     namespace: 73d8542f-4ccb-4f16-af3b-c104bee8af8f
     weight: 5
 
+# 数据库
+db:
+  mysql:
+    host: localhost
+    port: 3306
+    schema: video
+    username: root
+    password: 123456
+
+# redis配置
 redis:
   address: localhost:6379
   maxIdle: 8
   maxActive: 50
   idleTimeout: 100
 
+# 链路追踪服务地址
 zipkin:
   address: 192.168.151.109:9411
 
-noticeService: notice-service
+

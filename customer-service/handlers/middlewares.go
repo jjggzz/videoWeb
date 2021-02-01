@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"context"
-	"github.com/go-kit/kit/endpoint"
+	"github.com/jjggzz/kit/endpoint"
 	"github.com/jjggzz/kj/middleware"
 	"github.com/sony/gobreaker"
 	"log"

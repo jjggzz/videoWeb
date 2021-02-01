@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/go-kit/kit/log"
+	"github.com/jjggzz/kit/log"
 	"github.com/jjggzz/kj/discovery"
 	"github.com/openzipkin/zipkin-go"
 	"videoWeb/common/ecode"
