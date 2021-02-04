@@ -18,7 +18,7 @@ type SendPhoneVerifyRequest struct {
 // @Success 200 {object} ResultEntity "{"code":200,"data":{},"msg":"操作成功"}"
 // @Failure 500 {object} ResultEntity "{"code":500,"data":{},"msg":"服务暂时不可用"}"
 // @Router /verify/sendPhoneVerify [post]
-func (h *Http) SendPhoneVerify(context *gin.Context) (ecode.ECode, interface{}, error) {
+func (h *Business) SendPhoneVerify(context *gin.Context) (ecode.ECode, interface{}, error) {
 	data := SendPhoneVerifyRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
@@ -44,7 +44,7 @@ type SendEmailVerifyRequest struct {
 // @Success 200 {object} ResultEntity "{"code":200,"data":{},"msg":"操作成功"}"
 // @Failure 500 {object} ResultEntity "{"code":500,"data":{},"msg":"服务暂时不可用"}"
 // @Router /verify/sendEmailVerify [post]
-func (h *Http) SendEmailVerify(context *gin.Context) (ecode.ECode, interface{}, error) {
+func (h *Business) SendEmailVerify(context *gin.Context) (ecode.ECode, interface{}, error) {
 	data := SendEmailVerifyRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {

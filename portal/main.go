@@ -23,6 +23,7 @@ import (
 
 // @title Swagger Example API
 // @version 1.0
+
 // @description This is a sample server Petstore server.
 // @termsOfService http://swagger.io/terms/
 
@@ -66,7 +67,7 @@ func main() {
 		srv = service.New(config.Conf, discovery, tracer, logger)
 	}
 	// http初始化
-	var h *http.Http
+	var h *http.Business
 	{
 		h = http.New(srv)
 	}
@@ -83,7 +84,6 @@ func main() {
 		_ = level.Error(logger).Log("server", "run", "ip", uitls.LocalIpv4(), "port", config.Conf.Server.Http.Port)
 		// 启动
 		engine := gin.Default()
-		http.Middleware(engine)
 		http.Router(engine, h)
 		url := ginSwagger.URL("http://192.168.151.109:8080/swagger/doc.json")
 		engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

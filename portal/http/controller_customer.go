@@ -19,7 +19,7 @@ type LoginRequest struct {
 // @Success 200 {object} ResultEntity "{"code":200,"data":{},"msg":"操作成功"}"
 // @Failure 500 {object} ResultEntity "{"code":500,"data":{},"msg":"服务暂时不可用"}"
 // @Router /customer/login [post]
-func (h *Http) Login(context *gin.Context) (ecode.ECode, interface{}, error) {
+func (h *Business) Login(context *gin.Context) (ecode.ECode, interface{}, error) {
 	data := LoginRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
@@ -46,7 +46,7 @@ type RegisterRequest struct {
 // @Success 200 {object} ResultEntity "{"code":200,"data":{},"msg":"操作成功"}"
 // @Failure 500 {object} ResultEntity "{"code":500,"data":{},"msg":"服务暂时不可用"}"
 // @Router /customer/register [post]
-func (h *Http) Register(context *gin.Context) (ecode.ECode, interface{}, error) {
+func (h *Business) Register(context *gin.Context) (ecode.ECode, interface{}, error) {
 	data := RegisterRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {

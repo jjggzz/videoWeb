@@ -160,4 +160,57 @@ paths:
       summary: 发送短信验证码
       tags:
       - 验证码相关
+  /video/{accessKey}:
+    get:
+      consumes:
+      - application/json
+      description: 获取视频内容
+      parameters:
+      - description: accessKey
+        in: path
+        name: accessKey
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"操作成功"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+        "500":
+          description: '{"code":500,"data":{},"msg":"服务暂时不可用"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+      summary: 获取视频内容
+      tags:
+      - 视频相关
+  /videoManage/{accessKey}:
+    get:
+      description: 获取视频内容
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: accessKey
+        in: path
+        name: accessKey
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"操作成功"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+        "500":
+          description: '{"code":500,"data":{},"msg":"服务暂时不可用"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+      summary: 获取视频内容
+      tags:
+      - 视频管理相关
 swagger: "2.0"

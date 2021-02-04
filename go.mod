@@ -8,7 +8,7 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
-	github.com/go-kit/kit v0.10.0 // indirect
+	github.com/go-kit/kit v0.10.0
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/go-sql-driver/mysql v1.4.0
 	github.com/gogo/protobuf v1.2.2-0.20190723190241-65acae22fc9d

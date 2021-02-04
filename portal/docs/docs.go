@@ -192,6 +192,86 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/video/{accessKey}": {
+            "get": {
+                "description": "获取视频内容",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频相关"
+                ],
+                "summary": "获取视频内容",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "accessKey",
+                        "name": "accessKey",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"操作成功\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":500,\"data\":{},\"msg\":\"服务暂时不可用\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    }
+                }
+            }
+        },
+        "/videoManage/{accessKey}": {
+            "get": {
+                "description": "获取视频内容",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频管理相关"
+                ],
+                "summary": "获取视频内容",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "accessKey",
+                        "name": "accessKey",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"操作成功\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":500,\"data\":{},\"msg\":\"服务暂时不可用\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

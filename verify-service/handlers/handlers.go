@@ -33,7 +33,7 @@ func (s verifyService) SendVerifyCode(ctx context.Context, in *pb.SendVerifyCode
 		return nil, err
 	}
 	resp.Code = code.Code()
-	return &resp, err
+	return &resp, nil
 }
 
 func (s verifyService) CheckVerifyCode(ctx context.Context, in *pb.CheckVerifyCodeRequest) (*pb.CheckVerifyCodeResponse, error) {
@@ -45,5 +45,5 @@ func (s verifyService) CheckVerifyCode(ctx context.Context, in *pb.CheckVerifyCo
 		return nil, err
 	}
 	resp.Code = code.Code()
-	return &resp, err
+	return &resp, nil
 }

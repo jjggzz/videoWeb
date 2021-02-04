@@ -2,11 +2,14 @@ package service
 
 import (
 	"context"
+	"github.com/jjggzz/kj/uitls"
 	"videoWeb/common/ecode"
 	cuspb "videoWeb/customer-service/proto"
+	"videoWeb/portal/service/dto"
 	verpb "videoWeb/verify-service/proto"
 )
 
+// 用户登录
 func (srv *service) Login(ctx context.Context, phone string, verify string) (ecode.ECode, string, error) {
 	checkResponse, err := srv.ver.CheckVerifyCode(ctx, &verpb.CheckVerifyCodeRequest{Target: phone, VerifyCode: verify})
 	if err != nil {
@@ -25,6 +28,7 @@ func (srv *service) Login(ctx context.Context, phone string, verify string) (eco
 	return ecode.Success, loginResponse.Token, nil
 }
 
+// 用户注册
 func (srv *service) Register(ctx context.Context, phone string, verify string) (ecode.ECode, error) {
 	checkResponse, err := srv.ver.CheckVerifyCode(ctx, &verpb.CheckVerifyCodeRequest{Target: phone, VerifyCode: verify})
 	if err != nil {
@@ -43,6 +47,24 @@ func (srv *service) Register(ctx context.Context, phone string, verify string) (
 	return ecode.Success, nil
 }
 
+// 获取用户信息
+func (srv *service) GetUserInfo(ctx context.Context, token string) (ecode.ECode, *dto.UserInfoDto, error) {
+	var userInfo dto.UserInfoDto
+	getUserInfoResponse, err := srv.cus.GetCustomerInfoByToken(ctx, &cuspb.GetCustomerInfoByTokenRequest{Token: token})
+	if err != nil {
+		return ecode.ServerErr, nil, err
+	}
+	if getUserInfoResponse.Code != ecode.Success.Code() {
+		return ecode.Build(getUserInfoResponse.Code), nil, nil
+	}
+	err = uitls.Copy(getUserInfoResponse, &userInfo)
+	if err != nil {
+		return ecode.ServerErr, nil, err
+	}
+	return ecode.Success, &userInfo, nil
+}
+
+// 发送验证码
 func (srv *service) SendVerify(ctx context.Context, strategyName string, phone string) (ecode.ECode, error) {
 	sendResponse, err := srv.ver.SendVerifyCode(ctx, &verpb.SendVerifyCodeRequest{Target: phone, Strategy: strategy[strategyName]})
 	if err != nil {

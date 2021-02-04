@@ -9,7 +9,7 @@ import (
 )
 
 // 参数校验参考 https://github.com/go-playground/validator
-type Http struct {
+type Business struct {
 	srv service.Service
 }
 
@@ -19,8 +19,8 @@ type ResultEntity struct {
 	Data interface{} `json:"data"`
 }
 
-func New(service service.Service) *Http {
-	return &Http{srv: service}
+func New(service service.Service) *Business {
+	return &Business{srv: service}
 }
 
 // 包装http处理完后的可能的结果

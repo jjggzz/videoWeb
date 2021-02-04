@@ -2,20 +2,30 @@ package http
 
 import "github.com/gin-gonic/gin"
 
-func Router(engine *gin.Engine, http *Http) {
+func Router(engine *gin.Engine, http *Business) {
 	// add router
 
 	// 客户
-	customer := engine.Group("/customer")
+	customerGroup := engine.Group("/customer")
 	{
-		customer.POST("/login", Wrapper(http.Login))
-		customer.POST("/register", Wrapper(http.Register))
+		customerGroup.POST("/login", Wrapper(http.Login))
+		customerGroup.POST("/register", Wrapper(http.Register))
 	}
 	// 验证码
-	verify := engine.Group("/verify")
+	verifyGroup := engine.Group("/verify")
 	{
-		verify.POST("/sendPhoneVerify", Wrapper(http.SendPhoneVerify))
-		verify.POST("/sendEmailVerify", Wrapper(http.SendEmailVerify))
+		verifyGroup.POST("/sendPhoneVerify", Wrapper(http.SendPhoneVerify))
+		verifyGroup.POST("/sendEmailVerify", Wrapper(http.SendEmailVerify))
+	}
+	// 视频
+	videoGroup := engine.Group("/video")
+	{
+		videoGroup.GET("/:accessKey", Wrapper(http.GetVideo))
+	}
+	// 视频管理
+	videoManageGroup := engine.Group("/videoManage", http.CheckLoginMiddleware)
+	{
+		videoManageGroup.GET("/:accessKey", Wrapper(http.GetVideoManage))
 	}
 
 }

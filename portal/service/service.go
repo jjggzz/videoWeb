@@ -9,6 +9,7 @@ import (
 	cuspb "videoWeb/customer-service/proto"
 	cusgrpc "videoWeb/customer-service/svc/client/grpc"
 	"videoWeb/portal/config"
+	"videoWeb/portal/service/dto"
 	verpb "videoWeb/verify-service/proto"
 	vergrpc "videoWeb/verify-service/svc/client/grpc"
 )
@@ -37,5 +38,6 @@ func New(conf *config.Config, discover discovery.Discover, tracer *zipkin.Tracer
 type Service interface {
 	Login(ctx context.Context, phone string, verify string) (ecode.ECode, string, error)
 	Register(ctx context.Context, phone string, verify string) (ecode.ECode, error)
+	GetUserInfo(ctx context.Context, token string) (ecode.ECode, *dto.UserInfoDto, error)
 	SendVerify(ctx context.Context, strategyName string, phone string) (ecode.ECode, error)
 }

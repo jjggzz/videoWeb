@@ -23,7 +23,7 @@ func (s customerService) RegisterByPhone(ctx context.Context, in *pb.RegisterByP
 		return nil, err
 	}
 	resp.Code = code.Code()
-	return &resp, err
+	return &resp, nil
 }
 
 func (s customerService) LoginByPhone(ctx context.Context, in *pb.LoginByPhoneRequest) (*pb.LoginByPhoneResponse, error) {
@@ -35,7 +35,7 @@ func (s customerService) LoginByPhone(ctx context.Context, in *pb.LoginByPhoneRe
 	}
 	resp.Code = code.Code()
 	resp.Token = token
-	return &resp, err
+	return &resp, nil
 }
 
 func (s customerService) GetCustomerInfoByToken(ctx context.Context, in *pb.GetCustomerInfoByTokenRequest) (*pb.GetCustomerInfoByTokenResponse, error) {
@@ -53,5 +53,5 @@ func (s customerService) GetCustomerInfoByToken(ctx context.Context, in *pb.GetC
 		resp.Email = customer.Email
 		resp.Nickname = customer.Nickname
 	}
-	return &resp, err
+	return &resp, nil
 }
