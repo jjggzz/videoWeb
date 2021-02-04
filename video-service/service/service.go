@@ -1,3 +1,5 @@
+// author: JGZ
+// time:   2021-02-04 16:57
 package service
 
 import (
@@ -6,18 +8,19 @@ import (
 	"github.com/jjggzz/kj/discovery"
 	"github.com/openzipkin/zipkin-go"
 	"videoWeb/common/ecode"
-	"videoWeb/customer-service/config"
-	"videoWeb/customer-service/dao"
-	"videoWeb/customer-service/dao/repository"
 	genpb "videoWeb/generate-service/proto"
 	gengrpc "videoWeb/generate-service/svc/client/grpc"
+	"videoWeb/video-service/config"
+	"videoWeb/video-service/dao"
+	"videoWeb/video-service/dao/repository"
 )
 
-var Cus Service
+var Vid Service
 
 type service struct {
 	dao *dao.Dao
 	gen genpb.GenerateServer
+	log log.Logger
 }
 
 func New(conf *config.Config, dao *dao.Dao, discover discovery.Discover, tracer *zipkin.Tracer, logger log.Logger) Service {
@@ -27,13 +30,13 @@ func New(conf *config.Config, dao *dao.Dao, discover discovery.Discover, tracer 
 		tracer,
 		logger,
 	)
-	return &service{dao: dao,
+	return &service{
+		dao: dao,
 		gen: generateServer,
+		log: logger,
 	}
 }
 
 type Service interface {
-	RegisterByPhone(ctx context.Context, phone string) (ecode.ECode, error)
-	LoginByPhone(ctx context.Context, phone string) (ecode.ECode, string, error)
-	GetCustomerInfoByToken(ctx context.Context, token string) (ecode.ECode, *repository.Customer, error)
+	SaveVideo(ctx context.Context, video *repository.Video) (ecode.ECode, error)
 }

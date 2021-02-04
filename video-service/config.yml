@@ -37,4 +37,5 @@ redis:
 zipkin:
   address: 192.168.151.109:9411
 
+generateServerName: generate-service
 

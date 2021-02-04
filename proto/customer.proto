@@ -2,6 +2,11 @@ syntax = "proto3";
 
 package proto;
 
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/field_mask.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
 service Customer {
     rpc RegisterByPhone(RegisterByPhoneRequest) returns (RegisterByPhoneResponse) {};
     rpc LoginByPhone(LoginByPhoneRequest) returns (LoginByPhoneResponse) {};
@@ -30,9 +35,21 @@ message GetCustomerInfoByTokenRequest {
 }
 
 message GetCustomerInfoByTokenResponse {
+    option (gogoproto.goproto_getters) = false;
     int64 code = 1;
-    string accessKey = 2;
-    string username = 3;
-    string email = 4;
-    string nickname = 5;
+    int64 id = 2;
+    string accessKey = 3;
+    string username = 4;
+    string email = 5;
+    string nickname = 6;
+    google.protobuf.Timestamp createTime = 7 [
+        (gogoproto.stdtime) = true
+    ];
+    google.protobuf.Timestamp updateTime = 8 [
+        (gogoproto.stdtime) = true
+    ];
+    int32 deleteStatus = 9;
+    string phone = 10;
+    string password = 11;
+    int32 status = 12;
 }

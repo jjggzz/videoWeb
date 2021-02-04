@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"github.com/jjggzz/kj/utils"
 	"videoWeb/common/ecode"
 	"videoWeb/customer-service/service"
 
@@ -45,13 +46,9 @@ func (s customerService) GetCustomerInfoByToken(ctx context.Context, in *pb.GetC
 		// todo 当前服务记录日志,并返回错误
 		return nil, err
 	}
-
 	resp.Code = code.Code()
 	if code == ecode.Success {
-		resp.Username = customer.Username
-		resp.AccessKey = customer.AccessKey
-		resp.Email = customer.Email
-		resp.Nickname = customer.Nickname
+		_ = utils.Copy(customer, &resp)
 	}
 	return &resp, nil
 }

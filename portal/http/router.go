@@ -25,6 +25,7 @@ func Router(engine *gin.Engine, http *Business) {
 	// 视频管理
 	videoManageGroup := engine.Group("/videoManage", http.CheckLoginMiddleware)
 	{
+		videoManageGroup.POST("/uploadVideo", Wrapper(http.UploadVideo))
 		videoManageGroup.GET("/:accessKey", Wrapper(http.GetVideoManage))
 	}
 

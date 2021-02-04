@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type CustomerExample struct {
+type VideoExample struct {
 	criteria []struct {
 		fragment     string
 		param1       interface{}
@@ -15,7 +15,7 @@ type CustomerExample struct {
 	}
 }
 
-func (ex *CustomerExample) Clear() *CustomerExample {
+func (ex *VideoExample) Clear() *VideoExample {
 	ex.criteria = []struct {
 		fragment     string
 		param1       interface{}
@@ -26,7 +26,7 @@ func (ex *CustomerExample) Clear() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndIdIsNull() *CustomerExample {
+func (ex *VideoExample) AndIdIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -37,7 +37,7 @@ func (ex *CustomerExample) AndIdIsNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndIdIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndIdIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -48,7 +48,7 @@ func (ex *CustomerExample) AndIdIsNotNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndIdEqualTo(param int64) *CustomerExample {
+func (ex *VideoExample) AndIdEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -59,7 +59,7 @@ func (ex *CustomerExample) AndIdEqualTo(param int64) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndIdNotEqualTo(param int64) *CustomerExample {
+func (ex *VideoExample) AndIdNotEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -70,7 +70,7 @@ func (ex *CustomerExample) AndIdNotEqualTo(param int64) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndIdGreaterThan(param int64) *CustomerExample {
+func (ex *VideoExample) AndIdGreaterThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -81,7 +81,7 @@ func (ex *CustomerExample) AndIdGreaterThan(param int64) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndIdGreaterThanOrEqualTo(param int64) *CustomerExample {
+func (ex *VideoExample) AndIdGreaterThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -91,7 +91,7 @@ func (ex *CustomerExample) AndIdGreaterThanOrEqualTo(param int64) *CustomerExamp
 	}{fragment: "and id >= ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndIdLessThan(param int64) *CustomerExample {
+func (ex *VideoExample) AndIdLessThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -102,7 +102,7 @@ func (ex *CustomerExample) AndIdLessThan(param int64) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndIdLessThanOrEqualTo(param int64) *CustomerExample {
+func (ex *VideoExample) AndIdLessThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -113,7 +113,7 @@ func (ex *CustomerExample) AndIdLessThanOrEqualTo(param int64) *CustomerExample 
 	return ex
 }
 
-func (ex *CustomerExample) AndIdIn(param []int64) *CustomerExample {
+func (ex *VideoExample) AndIdIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -124,7 +124,7 @@ func (ex *CustomerExample) AndIdIn(param []int64) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndIdNotIn(param []int64) *CustomerExample {
+func (ex *VideoExample) AndIdNotIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -135,7 +135,7 @@ func (ex *CustomerExample) AndIdNotIn(param []int64) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndIdBetween(param1 int64, param2 int64) *CustomerExample {
+func (ex *VideoExample) AndIdBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -146,7 +146,7 @@ func (ex *CustomerExample) AndIdBetween(param1 int64, param2 int64) *CustomerExa
 	return ex
 }
 
-func (ex *CustomerExample) AndIdNotBetween(param1 int64, param2 int64) *CustomerExample {
+func (ex *VideoExample) AndIdNotBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -157,7 +157,7 @@ func (ex *CustomerExample) AndIdNotBetween(param1 int64, param2 int64) *Customer
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyIsNull() *CustomerExample {
+func (ex *VideoExample) AndAccessKeyIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -168,7 +168,7 @@ func (ex *CustomerExample) AndAccessKeyIsNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndAccessKeyIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -179,7 +179,7 @@ func (ex *CustomerExample) AndAccessKeyIsNotNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -190,7 +190,7 @@ func (ex *CustomerExample) AndAccessKeyEqualTo(param string) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyNotEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyNotEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -201,7 +201,7 @@ func (ex *CustomerExample) AndAccessKeyNotEqualTo(param string) *CustomerExample
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyGreaterThan(param string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyGreaterThan(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -212,7 +212,7 @@ func (ex *CustomerExample) AndAccessKeyGreaterThan(param string) *CustomerExampl
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyGreaterThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyGreaterThanOrEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -222,7 +222,7 @@ func (ex *CustomerExample) AndAccessKeyGreaterThanOrEqualTo(param string) *Custo
 	}{fragment: "and access_key >= ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndAccessKeyLessThan(param string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyLessThan(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -233,7 +233,7 @@ func (ex *CustomerExample) AndAccessKeyLessThan(param string) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyLessThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyLessThanOrEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -244,7 +244,7 @@ func (ex *CustomerExample) AndAccessKeyLessThanOrEqualTo(param string) *Customer
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyIn(param []string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -255,7 +255,7 @@ func (ex *CustomerExample) AndAccessKeyIn(param []string) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyNotIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyNotIn(param []string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -266,7 +266,7 @@ func (ex *CustomerExample) AndAccessKeyNotIn(param []string) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyBetween(param1 string, param2 string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -277,7 +277,7 @@ func (ex *CustomerExample) AndAccessKeyBetween(param1 string, param2 string) *Cu
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyNotBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyNotBetween(param1 string, param2 string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -288,7 +288,7 @@ func (ex *CustomerExample) AndAccessKeyNotBetween(param1 string, param2 string) 
 	return ex
 }
 
-func (ex *CustomerExample) AndAccessKeyLike(param string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyLike(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -298,7 +298,7 @@ func (ex *CustomerExample) AndAccessKeyLike(param string) *CustomerExample {
 	}{fragment: "and access_key like ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndAccessKeyNotLike(param string) *CustomerExample {
+func (ex *VideoExample) AndAccessKeyNotLike(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -309,7 +309,7 @@ func (ex *CustomerExample) AndAccessKeyNotLike(param string) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeIsNull() *CustomerExample {
+func (ex *VideoExample) AndCreateTimeIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -320,7 +320,7 @@ func (ex *CustomerExample) AndCreateTimeIsNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndCreateTimeIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -331,7 +331,7 @@ func (ex *CustomerExample) AndCreateTimeIsNotNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeEqualTo(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeEqualTo(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -342,7 +342,7 @@ func (ex *CustomerExample) AndCreateTimeEqualTo(param *time.Time) *CustomerExamp
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeNotEqualTo(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeNotEqualTo(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -353,7 +353,7 @@ func (ex *CustomerExample) AndCreateTimeNotEqualTo(param *time.Time) *CustomerEx
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeGreaterThan(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeGreaterThan(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -364,7 +364,7 @@ func (ex *CustomerExample) AndCreateTimeGreaterThan(param *time.Time) *CustomerE
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeGreaterThanOrEqualTo(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeGreaterThanOrEqualTo(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -374,7 +374,7 @@ func (ex *CustomerExample) AndCreateTimeGreaterThanOrEqualTo(param *time.Time) *
 	}{fragment: "and create_time >= ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndCreateTimeLessThan(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeLessThan(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -385,7 +385,7 @@ func (ex *CustomerExample) AndCreateTimeLessThan(param *time.Time) *CustomerExam
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeLessThanOrEqualTo(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeLessThanOrEqualTo(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -396,7 +396,7 @@ func (ex *CustomerExample) AndCreateTimeLessThanOrEqualTo(param *time.Time) *Cus
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeIn(param []*time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeIn(param []*time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -407,7 +407,7 @@ func (ex *CustomerExample) AndCreateTimeIn(param []*time.Time) *CustomerExample 
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeNotIn(param []*time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeNotIn(param []*time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -418,7 +418,7 @@ func (ex *CustomerExample) AndCreateTimeNotIn(param []*time.Time) *CustomerExamp
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeBetween(param1 *time.Time, param2 *time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeBetween(param1 *time.Time, param2 *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -429,7 +429,7 @@ func (ex *CustomerExample) AndCreateTimeBetween(param1 *time.Time, param2 *time.
 	return ex
 }
 
-func (ex *CustomerExample) AndCreateTimeNotBetween(param1 *time.Time, param2 *time.Time) *CustomerExample {
+func (ex *VideoExample) AndCreateTimeNotBetween(param1 *time.Time, param2 *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -440,7 +440,7 @@ func (ex *CustomerExample) AndCreateTimeNotBetween(param1 *time.Time, param2 *ti
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeIsNull() *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -451,7 +451,7 @@ func (ex *CustomerExample) AndUpdateTimeIsNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -462,7 +462,7 @@ func (ex *CustomerExample) AndUpdateTimeIsNotNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeEqualTo(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeEqualTo(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -473,7 +473,7 @@ func (ex *CustomerExample) AndUpdateTimeEqualTo(param *time.Time) *CustomerExamp
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeNotEqualTo(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeNotEqualTo(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -484,7 +484,7 @@ func (ex *CustomerExample) AndUpdateTimeNotEqualTo(param *time.Time) *CustomerEx
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeGreaterThan(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeGreaterThan(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -495,7 +495,7 @@ func (ex *CustomerExample) AndUpdateTimeGreaterThan(param *time.Time) *CustomerE
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeGreaterThanOrEqualTo(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeGreaterThanOrEqualTo(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -505,7 +505,7 @@ func (ex *CustomerExample) AndUpdateTimeGreaterThanOrEqualTo(param *time.Time) *
 	}{fragment: "and update_time >= ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndUpdateTimeLessThan(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeLessThan(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -516,7 +516,7 @@ func (ex *CustomerExample) AndUpdateTimeLessThan(param *time.Time) *CustomerExam
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeLessThanOrEqualTo(param *time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeLessThanOrEqualTo(param *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -527,7 +527,7 @@ func (ex *CustomerExample) AndUpdateTimeLessThanOrEqualTo(param *time.Time) *Cus
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeIn(param []*time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeIn(param []*time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -538,7 +538,7 @@ func (ex *CustomerExample) AndUpdateTimeIn(param []*time.Time) *CustomerExample 
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeNotIn(param []*time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeNotIn(param []*time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -549,7 +549,7 @@ func (ex *CustomerExample) AndUpdateTimeNotIn(param []*time.Time) *CustomerExamp
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeBetween(param1 *time.Time, param2 *time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeBetween(param1 *time.Time, param2 *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -560,7 +560,7 @@ func (ex *CustomerExample) AndUpdateTimeBetween(param1 *time.Time, param2 *time.
 	return ex
 }
 
-func (ex *CustomerExample) AndUpdateTimeNotBetween(param1 *time.Time, param2 *time.Time) *CustomerExample {
+func (ex *VideoExample) AndUpdateTimeNotBetween(param1 *time.Time, param2 *time.Time) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -571,7 +571,7 @@ func (ex *CustomerExample) AndUpdateTimeNotBetween(param1 *time.Time, param2 *ti
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusIsNull() *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -582,7 +582,7 @@ func (ex *CustomerExample) AndDeleteStatusIsNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -593,7 +593,7 @@ func (ex *CustomerExample) AndDeleteStatusIsNotNull() *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusEqualTo(param int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusEqualTo(param int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -604,7 +604,7 @@ func (ex *CustomerExample) AndDeleteStatusEqualTo(param int32) *CustomerExample 
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusNotEqualTo(param int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusNotEqualTo(param int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -615,7 +615,7 @@ func (ex *CustomerExample) AndDeleteStatusNotEqualTo(param int32) *CustomerExamp
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusGreaterThan(param int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusGreaterThan(param int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -626,7 +626,7 @@ func (ex *CustomerExample) AndDeleteStatusGreaterThan(param int32) *CustomerExam
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusGreaterThanOrEqualTo(param int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusGreaterThanOrEqualTo(param int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -636,7 +636,7 @@ func (ex *CustomerExample) AndDeleteStatusGreaterThanOrEqualTo(param int32) *Cus
 	}{fragment: "and delete_status >= ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndDeleteStatusLessThan(param int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusLessThan(param int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -647,7 +647,7 @@ func (ex *CustomerExample) AndDeleteStatusLessThan(param int32) *CustomerExample
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusLessThanOrEqualTo(param int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusLessThanOrEqualTo(param int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -658,7 +658,7 @@ func (ex *CustomerExample) AndDeleteStatusLessThanOrEqualTo(param int32) *Custom
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusIn(param []int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusIn(param []int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -669,7 +669,7 @@ func (ex *CustomerExample) AndDeleteStatusIn(param []int32) *CustomerExample {
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusNotIn(param []int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusNotIn(param []int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -680,7 +680,7 @@ func (ex *CustomerExample) AndDeleteStatusNotIn(param []int32) *CustomerExample 
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusBetween(param1 int32, param2 int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusBetween(param1 int32, param2 int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -691,7 +691,7 @@ func (ex *CustomerExample) AndDeleteStatusBetween(param1 int32, param2 int32) *C
 	return ex
 }
 
-func (ex *CustomerExample) AndDeleteStatusNotBetween(param1 int32, param2 int32) *CustomerExample {
+func (ex *VideoExample) AndDeleteStatusNotBetween(param1 int32, param2 int32) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
@@ -702,893 +702,1265 @@ func (ex *CustomerExample) AndDeleteStatusNotBetween(param1 int32, param2 int32)
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneIsNull() *CustomerExample {
+func (ex *VideoExample) AndCustomerIdIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone is null", noValue: true})
+	}{fragment: "and customer_id is null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndCustomerIdIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone is not null", noValue: true})
+	}{fragment: "and customer_id is not null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone = ?", param1: param})
+	}{fragment: "and customer_id = ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneNotEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdNotEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone <> ?", param1: param})
+	}{fragment: "and customer_id <> ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneGreaterThan(param string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdGreaterThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone > ?", param1: param})
+	}{fragment: "and customer_id > ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneGreaterThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdGreaterThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone >= ?", param1: param})
+	}{fragment: "and customer_id >= ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndPhoneLessThan(param string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdLessThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone < ?", param1: param})
+	}{fragment: "and customer_id < ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneLessThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdLessThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone <= ?", param1: param})
+	}{fragment: "and customer_id <= ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone in (?)", param1: param})
+	}{fragment: "and customer_id in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneNotIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdNotIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone not in (?)", param1: param})
+	}{fragment: "and customer_id not in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and customer_id between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneNotBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndCustomerIdNotBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone not between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and customer_id not between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndPhoneLike(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoNameIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone like ?", param1: param})
+	}{fragment: "and video_name is null", noValue: true})
 	return ex
 }
-func (ex *CustomerExample) AndPhoneNotLike(param string) *CustomerExample {
+
+func (ex *VideoExample) AndVideoNameIsNotNull() *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name is not null", noValue: true})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameEqualTo(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name = ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameNotEqualTo(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name <> ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameGreaterThan(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name > ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameGreaterThanOrEqualTo(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name >= ?", param1: param})
+	return ex
+}
+func (ex *VideoExample) AndVideoNameLessThan(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name < ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameLessThanOrEqualTo(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name <= ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameIn(param []string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name in (?)", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameNotIn(param []string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name not in (?)", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameBetween(param1 string, param2 string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameNotBetween(param1 string, param2 string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name not between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoNameLike(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name like ?", param1: param})
+	return ex
+}
+func (ex *VideoExample) AndVideoNameNotLike(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_name not like ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionIsNull() *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction is null", noValue: true})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionIsNotNull() *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction is not null", noValue: true})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionEqualTo(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction = ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionNotEqualTo(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction <> ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionGreaterThan(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and phone not like ?", param1: param})
+	}{fragment: "and video_introduction > ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameIsNull() *CustomerExample {
+func (ex *VideoExample) AndVideoIntroductionGreaterThanOrEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username is null", noValue: true})
+	}{fragment: "and video_introduction >= ?", param1: param})
 	return ex
 }
+func (ex *VideoExample) AndVideoIntroductionLessThan(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction < ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionLessThanOrEqualTo(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction <= ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionIn(param []string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction in (?)", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionNotIn(param []string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction not in (?)", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionBetween(param1 string, param2 string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionNotBetween(param1 string, param2 string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction not between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoIntroductionLike(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction like ?", param1: param})
+	return ex
+}
+func (ex *VideoExample) AndVideoIntroductionNotLike(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_introduction not like ?", param1: param})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoCoverPathIsNull() *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_cover_path is null", noValue: true})
+	return ex
+}
+
+func (ex *VideoExample) AndVideoCoverPathIsNotNull() *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_cover_path is not null", noValue: true})
+	return ex
+}
 
-func (ex *CustomerExample) AndUsernameIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndVideoCoverPathEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username is not null", noValue: true})
+	}{fragment: "and video_cover_path = ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoCoverPathNotEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username = ?", param1: param})
+	}{fragment: "and video_cover_path <> ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameNotEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoCoverPathGreaterThan(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username <> ?", param1: param})
+	}{fragment: "and video_cover_path > ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameGreaterThan(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoCoverPathGreaterThanOrEqualTo(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_cover_path >= ?", param1: param})
+	return ex
+}
+func (ex *VideoExample) AndVideoCoverPathLessThan(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username > ?", param1: param})
+	}{fragment: "and video_cover_path < ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameGreaterThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoCoverPathLessThanOrEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username >= ?", param1: param})
+	}{fragment: "and video_cover_path <= ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndUsernameLessThan(param string) *CustomerExample {
+
+func (ex *VideoExample) AndVideoCoverPathIn(param []string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username < ?", param1: param})
+	}{fragment: "and video_cover_path in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameLessThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoCoverPathNotIn(param []string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username <= ?", param1: param})
+	}{fragment: "and video_cover_path not in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndVideoCoverPathBetween(param1 string, param2 string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username in (?)", param1: param})
+	}{fragment: "and video_cover_path between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameNotIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndVideoCoverPathNotBetween(param1 string, param2 string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username not in (?)", param1: param})
+	}{fragment: "and video_cover_path not between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndVideoCoverPathLike(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_cover_path like ?", param1: param})
+	return ex
+}
+func (ex *VideoExample) AndVideoCoverPathNotLike(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_cover_path not like ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameNotBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username not between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_source_path is null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndUsernameLike(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username like ?", param1: param})
+	}{fragment: "and video_source_path is not null", noValue: true})
 	return ex
 }
-func (ex *CustomerExample) AndUsernameNotLike(param string) *CustomerExample {
+
+func (ex *VideoExample) AndVideoSourcePathEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and username not like ?", param1: param})
+	}{fragment: "and video_source_path = ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordIsNull() *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathNotEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password is null", noValue: true})
+	}{fragment: "and video_source_path <> ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathGreaterThan(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password is not null", noValue: true})
+	}{fragment: "and video_source_path > ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathGreaterThanOrEqualTo(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_source_path >= ?", param1: param})
+	return ex
+}
+func (ex *VideoExample) AndVideoSourcePathLessThan(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password = ?", param1: param})
+	}{fragment: "and video_source_path < ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordNotEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathLessThanOrEqualTo(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password <> ?", param1: param})
+	}{fragment: "and video_source_path <= ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordGreaterThan(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathIn(param []string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password > ?", param1: param})
+	}{fragment: "and video_source_path in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordGreaterThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathNotIn(param []string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password >= ?", param1: param})
+	}{fragment: "and video_source_path not in (?)", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndPasswordLessThan(param string) *CustomerExample {
+
+func (ex *VideoExample) AndVideoSourcePathBetween(param1 string, param2 string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password < ?", param1: param})
+	}{fragment: "and video_source_path between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordLessThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathNotBetween(param1 string, param2 string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password <= ?", param1: param})
+	}{fragment: "and video_source_path not between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndVideoSourcePathLike(param string) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_source_path like ?", param1: param})
+	return ex
+}
+func (ex *VideoExample) AndVideoSourcePathNotLike(param string) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password in (?)", param1: param})
+	}{fragment: "and video_source_path not like ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordNotIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndVideoSizeIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password not in (?)", param1: param})
+	}{fragment: "and video_size is null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndVideoSizeIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_size is not null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordNotBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndVideoSizeEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password not between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_size = ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndPasswordLike(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSizeNotEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password like ?", param1: param})
+	}{fragment: "and video_size <> ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndPasswordNotLike(param string) *CustomerExample {
+
+func (ex *VideoExample) AndVideoSizeGreaterThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and password not like ?", param1: param})
+	}{fragment: "and video_size > ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailIsNull() *CustomerExample {
+func (ex *VideoExample) AndVideoSizeGreaterThanOrEqualTo(param int64) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_size >= ?", param1: param})
+	return ex
+}
+func (ex *VideoExample) AndVideoSizeLessThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email is null", noValue: true})
+	}{fragment: "and video_size < ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndVideoSizeLessThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email is not null", noValue: true})
+	}{fragment: "and video_size <= ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSizeIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email = ?", param1: param})
+	}{fragment: "and video_size in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailNotEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSizeNotIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email <> ?", param1: param})
+	}{fragment: "and video_size not in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailGreaterThan(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSizeBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email > ?", param1: param})
+	}{fragment: "and video_size between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailGreaterThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoSizeNotBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email >= ?", param1: param})
+	}{fragment: "and video_size not between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
-func (ex *CustomerExample) AndEmailLessThan(param string) *CustomerExample {
+
+func (ex *VideoExample) AndVideoThumbsCountIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email < ?", param1: param})
+	}{fragment: "and video_thumbs_count is null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailLessThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoThumbsCountIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email <= ?", param1: param})
+	}{fragment: "and video_thumbs_count is not null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndVideoThumbsCountEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email in (?)", param1: param})
+	}{fragment: "and video_thumbs_count = ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailNotIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndVideoThumbsCountNotEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email not in (?)", param1: param})
+	}{fragment: "and video_thumbs_count <> ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndVideoThumbsCountGreaterThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_thumbs_count > ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndEmailNotBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndVideoThumbsCountGreaterThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email not between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_thumbs_count >= ?", param1: param})
 	return ex
 }
+func (ex *VideoExample) AndVideoThumbsCountLessThan(param int64) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_thumbs_count < ?", param1: param})
+	return ex
+}
 
-func (ex *CustomerExample) AndEmailLike(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoThumbsCountLessThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email like ?", param1: param})
+	}{fragment: "and video_thumbs_count <= ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndEmailNotLike(param string) *CustomerExample {
+
+func (ex *VideoExample) AndVideoThumbsCountIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and email not like ?", param1: param})
+	}{fragment: "and video_thumbs_count in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameIsNull() *CustomerExample {
+func (ex *VideoExample) AndVideoThumbsCountNotIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname is null", noValue: true})
+	}{fragment: "and video_thumbs_count not in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndVideoThumbsCountBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname is not null", noValue: true})
+	}{fragment: "and video_thumbs_count between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoThumbsCountNotBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname = ?", param1: param})
+	}{fragment: "and video_thumbs_count not between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameNotEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoPlayCountIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname <> ?", param1: param})
+	}{fragment: "and video_play_count is null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameGreaterThan(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoPlayCountIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname > ?", param1: param})
+	}{fragment: "and video_play_count is not null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameGreaterThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoPlayCountEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname >= ?", param1: param})
+	}{fragment: "and video_play_count = ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndNicknameLessThan(param string) *CustomerExample {
+
+func (ex *VideoExample) AndVideoPlayCountNotEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname < ?", param1: param})
+	}{fragment: "and video_play_count <> ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameLessThanOrEqualTo(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoPlayCountGreaterThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname <= ?", param1: param})
+	}{fragment: "and video_play_count > ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndVideoPlayCountGreaterThanOrEqualTo(param int64) *VideoExample {
+	ex.criteria = append(ex.criteria, struct {
+		fragment     string
+		param1       interface{}
+		param2       interface{}
+		noValue      bool
+		betweenValue bool
+	}{fragment: "and video_play_count >= ?", param1: param})
+	return ex
+}
+func (ex *VideoExample) AndVideoPlayCountLessThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname in (?)", param1: param})
+	}{fragment: "and video_play_count < ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameNotIn(param []string) *CustomerExample {
+func (ex *VideoExample) AndVideoPlayCountLessThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname not in (?)", param1: param})
+	}{fragment: "and video_play_count <= ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndVideoPlayCountIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_play_count in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameNotBetween(param1 string, param2 string) *CustomerExample {
+func (ex *VideoExample) AndVideoPlayCountNotIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname not between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_play_count not in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndNicknameLike(param string) *CustomerExample {
+func (ex *VideoExample) AndVideoPlayCountBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname like ?", param1: param})
+	}{fragment: "and video_play_count between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
-func (ex *CustomerExample) AndNicknameNotLike(param string) *CustomerExample {
+
+func (ex *VideoExample) AndVideoPlayCountNotBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and nickname not like ?", param1: param})
+	}{fragment: "and video_play_count not between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusIsNull() *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountIsNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status is null", noValue: true})
+	}{fragment: "and video_comment_count is null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusIsNotNull() *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountIsNotNull() *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status is not null", noValue: true})
+	}{fragment: "and video_comment_count is not null", noValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusEqualTo(param int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status = ?", param1: param})
+	}{fragment: "and video_comment_count = ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusNotEqualTo(param int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountNotEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status <> ?", param1: param})
+	}{fragment: "and video_comment_count <> ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusGreaterThan(param int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountGreaterThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status > ?", param1: param})
+	}{fragment: "and video_comment_count > ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusGreaterThanOrEqualTo(param int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountGreaterThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status >= ?", param1: param})
+	}{fragment: "and video_comment_count >= ?", param1: param})
 	return ex
 }
-func (ex *CustomerExample) AndStatusLessThan(param int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountLessThan(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status < ?", param1: param})
+	}{fragment: "and video_comment_count < ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusLessThanOrEqualTo(param int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountLessThanOrEqualTo(param int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status <= ?", param1: param})
+	}{fragment: "and video_comment_count <= ?", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusIn(param []int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status in (?)", param1: param})
+	}{fragment: "and video_comment_count in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusNotIn(param []int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountNotIn(param []int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status not in (?)", param1: param})
+	}{fragment: "and video_comment_count not in (?)", param1: param})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusBetween(param1 int32, param2 int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_comment_count between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }
 
-func (ex *CustomerExample) AndStatusNotBetween(param1 int32, param2 int32) *CustomerExample {
+func (ex *VideoExample) AndVideoCommentCountNotBetween(param1 int64, param2 int64) *VideoExample {
 	ex.criteria = append(ex.criteria, struct {
 		fragment     string
 		param1       interface{}
 		param2       interface{}
 		noValue      bool
 		betweenValue bool
-	}{fragment: "and status not between ? and ?", param1: param1, param2: param2, betweenValue: true})
+	}{fragment: "and video_comment_count not between ? and ?", param1: param1, param2: param2, betweenValue: true})
 	return ex
 }

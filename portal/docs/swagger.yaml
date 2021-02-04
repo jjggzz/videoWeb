@@ -213,4 +213,42 @@ paths:
       summary: 获取视频内容
       tags:
       - 视频管理相关
+  /videoManage/uploadVideo:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 上传视频
+      parameters:
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 文件
+        in: formData
+        name: file
+        required: true
+        type: file
+      - in: formData
+        name: videoIntroduction
+        required: true
+        type: string
+      - in: formData
+        name: videoName
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"data":{},"msg":"操作成功"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+        "500":
+          description: '{"code":500,"data":{},"msg":"服务暂时不可用"}'
+          schema:
+            $ref: '#/definitions/http.ResultEntity'
+      summary: 上传视频
+      tags:
+      - 视频管理相关
 swagger: "2.0"

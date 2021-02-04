@@ -16,6 +16,7 @@ type Config struct {
 	Zipkin             *config.Zipkin    `yaml:"zipkin"`
 	CustomerServerName string            `yaml:"customerServerName"`
 	VerifyServerName   string            `yaml:"verifyServerName"`
+	VideoServerName    string            `yaml:"videoServerName"`
 }
 
 func Init() {

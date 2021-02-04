@@ -231,6 +231,63 @@ var doc = `{
                 }
             }
         },
+        "/videoManage/uploadVideo": {
+            "post": {
+                "description": "上传视频",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "视频管理相关"
+                ],
+                "summary": "上传视频",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "文件",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "videoIntroduction",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "videoName",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":200,\"data\":{},\"msg\":\"操作成功\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    },
+                    "500": {
+                        "description": "{\"code\":500,\"data\":{},\"msg\":\"服务暂时不可用\"}",
+                        "schema": {
+                            "$ref": "#/definitions/http.ResultEntity"
+                        }
+                    }
+                }
+            }
+        },
         "/videoManage/{accessKey}": {
             "get": {
                 "description": "获取视频内容",

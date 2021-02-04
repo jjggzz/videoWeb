@@ -6,19 +6,25 @@ package proto
 import (
 	context "context"
 	fmt "fmt"
+	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
+	_ "github.com/gogo/protobuf/types"
+	github_com_gogo_protobuf_types "github.com/gogo/protobuf/types"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	_ "google.golang.org/protobuf/types/known/fieldmaskpb"
 	io "io"
 	math "math"
 	math_bits "math/bits"
+	time "time"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+var _ = time.Kitchen
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -255,11 +261,18 @@ func (m *GetCustomerInfoByTokenRequest) GetToken() string {
 }
 
 type GetCustomerInfoByTokenResponse struct {
-	Code      int64  `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	AccessKey string `protobuf:"bytes,2,opt,name=accessKey,proto3" json:"accessKey,omitempty"`
-	Username  string `protobuf:"bytes,3,opt,name=username,proto3" json:"username,omitempty"`
-	Email     string `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
-	Nickname  string `protobuf:"bytes,5,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	Code         int64      `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	Id           int64      `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
+	AccessKey    string     `protobuf:"bytes,3,opt,name=accessKey,proto3" json:"accessKey,omitempty"`
+	Username     string     `protobuf:"bytes,4,opt,name=username,proto3" json:"username,omitempty"`
+	Email        string     `protobuf:"bytes,5,opt,name=email,proto3" json:"email,omitempty"`
+	Nickname     string     `protobuf:"bytes,6,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	CreateTime   *time.Time `protobuf:"bytes,7,opt,name=createTime,proto3,stdtime" json:"createTime,omitempty"`
+	UpdateTime   *time.Time `protobuf:"bytes,8,opt,name=updateTime,proto3,stdtime" json:"updateTime,omitempty"`
+	DeleteStatus int32      `protobuf:"varint,9,opt,name=deleteStatus,proto3" json:"deleteStatus,omitempty"`
+	Phone        string     `protobuf:"bytes,10,opt,name=phone,proto3" json:"phone,omitempty"`
+	Password     string     `protobuf:"bytes,11,opt,name=password,proto3" json:"password,omitempty"`
+	Status       int32      `protobuf:"varint,12,opt,name=status,proto3" json:"status,omitempty"`
 }
 
 func (m *GetCustomerInfoByTokenResponse) Reset()         { *m = GetCustomerInfoByTokenResponse{} }
@@ -295,41 +308,6 @@ func (m *GetCustomerInfoByTokenResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_GetCustomerInfoByTokenResponse proto.InternalMessageInfo
 
-func (m *GetCustomerInfoByTokenResponse) GetCode() int64 {
-	if m != nil {
-		return m.Code
-	}
-	return 0
-}
-
-func (m *GetCustomerInfoByTokenResponse) GetAccessKey() string {
-	if m != nil {
-		return m.AccessKey
-	}
-	return ""
-}
-
-func (m *GetCustomerInfoByTokenResponse) GetUsername() string {
-	if m != nil {
-		return m.Username
-	}
-	return ""
-}
-
-func (m *GetCustomerInfoByTokenResponse) GetEmail() string {
-	if m != nil {
-		return m.Email
-	}
-	return ""
-}
-
-func (m *GetCustomerInfoByTokenResponse) GetNickname() string {
-	if m != nil {
-		return m.Nickname
-	}
-	return ""
-}
-
 func init() {
 	proto.RegisterType((*RegisterByPhoneRequest)(nil), "proto.RegisterByPhoneRequest")
 	proto.RegisterType((*RegisterByPhoneResponse)(nil), "proto.RegisterByPhoneResponse")
@@ -342,29 +320,40 @@ func init() {
 func init() { proto.RegisterFile("customer.proto", fileDescriptor_9efa92dae3d6ec46) }
 
 var fileDescriptor_9efa92dae3d6ec46 = []byte{
-	// 337 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x51, 0xcd, 0x4a, 0xf3, 0x40,
-	0x14, 0xcd, 0xf4, 0xe7, 0xa3, 0xbd, 0x7c, 0x28, 0x8c, 0xa5, 0x86, 0x68, 0x07, 0x09, 0x0a, 0x82,
-	0xd8, 0x85, 0xe2, 0x5e, 0xea, 0x42, 0x8a, 0x2e, 0x24, 0xf8, 0x02, 0x35, 0x5e, 0x6b, 0xa8, 0x9d,
-	0xa9, 0x99, 0xe9, 0x22, 0x6f, 0x21, 0x3e, 0x81, 0x8f, 0xe3, 0xb2, 0x4b, 0x97, 0x92, 0xbc, 0x88,
-	0x64, 0x26, 0xa9, 0x51, 0x93, 0xea, 0x2a, 0x39, 0x73, 0xcf, 0x39, 0x73, 0xe6, 0x1e, 0x58, 0xf3,
-	0xe7, 0x52, 0x89, 0x29, 0x86, 0xfd, 0x59, 0x28, 0x94, 0xa0, 0x4d, 0xfd, 0x71, 0xfb, 0xd0, 0xf5,
-	0x70, 0x1c, 0x48, 0x85, 0xe1, 0x20, 0xba, 0xba, 0x17, 0x1c, 0x3d, 0x7c, 0x9c, 0xa3, 0x54, 0xb4,
-	0x03, 0xcd, 0x59, 0x8a, 0x6d, 0xb2, 0x43, 0xf6, 0xdb, 0x9e, 0x01, 0xee, 0x21, 0x6c, 0xfe, 0xe0,
-	0xcb, 0x99, 0xe0, 0x12, 0x29, 0x85, 0x86, 0x2f, 0x6e, 0x0d, 0xbf, 0xee, 0xe9, 0x7f, 0xf7, 0x00,
-	0x36, 0x2e, 0xc5, 0x38, 0xe0, 0x7f, 0xf2, 0x3e, 0x85, 0xce, 0x57, 0x72, 0xb5, 0x71, 0xea, 0xa0,
-	0xc4, 0x04, 0xb9, 0x5d, 0x33, 0x0e, 0x1a, 0xb8, 0x27, 0xd0, 0x3b, 0x47, 0x75, 0x96, 0xbd, 0x74,
-	0xc8, 0xef, 0xc4, 0x20, 0xba, 0x4e, 0x27, 0x85, 0x8b, 0x8d, 0x8c, 0x14, 0x65, 0x2f, 0x04, 0x58,
-	0x95, 0x6e, 0x45, 0x86, 0x6d, 0x68, 0x8f, 0x7c, 0x1f, 0xa5, 0xbc, 0xc0, 0x28, 0xcb, 0xf1, 0x79,
-	0x40, 0x1d, 0x68, 0xcd, 0x25, 0x86, 0x7c, 0x34, 0x45, 0xbb, 0xae, 0x87, 0x4b, 0x9c, 0xc6, 0xc0,
-	0xe9, 0x28, 0x78, 0xb0, 0x1b, 0x26, 0x86, 0x06, 0xa9, 0x82, 0x07, 0xfe, 0x44, 0x2b, 0x9a, 0x46,
-	0x91, 0xe3, 0xa3, 0xe7, 0x1a, 0xb4, 0xf2, 0x7c, 0xd4, 0x83, 0xf5, 0x6f, 0x25, 0xd0, 0x9e, 0xa9,
-	0xb5, 0x5f, 0x5e, 0xa6, 0xc3, 0xaa, 0xc6, 0xe6, 0x79, 0xae, 0x45, 0x87, 0xf0, 0xbf, 0xb8, 0x7c,
-	0xea, 0x64, 0x8a, 0x92, 0xfa, 0x9c, 0xad, 0xd2, 0xd9, 0xd2, 0x6a, 0x0c, 0xdd, 0xf2, 0x6d, 0xd2,
-	0xdd, 0x4c, 0xb8, 0xb2, 0x24, 0x67, 0xef, 0x17, 0x56, 0x7e, 0xd1, 0xc0, 0x7e, 0x8d, 0x19, 0x59,
-	0xc4, 0x8c, 0xbc, 0xc7, 0x8c, 0x3c, 0x25, 0xcc, 0x5a, 0x24, 0xcc, 0x7a, 0x4b, 0x98, 0x75, 0xf3,
-	0x4f, 0x3b, 0x1c, 0x7f, 0x04, 0x00, 0x00, 0xff, 0xff, 0x9e, 0xcc, 0x44, 0x8b, 0xf6, 0x02, 0x00,
-	0x00,
+	// 520 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x4d, 0x6f, 0xd3, 0x40,
+	0x10, 0xb5, 0xf3, 0x45, 0x32, 0x8d, 0x8a, 0xb4, 0x54, 0xc1, 0x32, 0xd4, 0x89, 0x2c, 0x90, 0x22,
+	0xa1, 0x3a, 0x52, 0x11, 0x17, 0x4e, 0x55, 0x38, 0xa0, 0x0a, 0x0e, 0xc8, 0xe4, 0x8e, 0x1c, 0x7b,
+	0xe2, 0xae, 0x12, 0x7b, 0x8d, 0x77, 0x2d, 0x94, 0x7f, 0xc0, 0xb1, 0xe2, 0x17, 0x70, 0xe4, 0xa7,
+	0x70, 0xec, 0x91, 0x1b, 0x28, 0xf9, 0x23, 0xc8, 0xbb, 0x76, 0xe3, 0x86, 0xa4, 0xe4, 0xe4, 0x7d,
+	0x3b, 0xef, 0xbd, 0x99, 0xf5, 0x3c, 0x38, 0xf6, 0x33, 0x2e, 0x58, 0x84, 0xa9, 0x93, 0xa4, 0x4c,
+	0x30, 0xd2, 0x94, 0x1f, 0xb3, 0x1f, 0x32, 0x16, 0x2e, 0x70, 0x24, 0xd1, 0x34, 0x9b, 0x8d, 0x04,
+	0x8d, 0x90, 0x0b, 0x2f, 0x4a, 0x14, 0xcf, 0xb4, 0xb6, 0x09, 0x41, 0x96, 0x7a, 0x82, 0xb2, 0xb8,
+	0xa8, 0x0f, 0xb6, 0xeb, 0x33, 0x8a, 0x8b, 0xe0, 0x53, 0xe4, 0xf1, 0x79, 0xc1, 0x38, 0x0b, 0xa9,
+	0xb8, 0xca, 0xa6, 0x8e, 0xcf, 0xa2, 0x51, 0xc8, 0x42, 0xb6, 0xa1, 0xe6, 0x48, 0x02, 0x79, 0x52,
+	0x74, 0xdb, 0x81, 0x9e, 0x8b, 0x21, 0xe5, 0x02, 0xd3, 0xf1, 0xf2, 0xc3, 0x15, 0x8b, 0xd1, 0xc5,
+	0xcf, 0x19, 0x72, 0x41, 0x4e, 0xa0, 0x99, 0xe4, 0xd8, 0xd0, 0x07, 0xfa, 0xb0, 0xe3, 0x2a, 0x60,
+	0x9f, 0xc1, 0xe3, 0x7f, 0xf8, 0x3c, 0x61, 0x31, 0x47, 0x42, 0xa0, 0xe1, 0xb3, 0x40, 0xf1, 0xeb,
+	0xae, 0x3c, 0xdb, 0x2f, 0xe0, 0xd1, 0x7b, 0x16, 0xd2, 0xf8, 0x20, 0xef, 0x0b, 0x38, 0xb9, 0x4b,
+	0xde, 0x6f, 0x9c, 0x3b, 0x08, 0x36, 0xc7, 0xd8, 0xa8, 0x29, 0x07, 0x09, 0xec, 0x57, 0x70, 0xfa,
+	0x16, 0xc5, 0x9b, 0xe2, 0xdf, 0x5f, 0xc6, 0x33, 0x36, 0x5e, 0x4e, 0xf2, 0x4a, 0xa5, 0xb1, 0x92,
+	0xe9, 0x55, 0xd9, 0x8f, 0x3a, 0x58, 0xfb, 0x74, 0xf7, 0xcc, 0x70, 0x0c, 0x35, 0x1a, 0xc8, 0x01,
+	0xea, 0x6e, 0x8d, 0x06, 0xe4, 0x29, 0x74, 0x3c, 0xdf, 0x47, 0xce, 0xdf, 0xe1, 0xd2, 0xa8, 0xcb,
+	0x06, 0x9b, 0x0b, 0x62, 0x42, 0x3b, 0xe3, 0x98, 0xc6, 0x5e, 0x84, 0x46, 0x43, 0x16, 0x6f, 0x71,
+	0x3e, 0x16, 0x46, 0x1e, 0x5d, 0x18, 0x4d, 0x35, 0x96, 0x04, 0xb9, 0x22, 0xa6, 0xfe, 0x5c, 0x2a,
+	0x5a, 0x4a, 0x51, 0x62, 0x72, 0x01, 0xe0, 0xa7, 0xe8, 0x09, 0x9c, 0xd0, 0x08, 0x8d, 0x07, 0x03,
+	0x7d, 0x78, 0x74, 0x6e, 0x3a, 0x2a, 0x1d, 0x4e, 0xb9, 0x72, 0x67, 0x52, 0xc6, 0x6b, 0xdc, 0xb8,
+	0xfe, 0xdd, 0xd7, 0xdd, 0x8a, 0x26, 0x77, 0xc8, 0x92, 0xa0, 0x74, 0x68, 0x1f, 0xea, 0xb0, 0xd1,
+	0x10, 0x1b, 0xba, 0x01, 0x2e, 0x50, 0xe0, 0x47, 0xe1, 0x89, 0x8c, 0x1b, 0x9d, 0x81, 0x3e, 0x6c,
+	0xba, 0x77, 0xee, 0x36, 0x9b, 0x86, 0xca, 0xa6, 0xf3, 0x97, 0x25, 0x1e, 0xe7, 0x5f, 0x58, 0x1a,
+	0x18, 0x47, 0xea, 0x65, 0x25, 0x26, 0x3d, 0x68, 0x71, 0xe5, 0xd7, 0x95, 0x7e, 0x05, 0x7a, 0xdd,
+	0xf8, 0xfa, 0xbd, 0xaf, 0x9d, 0x7f, 0xab, 0x41, 0xbb, 0xdc, 0x13, 0x71, 0xe1, 0xe1, 0x56, 0x18,
+	0xc9, 0xa9, 0x1a, 0xdd, 0xd9, 0x1d, 0x6a, 0xd3, 0xda, 0x57, 0x56, 0x6b, 0xb6, 0x35, 0x72, 0x09,
+	0xdd, 0x6a, 0x08, 0x89, 0x59, 0x28, 0x76, 0xc4, 0xd8, 0x7c, 0xb2, 0xb3, 0x76, 0x6b, 0x15, 0x42,
+	0x6f, 0x77, 0xaa, 0xc8, 0xb3, 0x42, 0x78, 0x6f, 0x58, 0xcd, 0xe7, 0xff, 0x61, 0x95, 0x8d, 0xc6,
+	0xc6, 0xcf, 0x95, 0xa5, 0xdf, 0xac, 0x2c, 0xfd, 0xcf, 0xca, 0xd2, 0xaf, 0xd7, 0x96, 0x76, 0xb3,
+	0xb6, 0xb4, 0x5f, 0x6b, 0x4b, 0x9b, 0xb6, 0xa4, 0xc3, 0xcb, 0xbf, 0x01, 0x00, 0x00, 0xff, 0xff,
+	0xdb, 0x82, 0x31, 0x54, 0x90, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -663,29 +652,76 @@ func (m *GetCustomerInfoByTokenResponse) MarshalTo(dAtA []byte) (int, error) {
 		i++
 		i = encodeVarintCustomer(dAtA, i, uint64(m.Code))
 	}
+	if m.Id != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintCustomer(dAtA, i, uint64(m.Id))
+	}
 	if len(m.AccessKey) > 0 {
-		dAtA[i] = 0x12
+		dAtA[i] = 0x1a
 		i++
 		i = encodeVarintCustomer(dAtA, i, uint64(len(m.AccessKey)))
 		i += copy(dAtA[i:], m.AccessKey)
 	}
 	if len(m.Username) > 0 {
-		dAtA[i] = 0x1a
+		dAtA[i] = 0x22
 		i++
 		i = encodeVarintCustomer(dAtA, i, uint64(len(m.Username)))
 		i += copy(dAtA[i:], m.Username)
 	}
 	if len(m.Email) > 0 {
-		dAtA[i] = 0x22
+		dAtA[i] = 0x2a
 		i++
 		i = encodeVarintCustomer(dAtA, i, uint64(len(m.Email)))
 		i += copy(dAtA[i:], m.Email)
 	}
 	if len(m.Nickname) > 0 {
-		dAtA[i] = 0x2a
+		dAtA[i] = 0x32
 		i++
 		i = encodeVarintCustomer(dAtA, i, uint64(len(m.Nickname)))
 		i += copy(dAtA[i:], m.Nickname)
+	}
+	if m.CreateTime != nil {
+		dAtA[i] = 0x3a
+		i++
+		i = encodeVarintCustomer(dAtA, i, uint64(github_com_gogo_protobuf_types.SizeOfStdTime(*m.CreateTime)))
+		n1, err1 := github_com_gogo_protobuf_types.StdTimeMarshalTo(*m.CreateTime, dAtA[i:])
+		if err1 != nil {
+			return 0, err1
+		}
+		i += n1
+	}
+	if m.UpdateTime != nil {
+		dAtA[i] = 0x42
+		i++
+		i = encodeVarintCustomer(dAtA, i, uint64(github_com_gogo_protobuf_types.SizeOfStdTime(*m.UpdateTime)))
+		n2, err2 := github_com_gogo_protobuf_types.StdTimeMarshalTo(*m.UpdateTime, dAtA[i:])
+		if err2 != nil {
+			return 0, err2
+		}
+		i += n2
+	}
+	if m.DeleteStatus != 0 {
+		dAtA[i] = 0x48
+		i++
+		i = encodeVarintCustomer(dAtA, i, uint64(m.DeleteStatus))
+	}
+	if len(m.Phone) > 0 {
+		dAtA[i] = 0x52
+		i++
+		i = encodeVarintCustomer(dAtA, i, uint64(len(m.Phone)))
+		i += copy(dAtA[i:], m.Phone)
+	}
+	if len(m.Password) > 0 {
+		dAtA[i] = 0x5a
+		i++
+		i = encodeVarintCustomer(dAtA, i, uint64(len(m.Password)))
+		i += copy(dAtA[i:], m.Password)
+	}
+	if m.Status != 0 {
+		dAtA[i] = 0x60
+		i++
+		i = encodeVarintCustomer(dAtA, i, uint64(m.Status))
 	}
 	return i, nil
 }
@@ -775,6 +811,9 @@ func (m *GetCustomerInfoByTokenResponse) Size() (n int) {
 	if m.Code != 0 {
 		n += 1 + sovCustomer(uint64(m.Code))
 	}
+	if m.Id != 0 {
+		n += 1 + sovCustomer(uint64(m.Id))
+	}
 	l = len(m.AccessKey)
 	if l > 0 {
 		n += 1 + l + sovCustomer(uint64(l))
@@ -790,6 +829,28 @@ func (m *GetCustomerInfoByTokenResponse) Size() (n int) {
 	l = len(m.Nickname)
 	if l > 0 {
 		n += 1 + l + sovCustomer(uint64(l))
+	}
+	if m.CreateTime != nil {
+		l = github_com_gogo_protobuf_types.SizeOfStdTime(*m.CreateTime)
+		n += 1 + l + sovCustomer(uint64(l))
+	}
+	if m.UpdateTime != nil {
+		l = github_com_gogo_protobuf_types.SizeOfStdTime(*m.UpdateTime)
+		n += 1 + l + sovCustomer(uint64(l))
+	}
+	if m.DeleteStatus != 0 {
+		n += 1 + sovCustomer(uint64(m.DeleteStatus))
+	}
+	l = len(m.Phone)
+	if l > 0 {
+		n += 1 + l + sovCustomer(uint64(l))
+	}
+	l = len(m.Password)
+	if l > 0 {
+		n += 1 + l + sovCustomer(uint64(l))
+	}
+	if m.Status != 0 {
+		n += 1 + sovCustomer(uint64(m.Status))
 	}
 	return n
 }
@@ -1280,6 +1341,25 @@ func (m *GetCustomerInfoByTokenResponse) Unmarshal(dAtA []byte) error {
 				}
 			}
 		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field AccessKey", wireType)
 			}
@@ -1311,7 +1391,7 @@ func (m *GetCustomerInfoByTokenResponse) Unmarshal(dAtA []byte) error {
 			}
 			m.AccessKey = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 3:
+		case 4:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Username", wireType)
 			}
@@ -1343,7 +1423,7 @@ func (m *GetCustomerInfoByTokenResponse) Unmarshal(dAtA []byte) error {
 			}
 			m.Username = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 4:
+		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Email", wireType)
 			}
@@ -1375,7 +1455,7 @@ func (m *GetCustomerInfoByTokenResponse) Unmarshal(dAtA []byte) error {
 			}
 			m.Email = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-		case 5:
+		case 6:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Nickname", wireType)
 			}
@@ -1407,6 +1487,180 @@ func (m *GetCustomerInfoByTokenResponse) Unmarshal(dAtA []byte) error {
 			}
 			m.Nickname = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field CreateTime", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.CreateTime == nil {
+				m.CreateTime = new(time.Time)
+			}
+			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(m.CreateTime, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UpdateTime", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.UpdateTime == nil {
+				m.UpdateTime = new(time.Time)
+			}
+			if err := github_com_gogo_protobuf_types.StdTimeUnmarshal(m.UpdateTime, dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field DeleteStatus", wireType)
+			}
+			m.DeleteStatus = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.DeleteStatus |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Phone", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Phone = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 11:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Password", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthCustomer
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Password = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 12:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowCustomer
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipCustomer(dAtA[iNdEx:])

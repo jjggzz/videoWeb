@@ -10,7 +10,7 @@ import (
 	"github.com/jjggzz/kj/discovery/nacos"
 	"github.com/jjggzz/kj/log"
 	"github.com/jjggzz/kj/track"
-	"github.com/jjggzz/kj/uitls"
+	"github.com/jjggzz/kj/utils"
 	"google.golang.org/grpc"
 	"net"
 	"os"
@@ -18,6 +18,7 @@ import (
 	"videoWeb/video-service/dao"
 	"videoWeb/video-service/handlers"
 	"videoWeb/video-service/proto"
+	"videoWeb/video-service/service"
 	"videoWeb/video-service/svc"
 	"videoWeb/video-service/svc/server"
 )
@@ -48,11 +49,14 @@ func main() {
 	if err != nil {
 		_ = level.Error(logger).Log("err", err)
 	}
-
+	// dao初始化
 	var d *dao.Dao
 	{
 		d = dao.New(config.Conf)
-		fmt.Println(d)
+	}
+	// service初始化
+	{
+		service.Vid = service.New(config.Conf, d, discovery, tracer, logger)
 	}
 
 	// 初始化端点
@@ -67,10 +71,10 @@ func main() {
 	go func() {
 		// 注册
 		discovery.RegisterServer()
-		_ = level.Info(logger).Log("transport", "gRPC", "Ip", uitls.LocalIpv4(), "Port", config.Conf.Server.Tcp.Port)
+		_ = level.Info(logger).Log("transport", "gRPC", "Ip", utils.LocalIpv4(), "Port", config.Conf.Server.Tcp.Port)
 
 		// 启动服务
-		ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", uitls.LocalIpv4(), config.Conf.Server.Tcp.Port))
+		ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", utils.LocalIpv4(), config.Conf.Server.Tcp.Port))
 		if err != nil {
 			errs <- err
 			return

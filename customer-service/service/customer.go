@@ -33,10 +33,11 @@ func (srv *service) RegisterByPhone(ctx context.Context, phone string) (ecode.EC
 		return ecode.Build(response.Code), nil
 	}
 	// 插入数据
+	now := time.Now()
 	customer := &repository.Customer{
 		AccessKey:    response.Id,
-		CreateTime:   time.Now(),
-		UpdateTime:   time.Now(),
+		CreateTime:   &now,
+		UpdateTime:   &now,
 		DeleteStatus: 1,
 		Phone:        phone,
 		Username:     phone,

@@ -22,3 +22,4 @@ zipkin:
 
 customerServerName: customer-service
 verifyServerName: verify-service
+videoServerName: video-service

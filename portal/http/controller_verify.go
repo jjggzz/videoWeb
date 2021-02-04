@@ -22,7 +22,7 @@ func (h *Business) SendPhoneVerify(context *gin.Context) (ecode.ECode, interface
 	data := SendPhoneVerifyRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		return ecode.ParamParsingErr, nil, err
+		return ecode.ParamParsingErr, nil, nil
 	}
 	code, err := h.srv.SendVerify(context, "phone", data.Phone)
 	if err != nil {
@@ -48,7 +48,7 @@ func (h *Business) SendEmailVerify(context *gin.Context) (ecode.ECode, interface
 	data := SendEmailVerifyRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		return ecode.ParamParsingErr, nil, err
+		return ecode.ParamParsingErr, nil, nil
 	}
 	code, err := h.srv.SendVerify(context, "email", data.Email)
 	if err != nil {

@@ -10,7 +10,7 @@ import (
 	"github.com/jjggzz/kj/discovery/nacos"
 	"github.com/jjggzz/kj/log"
 	"github.com/jjggzz/kj/track"
-	"github.com/jjggzz/kj/uitls"
+	"github.com/jjggzz/kj/utils"
 	"google.golang.org/grpc"
 	"net"
 	"os"
@@ -73,10 +73,10 @@ func main() {
 	go func() {
 		// 注册
 		discovery.RegisterServer()
-		_ = level.Info(logger).Log("transport", "gRPC", "Ip", uitls.LocalIpv4(), "Port", config.Conf.Server.Tcp.Port)
+		_ = level.Info(logger).Log("transport", "gRPC", "Ip", utils.LocalIpv4(), "Port", config.Conf.Server.Tcp.Port)
 
 		// 启动服务
-		ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", uitls.LocalIpv4(), config.Conf.Server.Tcp.Port))
+		ln, err := net.Listen("tcp", fmt.Sprintf("%s:%d", utils.LocalIpv4(), config.Conf.Server.Tcp.Port))
 		if err != nil {
 			errs <- err
 			return

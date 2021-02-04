@@ -8,7 +8,7 @@ import (
 	"github.com/jjggzz/kj/discovery/nacos"
 	"github.com/jjggzz/kj/log"
 	"github.com/jjggzz/kj/track"
-	"github.com/jjggzz/kj/uitls"
+	"github.com/jjggzz/kj/utils"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"os"
@@ -81,13 +81,13 @@ func main() {
 	}()
 
 	go func() {
-		_ = level.Error(logger).Log("server", "run", "ip", uitls.LocalIpv4(), "port", config.Conf.Server.Http.Port)
+		_ = level.Error(logger).Log("server", "run", "ip", utils.LocalIpv4(), "port", config.Conf.Server.Http.Port)
 		// 启动
 		engine := gin.Default()
 		http.Router(engine, h)
 		url := ginSwagger.URL("http://192.168.151.109:8080/swagger/doc.json")
 		engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
-		errs <- engine.Run(fmt.Sprintf("%s:%d", uitls.LocalIpv4(), config.Conf.Server.Http.Port))
+		errs <- engine.Run(fmt.Sprintf("%s:%d", utils.LocalIpv4(), config.Conf.Server.Http.Port))
 	}()
 
 	_ = level.Error(logger).Log("exit", <-errs)

@@ -2,11 +2,12 @@ package service
 
 import (
 	"context"
-	"github.com/jjggzz/kj/uitls"
+	"github.com/jjggzz/kj/utils"
 	"videoWeb/common/ecode"
 	cuspb "videoWeb/customer-service/proto"
 	"videoWeb/portal/service/dto"
 	verpb "videoWeb/verify-service/proto"
+	vidpb "videoWeb/video-service/proto"
 )
 
 // 用户登录
@@ -57,10 +58,7 @@ func (srv *service) GetUserInfo(ctx context.Context, token string) (ecode.ECode,
 	if getUserInfoResponse.Code != ecode.Success.Code() {
 		return ecode.Build(getUserInfoResponse.Code), nil, nil
 	}
-	err = uitls.Copy(getUserInfoResponse, &userInfo)
-	if err != nil {
-		return ecode.ServerErr, nil, err
-	}
+	_ = utils.Copy(getUserInfoResponse, &userInfo)
 	return ecode.Success, &userInfo, nil
 }
 
@@ -71,4 +69,16 @@ func (srv *service) SendVerify(ctx context.Context, strategyName string, phone s
 		return ecode.ServerErr, err
 	}
 	return ecode.Build(sendResponse.Code), nil
+}
+
+// 上传视频
+func (srv *service) UploadVideo(ctx context.Context, videoDto *dto.UploadVideoDto) (ecode.ECode, error) {
+	var uploadRequest vidpb.UploadVideoRequest
+	_ = utils.Copy(videoDto, &uploadRequest)
+	uploadRequest.CustomerId = ctx.Value("customerInfo").(*dto.UserInfoDto).Id
+	uploadResponse, err := srv.vid.UploadVideo(ctx, &uploadRequest)
+	if err != nil {
+		return ecode.ServerErr, err
+	}
+	return ecode.Build(uploadResponse.Code), nil
 }

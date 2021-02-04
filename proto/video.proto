@@ -7,6 +7,12 @@ service Video {
 }
 
 message UploadVideoRequest {
+    int64 customerId = 1;
+	string videoSourcePath = 2;
+	string videoCoverPath = 3;
+	int64 VideoSize = 4;
+	string VideoName = 5;
+	string videoIntroduction = 6;
 }
 
 message UploadVideoResponse {

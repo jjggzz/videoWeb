@@ -23,7 +23,7 @@ func (h *Business) Login(context *gin.Context) (ecode.ECode, interface{}, error)
 	data := LoginRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		return ecode.ParamParsingErr, nil, err
+		return ecode.ParamParsingErr, nil, nil
 	}
 	code, token, err := h.srv.Login(context, data.Phone, data.Verify)
 	if err != nil {
@@ -50,11 +50,11 @@ func (h *Business) Register(context *gin.Context) (ecode.ECode, interface{}, err
 	data := RegisterRequest{}
 	err := context.ShouldBindJSON(&data)
 	if err != nil {
-		return ecode.ParamParsingErr, nil, err
+		return ecode.ParamParsingErr, nil, nil
 	}
 	code, err := h.srv.Register(context, data.Phone, data.Verify)
 	if err != nil {
 		return ecode.ServerErr, nil, err
 	}
-	return code, nil, nil
+	return code, gin.H{}, nil
 }
