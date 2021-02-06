@@ -13,8 +13,8 @@ discovery:
       interval: 5
       deregisterCriticalServiceAfter: 30
   nacos:
-    address: 192.168.151.109:8848
-    namespace: 73d8542f-4ccb-4f16-af3b-c104bee8af8f
+    address: 192.168.1.102:8848
+    namespace: c6f706d8-6ebf-4c6c-ab3b-24a573806a8f
     weight: 5
 
 # 数据库
@@ -35,7 +35,7 @@ redis:
 
 # 链路追踪服务地址
 zipkin:
-  address: 192.168.151.109:9411
+  address: 192.168.1.102:9411
 
 # jwt加密码
 secretCode: DFAJLSDGEGFIA

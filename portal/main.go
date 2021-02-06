@@ -34,7 +34,7 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host 192.168.151.109:8080
+// @host 192.168.1.102:8080
 func main() {
 	flag.Parse()
 	config.Init()
@@ -85,7 +85,7 @@ func main() {
 		// 启动
 		engine := gin.Default()
 		http.Router(engine, h)
-		url := ginSwagger.URL("http://192.168.151.109:8080/swagger/doc.json")
+		url := ginSwagger.URL("http://192.168.1.102:8080/swagger/doc.json")
 		engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 		errs <- engine.Run(fmt.Sprintf("%s:%d", utils.LocalIpv4(), config.Conf.Server.Http.Port))
 	}()

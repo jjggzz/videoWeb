@@ -82,8 +82,8 @@ func (h *Business) UploadVideo(context *gin.Context) (ecode.ECode, interface{}, 
 // 保存视频，返回视频地址与封面地址
 func saveVideo(context *gin.Context, file *multipart.FileHeader) (filePath string, imagePath string, err error) {
 	rand.Seed(time.Now().UnixNano())
-	filePath = "D:/file/" + strconv.Itoa(rand.Int()) + "-" + file.Filename
-	imagePath = "D:/file/" + strconv.Itoa(rand.Int()) + "-" + strings.Split(file.Filename, ".")[0] + ".jpg"
+	filePath = "/home/JGZ/file/" + strconv.Itoa(rand.Int()) + "-" + file.Filename
+	imagePath = "/home/JGZ/file/" + strconv.Itoa(rand.Int()) + "-" + strings.Split(file.Filename, ".")[0] + ".jpg"
 	err = context.SaveUploadedFile(file, filePath)
 	if err != nil {
 		return

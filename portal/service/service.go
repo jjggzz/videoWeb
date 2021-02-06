@@ -25,7 +25,7 @@ type service struct {
 func New(conf *config.Config, discover discovery.Discover, tracer *zipkin.Tracer, logger log.Logger) Service {
 	cusIns, _ := discover.Discovery(conf.CustomerServerName)
 	verIns, _ := discover.Discovery(conf.VerifyServerName)
-	vidIns, _ := discover.Discovery(conf.VerifyServerName)
+	vidIns, _ := discover.Discovery(conf.VideoServerName)
 	// 客户服务
 	customerServer, _ := cusgrpc.NewLoadBalanceClient(
 		cusIns,
